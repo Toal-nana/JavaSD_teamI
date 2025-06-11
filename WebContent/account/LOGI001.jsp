@@ -1,10 +1,11 @@
 <%@page contentType="text/html; charset=UTF-8"%>
+<%@page errorPage="ERRO001.jsp" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/base.jsp">
 
 <c:param name="title">得点管理システム</c:param>
 
-<c:param name="link">${pageContext.request.contextPath}/css/login.css</c:param>
+<c:param name="link">${pageContext.request.contextPath}/css/LOGI001.css</c:param>
 
 <c:param name="body">
 

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import tool.CommonServlet;
 
-public class LoginController extends CommonServlet {
+public class LoginExecuteController extends CommonServlet {
 
 	@Override
 	protected String get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
