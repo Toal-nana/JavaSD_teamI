@@ -14,7 +14,7 @@
            <input type="text">クラス
 
 
-<input type="submit" >登録して終了
-<link href="MMNU001">戻る
+<input type="submit" value="登録して終了" >
+<link href="STDM001">戻る
     </c:param>
 </c:import>
