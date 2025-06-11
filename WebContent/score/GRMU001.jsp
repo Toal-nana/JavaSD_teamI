@@ -69,6 +69,7 @@
 			</table>
 		</div>
 
+		<%-- 検索にヒットしたら詳細を表示する --%>
 		<div class="search-results">
 		    <c:if test="${not empty searchResults}">
 		      <table>

@@ -1,0 +1,19 @@
+﻿body{
+	padding:0px 200px 0px 200px
+}
+
+h1{
+	background-color: #D9E5FF;
+	height: 50px;
+	line-height: 50px;﻿
+}
+
+footer{
+	text-align: center;
+	color: #999999;
+	background-color:#CCCCCC;
+}
+
+footer p {
+  margin: 0px;
+}
