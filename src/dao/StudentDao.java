@@ -16,6 +16,7 @@ public class StudentDao extends Dao {
 
 
 	// 学生番号を指定して学生インスタンスを一件取得するメソッド
+	// 指定した番号が存在しなかったらnullが入る
 	public Student get(String no) throws Exception {
 		Student student = new Student();
 		// DBに接続
@@ -124,7 +125,7 @@ public class StudentDao extends Dao {
 			statement.setString(3, classNum);
 			// プライベートステートメントを実行
 			rSet = statement.executeQuery();
-			// リストへの格納処理を実行
+			// 検索結果をリストへ格納
 			list = postFilter(rSet, school);
 		} catch (Exception e) {
 			throw e;
@@ -170,7 +171,7 @@ public class StudentDao extends Dao {
 			conditionIsAttend = "and is_attend=true";
 		}
 		try {
-			// SQL文をセット
+			// SQL文をセット select * from student where school_cd=? and ent_year=? and is_attend=true order by no asc
 			statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
 			// SQL文に学校コードを入れる
 			statement.setString(1, school.getCd());
