@@ -14,12 +14,13 @@
 
 
 <%-- body --%>
-<body>
+<body class="container">
 
 <%-- header --%>
-<header class="p-3 text-bg-dark">
-	 <h1>得点管理システム</h1>
+<header class="d-flex p-3 bg-primary bg-opacity-25 text-dark">
+	 <div class="col-md-3 mb-2 mb-md-0"><h1>得点管理システム</h1></div>
 	<%-- ログインしている場合 --%>
+	<div class="col-md-9 text-end">
 	<%--<c:when test="${not empty session_user}">
         <%-- 名前とログアウトを表示：名前${session_user.username}
         (ログインしているかしていないかの判断でエラーになったのでコメントアウト) --%>
@@ -27,19 +28,24 @@
         <%-- ログアウト画面へ飛ぶ（ログアウト処理のサーブレットのアノテーションによるので、後で変更） --%>
         <a href="${pageContext.request.contextPath}/accounts/LOGO001">ログアウト</a>
     <%--</c:when>--%>
+    </div>
 </header>
 
-
+<div class="row py-3">
 <%-- サイドメニュー --%>
-<c:import url="/menu.jsp"/>
+<div class="col-md-2 "><c:import url="/menu.jsp"/></div>
+<div class="col-md-1 d-flex flex-row-reverse container m-0 p-0">
+  <div class="vr p-0"></div>
+</div>
 <%-- 各要素のbody --%>
-${ param.body }
+<div class="col-md-8">${ param.body }</div>
+</div>
 
 
 <%-- footer --%>
-<footer>
-	<p>@ 2023 TIC</p>
-	<p>大原学園</p>
+<footer class="text-center text-body-secondary bg-secondary bg-opacity-25 py-2">
+	<p class="m-0">@ 2023 TIC</p>
+	<p class="m-0">大原学園</p>
 </footer>
 
 </body>
