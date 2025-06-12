@@ -17,12 +17,12 @@
 <body class="container">
 
 <%-- header --%>
-<header class="d-flex p-3 bg-primary bg-opacity-25 text-dark">
-	 <div class="col-md-3 mb-2 mb-md-0"><h1>得点管理システム</h1></div>
+<header class="d-flex p-3 bg-primary bg-opacity-25 text-dark position-relative">
+	<div class="col-md-5 mb-2 mb-md-0"><h1>得点管理システム</h1></div>
 	<%-- ログインしている場合 --%>
-	<div class="col-md-9 text-end">
+	<div class="col-md-7 text-end position-absolute bottom-0 end-0 pb-2 mx-3">
 	<%--<c:when test="${not empty session_user}">
-        <%-- 名前とログアウトを表示：名前${session_user.username}
+        <%-- 名前とログアウトを表示名前${session_user.username}
         (ログインしているかしていないかの判断でエラーになったのでコメントアウト) --%>
         <span> 様</span>
         <%-- ログアウト画面へ飛ぶ（ログアウト処理のサーブレットのアノテーションによるので、後で変更） --%>
