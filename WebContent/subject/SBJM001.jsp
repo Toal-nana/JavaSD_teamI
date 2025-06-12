@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +31,11 @@
   	<a href="${pageContext.request.contextPath}/subject/updatesubjectId=${subject.subjectId}">変更</a>
   	<a href="${pageContext.request.contextPath}/subject/deleteConfirmsubjectId=${subject.subjectId}">削除</a>
 
-
 </body>
+
+<footer>
+	<p>@ 2023 TIC</p>
+	<p>大原学園</p>
+</footer>
+
 </html>

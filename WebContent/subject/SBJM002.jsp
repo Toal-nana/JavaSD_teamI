@@ -31,4 +31,9 @@
   <br><a href="${pageContext.request.contextPath}/subject/list">戻る</a>
 
 </body>
+
+<footer>
+	<p>@ 2023 TIC</p>
+	<p>大原学園</p>
+</footer>
 </html>
