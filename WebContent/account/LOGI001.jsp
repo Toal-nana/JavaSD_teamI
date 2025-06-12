@@ -5,42 +5,56 @@
 
 <c:param name="title">得点管理システム</c:param>
 
-<c:param name="link">${pageContext.request.contextPath}/css/LOGI001.css</c:param>
 
 <c:param name="body">
 
   <%-- メインコンテンツ: ログインフォーム --%>
-  <section>
-    <h2>ログイン</h2>
+  <div class="col-lg-6 col-md-8 mx-auto my-5">
 
-    <form action="loginexecute" method="post">
+    <%-- カードコンポーネントでフォーム全体をデザイン --%>
+    <div class="card shadow-sm border-light">
 
-      <c:if test="${error != null}">
-        <p>ログインに失敗しました。IDまたはパスワードが正しくありません</p>
-      </c:if>
-
-      <%-- ユーザーID入力欄 --%>
-      <div>
-        <input type="text" name="id" value="" maxlength="20" style="ime-mode: disabled;" placeholder="半角でご入力ください" required>
+      <%-- カードヘッダー: ログインタイトル --%>
+      <div class="card-header bg-light text-center h2 py-3">
+        ログイン
       </div>
 
-      <%-- パスワード入力欄 --%>
-      <div>
-        <input type="password" name="password" id="password" value="" maxlength="20" style="ime-mode: disabled;" placeholder="20文字以内の半角英数字でご入力ください" required>
-      </div>
+      <%-- カードボディ --%>
+      <div class="card-body p-4">
+        <form action="loginexecute" method="post">
 
-      <%-- パスワード表示切替チェックボックス --%>
-      <div>
-        <input type="checkbox" name="chk_d_ps" id="chk_d_ps">
-        <label for="chk_d_ps">パスワードを表示</label>
-      </div>
+          <c:if test="${error != null}">
+              ログインに失敗しました。IDまたはパスワードが正しくありません
+            </div>
+          </c:if>
 
-      <%-- ログイン送信ボタン --%>
-      <div>
-        <input type="submit" name="login" value="ログイン">
+          <%-- ユーザーID入力欄 (フローティングラベル) --%>
+          <div class="form-floating mb-3">
+            <input type="text" name="id" id="id" class="form-control" value="" placeholder="半角でご入力ください" maxlength="20" style="ime-mode: disabled; background-color: #e6f2ff;" required>
+            <label for="id">ID</label>
+          </div>
+
+          <%-- パスワード入力欄 (フローティングラベル) --%>
+          <div class="form-floating mb-3">
+            <input type="password" name="password" id="password" class="form-control" value="" placeholder="20文字以内の半角英数字でご入力ください" maxlength="20" style="ime-mode: disabled; background-color: #e6f2ff;" required>
+            <label for="password">パスワード</label>
+          </div>
+
+          <div class="form-check d-flex justify-content-center mb-4">
+            <div>
+              <input type="checkbox" name="chk_d_ps" id="chk_d_ps" class="form-check-input">
+              <label for="chk_d_ps" class="form-check-label">パスワードを表示</label>
+            </div>
+          </div>
+
+          <%-- ログイン送信ボタン --%>
+          <div class="text-center">
+            <button type="submit" name="login" class="btn btn-primary btn-lg fw-bold px-5">ログイン</button>
+          </div>
+        </form>
       </div>
-    </form>
-  </section>
+    </div>
+  </div>
 
   <%-- チェックボックスでパスワード表示モードを切り替えるスクリプト --%>
   <script>

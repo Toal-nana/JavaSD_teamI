@@ -8,7 +8,7 @@
 
     <h2>ログアウト</h2>
     <p>ログアウトしました</p>
-    <a href="login.jsp">ログイン</a>
+    <a href="${pageContext.request.contextPath}/account/LOGI001.jsp">ログイン</a>
 
 </c:param>
 
