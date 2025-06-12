@@ -11,12 +11,11 @@ import bean.School;
 import bean.Student;
 
 public class StudentDao extends Dao {
-	// Studentテーブルからデータを取得するSQL
+	// 学校ごとの表示に必要
 	private String baseSql = "select * from student where school_cd=?";
 
-
-	// 学生番号を指定して学生インスタンスを一件取得するメソッド
-	// 指定した番号が存在しなかったらnullが入る
+	// idで指定した学生を学生インスタンスにして一件返す
+	// 存在しなかったらnullが入る
 	public Student get(String no) throws Exception {
 		Student student = new Student();
 		// DBに接続
@@ -31,21 +30,21 @@ public class StudentDao extends Dao {
 			statement.setString(1, no);
 			// SQL文を実行
 			ResultSet rSet = statement.executeQuery();
-			// 学校Daoを初期化
+			// 学校Daoを初期化(学校コードをセットするため)
 			SchoolDao schoolDao = new SchoolDao();
 
 			if (rSet.next()) {
-				// リザルトセットが存在する場合
+				// 検索に引っかかった科目がある場合
 				// 学生インスタンスに検索結果をセット
 				student.setNo(rSet.getString("no"));
 				student.setName(rSet.getString("name"));
 				student.setEntYear(rSet.getInt("ent_year"));
 				student.setClassNum(rSet.getString("class_num"));
 				student.setAttend(rSet.getBoolean("is_attend"));
-				// 学校フィールドには学校コードで検索した学校インスタンスをセット
+				// SchoolDaoを使って学校コードをセット
 				student.setSchool(schoolDao.get(rSet.getString("school_cd")));
 			} else {
-				// リザルトセットが存在しない場合
+				// 検索に一件も引っかからなかった場合
 				// 学生インスタンスにnullをセット
 				student = null;
 			}
@@ -72,7 +71,7 @@ public class StudentDao extends Dao {
 		return student;
 	}
 
-	//検索後のリストへの格納処理をするメソッド
+	// 検索結果をリストに格納して返す
 	private List<Student> postFilter(ResultSet rSet,School school) throws Exception {
 		List<Student> list = new ArrayList<>();
 		try {
@@ -94,7 +93,7 @@ public class StudentDao extends Dao {
 		return list;
 	}
 
-	//学校、入学年度、クラス番号、在学フラグを指定して学生の一覧を取得するメソッド
+	//学校、入学年度、クラス番号、在学フラグを指定して検索をかける
 	public List<Student> filter(School school,int entYear,String classNum,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
 		// DBに接続
@@ -109,7 +108,7 @@ public class StudentDao extends Dao {
 
 		// SQL文の在学フラグ条件
 		String conditionIsAttend = "";
-		// 在学フラグがtrueの場合
+		// 在学フラグがtrueの場合(条件文に"出席している"を加える)
 		if (isAttend) {
 			conditionIsAttend = "and is_attend=true";
 		}
@@ -151,7 +150,7 @@ public class StudentDao extends Dao {
 	}
 
 
-	// 学校、入学年度、在学フラグを指定して学生の一覧を取得するメソッド
+	// 学校、入学年度、在学フラグを指定して検索をかける
 	public List<Student> filter(School school,int entYear,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
 		// DBに接続
@@ -166,7 +165,7 @@ public class StudentDao extends Dao {
 
 		// SQL文の在学フラグ
 		String conditionIsAttend = "";
-		// 在学フラグがtrueだった場合
+		// 在学フラグがtrueだった場合(条件文に"出席している"を加える)
 		if (isAttend) {
 			conditionIsAttend = "and is_attend=true";
 		}
@@ -204,7 +203,7 @@ public class StudentDao extends Dao {
 		return list;
 	}
 
-	// 学校、在学フラグを指定して学生の一覧を取得するメソッド
+	// 学校、在学フラグを指定して検索をかける
 	public List<Student> filter(School school,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
 		// DBに接続
@@ -217,7 +216,7 @@ public class StudentDao extends Dao {
 
 		// SQL文の在学フラグ
 		String conditionIsAttend = "";
-		// 在学フラグがtrueだった場合
+		// 在学フラグがtrueだった場合(条件文に"出席している"を加える)
 		if (isAttend) {
 			conditionIsAttend = "and is_attend=true";
 		}
@@ -269,7 +268,7 @@ public class StudentDao extends Dao {
 			Student old = get(student.getNo());
 			if (old == null) {
 				// 学生が存在しなかった場合
-				// PreparedStatementにINSERT文をセット(新規登録)
+				// SQL文にinsert文を加え、学生の新規登録を行う
 				statement = connection.prepareStatement("insert into student(no,name,ent_year,class_num,is_attend,school_cd) values(?,?,?,?,?,?)");
 				// PreparedStatementに値をバインド
 				statement.setString(1, student.getNo());
@@ -280,10 +279,9 @@ public class StudentDao extends Dao {
 				statement.setString(6, student.getSchool().getCd());
 			} else {
 				// 学生が存在した場合
-				// PreparedStatementにUPDATE文をセット(上書き保存)
+				// SQL文にupdate文を加え、学生の更新を行う
 				statement = connection.prepareStatement("update student set name=?, ent_year=?, class_num=?, is_attend=? where no=?");
-				// PreparedStatementに値をバインド
-				// PreparedStatementに値をバインド
+				// SQL文の条件文に値をセット
 				statement.setString(1, student.getName());
 				statement.setInt(2, student.getEntYear());
 				statement.setString(3, student.getClassNum());

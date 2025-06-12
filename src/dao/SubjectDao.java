@@ -12,9 +12,8 @@ import bean.Subject;
 
 public class SubjectDao extends Dao {
 
-
-	// 科目番号を指定して科目インスタンスを一件取得するメソッド
-	// 指定した番号が存在しなかったらnullが入る
+	// idで指定した学生を学生インスタンスにして一件返す
+	// 存在しなかったらnullが入る
 	public Subject get(String cd) throws Exception {
 		Subject subject = new Subject();
 		// DBに接続
@@ -33,14 +32,14 @@ public class SubjectDao extends Dao {
 			SchoolDao schoolDao = new SchoolDao();
 
 			if (rSet.next()) {
-				// リザルトセットが存在する場合
-				// 科目インスタンスに検索結果をセット
+				// 検索に引っかかった科目がある場合
+				// 科目インスタンスにその検索結果をセット
 				subject.setCd(rSet.getString("cd"));
 				subject.setName(rSet.getString("name"));
 				// 検索で引っかかった科目テーブルから学校番号を持ってきて、セット
 				subject.setSchool(schoolDao.get(rSet.getString("school_cd")));
 			} else {
-				// リザルトセットが存在しない場合
+				// 検索に一件も引っかからなかった場合
 				// 科目インスタンスにnullをセット
 				subject = null;
 			}
@@ -183,7 +182,8 @@ public class SubjectDao extends Dao {
 	}
 
 
-	// 指定した科目インスタンスを削除する
+	// 指定した科目レコードを削除する
+	// 変更件数が1件以上だとtrue、0件だとfalseを返す
 	public boolean delete(Subject subject) throws Exception {
 		// DBに接続
 		Connection connection = getConnection();
@@ -195,7 +195,7 @@ public class SubjectDao extends Dao {
 		try {
 			// delete文をセット
 			statement = connection.prepareStatement("delete from subject where cd=?");
-			// 受け取った科目インスタンスの科目番号で削除するテーブルを指定する
+			// 受け取った科目インスタンスの科目番号で削除するレコードを指定する
 			statement.setString(1,subject.getCd());
 			//SQL文を実行し、削除件数をカウント
 			count = statement.executeUpdate();
