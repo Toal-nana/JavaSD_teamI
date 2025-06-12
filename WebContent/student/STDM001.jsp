@@ -2,10 +2,8 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE>
-<html>
-<head>
-<%--
+
+
 <c:import url="/base.jsp">
 
     <c:param name="title">学生管理</c:param>
@@ -14,10 +12,13 @@
 
     <c:param name="content">
 
-    --%>
-    </head>
 
-    <body>
+
+    <!-- Bootstrap CSS -->
+
+
+
+
     	<section class="mp=4">
     	<h1>学生管理</h1>
     	<div class="my-2 text-end px-4">
@@ -121,11 +122,14 @@
 
 
     		</section>
-</body>
 
-</html>
-<%--
+
+    		 <!-- Bootstrap JavaScript -->
+
+
+
+
     </c:param>
 </c:import>
 
---%>
+
