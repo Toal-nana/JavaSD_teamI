@@ -1,17 +1,44 @@
-﻿body{
-	padding:0px 200px 0px 200px
+﻿/* --- ここから修正後のCSS --- */
+
+body {
+  padding: 0px 200px 0px 200px;
+  /* bodyのデフォルトマージンをリセットしておくと意図しない余白が消える */
+  margin: 0;
 }
 
-h1{
-	background-color: #D9E5FF;
-	height: 50px;
-	line-height: 50px;﻿
+header {
+  background-color: #D9E5FF;
 }
 
-footer{
-	text-align: center;
-	color: #999999;
-	background-color:#CCCCCC;
+/* 親コンテナの指定 */
+header .flex {
+  display: flex;
+  align-items: center; /* 要素の上下を中央に揃える */
+  height: 100px;
+}
+
+/* h1が持つデフォルトの余白をリセット */
+header .box1 h1 {
+  margin: 0;
+  font-size: 24px; /* お好みのサイズに調整 */
+}
+
+/* 右に寄せたいグループの最初の要素に指定 */
+header .item.box2 {
+  margin-left: auto; /* ★これが重要！残りのスペースをすべて左マージンにして右に寄せる */
+}
+
+/* ログアウトと「様」の間のスペース */
+header .item.box3 {
+  margin-left: 1em; /* 1em = フォントサイズ1文字分の余白 */
+}
+
+
+/* --- footerは変更なし --- */
+footer {
+  text-align: center;
+  color: #999999;
+  background-color: #CCCCCC;
 }
 
 footer p {
