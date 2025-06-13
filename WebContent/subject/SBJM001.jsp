@@ -9,12 +9,12 @@
   <%-- body に表示するコンテンツを渡す --%>
   <c:param name="body">
       <!-- タイトル -->
-      <div class="bg-light p-3 rounded">
+      <div class="bg-body-secondary p-3 rounded my-4">
         <h2 class="mb-0">科目管理</h2>
       </div>
 
       <!-- 新規登録リンク -->
-      <div class="text-end my-3">
+      <div class="text-end mb-3">
         <a href="${pageContext.request.contextPath}/subject/insertForm" class="btn btn-link">新規登録</a>
       </div>
 
@@ -24,7 +24,7 @@
           <tr>
             <th>科目コード</th>
             <th>科目名</th>
-		<%-- 変更・削除ボタン用の見出し --%>
+            <th></th> <%-- 変更・削除ボタン用の見出し --%>
           </tr>
         </thead>
         <tbody>

@@ -4,44 +4,42 @@
 <%-- base.jsp を継承し、共通レイアウトを利用する --%>
 <c:import url="/base.jsp">
 
-  <%-- ページタイトルを指定（base.jsp 内の ${param.title} で使われる） --%>
+  <%-- ページタイトルを指定 --%>
   <c:param name="title" value="科目情報登録" />
 
-  <%-- ページ本体のHTMLを "body" パラメータとして渡す（base.jsp 側で ${param.body} で出力） --%>
+  <%-- ページ本体のHTMLを "body" パラメータとして渡す --%>
   <c:param name="body">
 
-    <h2>科目情報登録</h2> <%-- 画面見出し --%>
+    <%-- 画面見出し（登録完了ページとスタイルを統一） --%>
+    <div class="bg-body-secondary p-3 rounded my-4">
+      <h2 class="mb-0">科目情報登録</h2>
+    </div>
 
-    <%-- 科目情報を送信するフォーム。送信先は /subject/update にPOSTで送る --%>
     <form action="${pageContext.request.contextPath}/subject/update" method="post">
 
-      <table border="1">
-        <tr>
-          <th>科目コード</th>
-          <td>
-            <%-- 科目コードの入力欄。事前にセットされた subject オブジェクトの値を表示 --%>
-            <input type="text" name="subjectId" value="${subject.subjectId}" required />
-          </td>
-        </tr>
-        <tr>
-          <th>科目名</th>
-          <td>
-            <%-- 科目名の入力欄 --%>
-            <input type="text" name="subjectName" value="${subject.subjectName}" required />
-          </td>
-        </tr>
-      </table>
+      <%-- 科目コード --%>
+      <div class="mb-3">
+        <label for="subjectId" class="form-label">科目コード</label>
+        <input type="text" class="form-control" id="subjectId" name="subjectId" value="<c:out value='${subject.subjectId}'/>" placeholder="科目コードを入力してください" required>
+      </div>
 
-      <br>
+      <%-- 科目名 --%>
+      <div class="mb-3">
+        <label for="subjectName" class="form-label">科目名</label>
+        <input type="text" class="form-control" id="subjectName" name="subjectName" value="<c:out value='${subject.subjectName}'/>" placeholder="科目名を入力してください" required>
+      </div>
 
-      <%-- 登録ボタン（フォームを送信） --%>
-      <input type="submit" value="登録">
+      <%-- 登録ボタン --%>
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary">登録</button>
+      </div>
+
     </form>
 
-    <br>
-
-    <%-- 一覧ページへ戻るリンク --%>
-    <a href="${pageContext.request.contextPath}/subject/list">戻る</a>
+    <%-- 戻るリンク --%>
+    <div class="mt-2 mb-5">
+      <a href="${pageContext.request.contextPath}/subject/list">戻る</a>
+    </div>
 
   </c:param>
 </c:import>

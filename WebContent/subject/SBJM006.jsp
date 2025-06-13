@@ -10,24 +10,28 @@
   <%-- ページ本文の内容 --%>
   <c:param name="body">
 
-    <h2>科目情報削除</h2>
+    <%-- 画面見出し（他のページとスタイルを統一） --%>
+    <div class="bg-body-secondary p-3 rounded my-4">
+      <h2 class="mb-0">科目情報削除</h2>
+    </div>
 
-    <%-- 削除確認メッセージ：対象の科目名を表示 --%>
-    <p>
-      「<strong><c:out value="${subject.subjectName}"/></strong>」を削除してもよろしいですか？
+    <%-- 削除確認メッセージ --%>
+    <p class="my-4">
+      <%-- 画像に合わせて科目コードも表示 --%>
+      「<c:out value="${subject.subjectName}"/><c:out value="${subject.subjectId}"/>」を削除してもよろしいですか？
     </p>
 
     <%-- 削除を確定するフォーム --%>
     <form action="${pageContext.request.contextPath}/subject/delete" method="post">
       <%-- 削除対象の科目IDを非表示で送信 --%>
-      <input type="hidden" name="subjectId" value="${subject.subjectId}" />
-      <input type="submit" value="削除">
+      <input type="hidden" name="subjectId" value="<c:out value='${subject.subjectId}'/>" />
+      <button type="submit" class="btn btn-danger">削除</button>
     </form>
 
-    <br>
-
-    <%-- 一覧に戻るリンク --%>
-    <a href="${pageContext.request.contextPath}/subject/SBJM001">一覧に戻る</a>
+    <%-- 戻るリンク --%>
+    <div class="mt-2 mb-5">
+      <a href="${pageContext.request.contextPath}/subject/list">戻る</a>
+    </div>
 
   </c:param>
 </c:import>
