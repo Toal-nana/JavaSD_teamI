@@ -32,7 +32,7 @@ public class ClassNumDao extends Dao {
 
 		// 実行結果をリストに格納
 		while (rSet.next()) {
-			list.add(rSet.getString("cd"));
+			list.add(rSet.getString("class_num"));
 		}
 	} catch (Exception e) {
 		throw e;

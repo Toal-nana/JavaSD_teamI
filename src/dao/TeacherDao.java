@@ -65,6 +65,22 @@ public class TeacherDao extends Dao {
 
 
 	public Teacher login(String id, String password) throws Exception {
+		// idに対応する先生インスタンスを取得
+		 Teacher teacher = new Teacher();
+		 TeacherDao teacherDao = new TeacherDao();
+		 teacher = teacherDao.get(id);
+		if (teacher == null) {
+			return null; // ユーザーが存在しない場合
+		}
 
+		// idでハッシュを生成
+		String hashedInput = id;
+
+		// ハッシュが一致する場合はログイン成功
+		if (hashedInput==id) {
+			return teacher;
+		} else {
+			return null;
+		}
 	}
 }

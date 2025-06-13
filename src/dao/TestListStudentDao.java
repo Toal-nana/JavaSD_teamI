@@ -11,28 +11,24 @@ import bean.Student;
 import bean.TestListStudent;
 
 public class TestListStudentDao extends Dao {
-	// 学校ごとに表示するために必要
-	private String baseSql = "select * from test where school_cd=?";
+	// testテーブルとsubjectテーブルのjoin
+	private String baseSql = "select name as subject_name,subject_cd,no,point from test as t left  join subject as s on t.subject_cd = s.cd";
 
 	//検索後のリストへの格納処理をするメソッド
 	private List<TestListStudent> postFilter(ResultSet rSet) throws Exception {
 		List<TestListStudent> list = new ArrayList<>();
 		try {
-			// 科目Daoを初期化
-			SubjectDao subjectDao = new SubjectDao();
 			while (rSet.next()) {
 				TestListStudent testListStudent = new TestListStudent();
 				// テストリストインスタンスに検索結果をセット
-				// subjectDao.get(rSet.getString("subject_cd"))で検索で引っかかった科目のインスタンスが返ってくる
-				// つまりSubject.getName()が実行されている状態
-				testListStudent.setSubjectName(subjectDao.get(rSet.getString("subject_cd")).getName());
-				// こっちで科目コードのセット
-				testListStudent.setSubjectCd(subjectDao.get(rSet.getString("subject_cd")).getCd());
+				// 科目名をセット
+				testListStudent.setSubjectName("subject_name");
+				// 科目コードをセット
+				testListStudent.setSubjectCd("subject_cd");
 				// 回数のセット
-				testListStudent.setNum(rSet.getInt("num"));
+				testListStudent.setNum(rSet.getInt("no"));
 				// 点数のセット
 				testListStudent.setPoint(rSet.getInt("point"));
-
 				// リストに追加
 				list.add(testListStudent);
 			}
@@ -50,14 +46,15 @@ public class TestListStudentDao extends Dao {
 		// SQL文を準備する変数
 		PreparedStatement statement = null;
 		ResultSet rSet = null;
-		// SQL文の条件
-		String condition = "and student_no=?";
+		// SQL文の条件 (指定した学生の学生番号で絞り込み)
+		String condition = "where school_cd=? and student_no=?";
 		// SQL文のソート
-		String order = "order by no asc";
+		String order = "order by subject_cd asc";
 
 		try {
 			// SQL文をセット 学校と学生番号による絞り込み
-			statement = connection.prepareStatement(baseSql + condition + order);
+			statement = connection.prepareStatement(
+					 baseSql + condition + order);
 			// SQL文に学校番号を入れる
 			statement.setString(1,student.getSchool().getCd());
 			// SQL文に学生番号を入れる
