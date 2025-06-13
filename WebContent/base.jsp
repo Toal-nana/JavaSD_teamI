@@ -44,7 +44,7 @@
 
 <c:choose>
   <%-- ログインしている場合の表示形式 --%>
-  <c:when test="${not empty session_user}">
+  <c:when test="${ not empty session_user}">
     <div class="row py-3">
     <%-- サイドメニュー --%>
     <div class="col-md-2 "><c:import url="/menu.jsp"/></div>
@@ -57,7 +57,7 @@
   </c:when>
 
   <%-- ログインしていない場合の表示形式 --%>
-  <c:when test="${empty session_user }">
+  <c:when test="${ empty session_user }">
     <div>${param.body}</div>
   </c:when>
 </c:choose>

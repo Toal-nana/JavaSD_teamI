@@ -7,15 +7,21 @@
 <c:import url="/base.jsp">
 
   <c:param name="title">登録完了</c:param>
-
  <%-- メイン表示内容（body） --%>
   <c:param name="body">
+  <div class="mx-auto">
+	<h2 class="bg-light border  shadow-sm p-3">学生情報登録</h2>
 
-    <h2>登録完了</h2>
-    <p>学生情報の登録が完了しました。</p>
 
- <li><a href="${pageContext.request.contextPath}/student/STDM001">戻る</a></li>
+  <div class="alert text-center alert-success shadow-sm  py-2" role="alert" style="background-color:#8ab79a;">
+    <label class="mb-0">登録が完了しました。</label>
 
- <li><a href="${pageContext.request.contextPath}/student/STDM002">学生入力</a></li>
+    </div>
+    </div>
+
+ <li><a href="${pageContext.request.contextPath}/student/STDM001">学生一覧</a></li>
+
+ <li><a href="${pageContext.request.contextPath}/student/STDM002">戻る</a></li>
+
   </c:param>
 </c:import>

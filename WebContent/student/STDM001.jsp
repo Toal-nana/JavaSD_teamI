@@ -8,9 +8,9 @@
 
     <c:param name="title">学生管理</c:param>
 
-    <c:param name="scripts"> </c:param>
 
-    <c:param name="content">
+
+    <c:param name="body">
 
 
 
