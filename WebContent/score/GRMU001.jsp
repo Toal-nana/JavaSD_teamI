@@ -11,8 +11,8 @@
 			<h2 class="p-3 mb-4 bg-light rounded">成績管理</h2>
 
 			<%-- 検索フォーム --%>
-			<form method="post" action="">
-				<div class="bg-white p-3 rounded shadow-sm border mb-4"
+			<form method="execute" action="/score/subject">
+				<div class="bg-white p-3 rounded shadow-sm border mb-4 container"
 					style="width: fit-content;">
 					<table class="table table-borderless mb-0">
 						<tbody>
