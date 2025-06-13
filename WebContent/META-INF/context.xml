@@ -14,7 +14,7 @@
 	/>  -->
 	<!-- teamiに接続 -->
 	<Resource
-		name="jdbc/team"
+		name="jdbc/teami"
 		auth="Container"
 		type="javax.sql.DataSource"
 		driverClassName="org.h2.Driver"

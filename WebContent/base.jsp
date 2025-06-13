@@ -32,13 +32,10 @@
 		<%-- ログインしている場合 --%>
 		<div
 			class="col-md-7 text-end position-absolute bottom-0 end-0 pb-2 mx-3">
-			<%--<c:when test="${not empty session_user}">
-        <%-- 名前とログアウトを表示名前${session_user.username}
-        (ログインしているかしていないかの判断でエラーになったのでコメントアウト) --%>
-			<span> 様</span>
-			<%-- ログアウト画面へ飛ぶ（ログアウト処理のサーブレットのアノテーションによるので、後で変更） --%>
-			<a href="${pageContext.request.contextPath}/accounts/LOGO001">ログアウト</a>
-			<%--</c:when>--%>
+			<c:if test="${not empty session_user}">
+			  <span> ${session_user.name}様</span>
+			  <a href="${pageContext.request.contextPath}/account/logout">ログアウト</a>
+			</c:if>
 		</div>
 	</header>
 

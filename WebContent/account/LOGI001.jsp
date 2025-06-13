@@ -22,21 +22,21 @@
       <div class="card-body p-4">
         <form action="loginexecute" method="post">
 
-          <c:if test="${empty error}">
+          <c:if test="${not empty error}">
             <div class="text-center mt-0 mb-3">
-              ログインに失敗しました。IDまたはパスワードが正しくありません
+              ${error}
             </div>
           </c:if>
 
           <%-- ユーザーID入力欄 (フローティングラベル) --%>
           <div class="form-floating mb-3">
-            <input type="text" name="id" id="id" class="form-control" value="" placeholder="半角でご入力ください" maxlength="20" style="ime-mode: disabled; background-color: #e6f2ff;" required>
+            <input type="text" name="id" id="id" class="form-control" value="${id}" placeholder="半角でご入力ください" maxlength="20" style="ime-mode: disabled; background-color: #e6f2ff;" required>
             <label for="id">ID</label>
           </div>
 
           <%-- パスワード入力欄 (フローティングラベル) --%>
           <div class="form-floating mb-3">
-            <input type="password" name="password" id="password" class="form-control" value="" placeholder="20文字以内の半角英数字でご入力ください" maxlength="20" style="ime-mode: disabled; background-color: #e6f2ff;" required>
+            <input type="password" name="password" id="password" class="form-control" value="${password}" placeholder="20文字以内の半角英数字でご入力ください" maxlength="20" style="ime-mode: disabled; background-color: #e6f2ff;" required>
             <label for="password">パスワード</label>
           </div>
 

@@ -1,8 +1,0 @@
-/* フローティングラベルが上に移動した時のスタイルを上書き */
-.form-floating > .form-control:focus ~ label,
-.form-floating > .form-control:not(:placeholder-shown) ~ label {
-    background-color: #e6f2ff;
-    padding-left: 5px;
-    padding-right: 5px;
-    border-radius: 5px;
-}

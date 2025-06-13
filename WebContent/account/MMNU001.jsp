@@ -16,7 +16,7 @@
                 <div class="p-5 rounded shadow-sm h-100 d-flex align-items-center justify-content-center" style="background-color: #d9baba;">
                     <%-- 変更点: クラスに h4 を追加して文字サイズを大きくする --%>
                     <h5 class="mb-0 h4">
-                        <a href="">学生管理</a>
+                        <a href="${pageContext.request.contextPath}/student/STDM001">学生管理</a>
                     </h5>
                 </div>
             </div>
@@ -27,8 +27,8 @@
                 <div class="p-5 rounded shadow-sm h-100" style="background-color: #c3e0c4;">
                     <%-- 変更点: クラスに h4 を追加して文字サイズを大きくする --%>
                     <h5 class="mb-3 h4">成績管理</h5>
-                    <div class="d-block mb-3 h4"><a href="">成績登録</a></div>
-                    <div class="d-block mb-3 h4"><a href="">成績参照</a></div>
+                    <div class="d-block mb-3 h4"><a href="${pageContext.request.contextPath}/score/GRMU001">成績登録</a></div>
+                    <div class="d-block mb-3 h4"><a href="${pageContext.request.contextPath}/score/GRMR001">成績参照</a></div>
                 </div>
             </div>
 
@@ -38,7 +38,7 @@
                 <div class="p-5 rounded shadow-sm h-100 d-flex align-items-center justify-content-center" style="background-color: #c2c2e0;">
                     <%-- 変更点: クラスに h4 を追加して文字サイズを大きくする --%>
                     <h5 class="mb-0 h4">
-                        <a href="">科目管理</a>
+                        <a href="${pageContext.request.contextPath}/subject/SBJM001">科目管理</a>
                     </h5>
                 </div>
             </div>
