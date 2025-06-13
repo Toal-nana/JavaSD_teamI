@@ -5,11 +5,10 @@
 
 <c:param name="title">得点管理システム</c:param>
 
-
 <c:param name="body">
 
   <%-- メインコンテンツ: ログインフォーム --%>
-  <div class="col-lg-6 col-md-8 mx-auto my-5">
+  <div class="col-lg-6 col-md-8 mx-auto my-3">
 
     <%-- カードコンポーネントでフォーム全体をデザイン --%>
     <div class="card shadow-sm border-light">
@@ -23,7 +22,8 @@
       <div class="card-body p-4">
         <form action="loginexecute" method="post">
 
-          <c:if test="${error != null}">
+          <c:if test="${empty error}">
+            <div class="text-center mt-0 mb-3">
               ログインに失敗しました。IDまたはパスワードが正しくありません
             </div>
           </c:if>

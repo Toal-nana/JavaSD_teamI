@@ -6,97 +6,114 @@
 
 	<c:param name="body">
 
-		<%-- 画面タイトル --%>
-		<h2>成績管理</h2>
+		<div class="container">
+			<%-- 画面タイトル --%>
+			<h2 class="p-3 mb-4 bg-light rounded">成績管理</h2>
 
-		<div>
-			<table>
+			<%-- 検索フォーム --%>
+			<form method="post" action="">
+				<div class="bg-white p-3 rounded shadow-sm border mb-4"
+					style="width: fit-content;">
+					<table class="table table-borderless mb-0">
+						<tbody>
+							<tr>
+								<%-- 入学年度 --%>
+								<td style="width: 180px; vertical-align: bottom;"><label
+									for="f1" class="form-label">入学年度</label> <select name="f1"
+									id="f1" class="form-select">
+										<option value="">--------</option>
+										<c:forEach var="years" items="${years}">
+											<option value="${years.year}">${years.year}</option>
+										</c:forEach>
+								</select></td>
 
-				<tr>
-					<%-- ヘッダー：入学年度 --%>
-					<th>入学年度</th>
-					<%-- ヘッダー：クラス --%>
-					<th>クラス</th>
-					<%-- ヘッダー：科目 --%>
-					<th>科目</th>
-					<%-- ヘッダー：回目 --%>
-					<th>回数</th>
-				</tr>
+								<%-- クラス --%>
+								<td style="width: 120px; vertical-align: bottom;"><label
+									for="f2" class="form-label">クラス</label> <select name="f2"
+									id="f2" class="form-select">
+										<option value="">--------</option>
+										<c:forEach var="course" items="${courses}">
+											<option value="${course.num}">${course.num}</option>
+										</c:forEach>
+								</select></td>
 
-				<tr>
-					<%-- セレクトボックス：入学年度 --%>
-					<th>
-						<select name="f1">
-	                        <option value="">--------</option>
-	                        <c:forEach var="years" items="${years}">
-	    						<option value="${years.year}">${years.year}</option>
-	  						</c:forEach>
-	                    </select>
-					</th>
-					<%-- セレクトボックス：クラス --%>
-					<th>
-						<select name="f2">
-	                        <option value="">--------</option>
-	                        <c:forEach var="course" items="${courses}">
-	    						<option value="${course.num}">${course.num}</option>
-	  						</c:forEach>
-	                    </select>
-					</th>
-					<%-- セレクトボックス：科目 --%>
-					<th>
-						<select name="f3">
-	                        <option value="">--------</option>
-	                        <c:forEach var="subject" items="${subjects}">
-	    						<option value="${subject.cd}">${subject.cd}</option>
-	  						</c:forEach>
-	                    </select>
-					</th>
-					<%-- セレクトボックス：回目 --%>
-					<th>
-						<select name="f4">
-	                        <option value="">--------</option>
-	                        <c:forEach var="count" items="${counts}">
-	    						<option value="${count.num}">${count.num}</option>
-	  						</c:forEach>
-	                    </select>
-					</th>
-					<%-- ボタン：検索 --%>
-					<th>
-	                    <button class="favorite styled" type="button">検索</button>
-	                </th>
-				</tr>
+								<%-- 科目 --%>
+								<td style="width: 160px; vertical-align: bottom;"><label
+									for="f3" class="form-label">科目</label> <select name="f3"
+									id="f3" class="form-select">
+										<option value="">--------</option>
+										<c:forEach var="subject" items="${subjects}">
+											<option value="${subject.cd}">${subject.cd}</option>
+										</c:forEach>
+								</select></td>
 
-			</table>
+								<%-- 回数 --%>
+								<td style="width: 120px; vertical-align: bottom;"><label
+									for="f4" class="form-label">回数</label> <select name="f4"
+									id="f4" class="form-select">
+										<option value="">--------</option>
+										<c:forEach var="count" items="${counts}">
+											<option value="${count.num}">${count.num}</option>
+										</c:forEach>
+								</select></td>
+
+								<%-- 検索ボタン --%>
+								<td style="width: 80px; vertical-align: bottom;">
+									<button type="submit" class="btn btn-secondary w-100">検索</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</form>
+
+
+			<%-- 検索にヒットしたら詳細を表示する --%>
+			<c:if test="${not empty searchResults}">
+				<div class="search-results">
+					<%-- 科目情報 --%>
+					<div class="mb-3">
+						<span class="fw-bold">科目：${selectedSubject}
+							（${selectedCount}回）</span>
+					</div>
+
+					<%-- 成績入力テーブル --%>
+					<form method="post" action="">
+						<table class="table table-bordered bg-white">
+							<thead class="table-light">
+								<tr>
+									<th style="width: 120px;">入学年度</th>
+									<th style="width: 100px;">クラス</th>
+									<th style="width: 120px;">学生番号</th>
+									<th style="width: 150px;">氏名</th>
+									<th style="width: 120px;">点数</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="result" items="${searchResults}"
+									varStatus="status">
+									<tr>
+										<td class="text-center">${result.year}</td>
+										<td class="text-center">${result.className}</td>
+										<td class="text-center">${result.studentId}</td>
+										<td>${result.name}</td>
+										<td><input type="number" name="score_${result.studentId}"
+											class="form-control" value="${result.score}" min="0"
+											max="100" style="width: 80px;"></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+
+						<%-- 登録ボタン --%>
+						<div class="mb-4">
+							<button type="submit" class="btn btn-secondary px-4">登録して終了</button>
+						</div>
+					</form>
+				</div>
+			</c:if>
+
 		</div>
-
-		<%-- 検索にヒットしたら詳細を表示する --%>
-		<div class="search-results">
-		    <c:if test="${not empty searchResults}">
-		      <table>
-		        <thead>
-		          <tr>
-		            <th>入学年度</th>
-		            <th>クラス</th>
-		            <th>学生番号</th>
-		            <th>氏名</th>
-		            <th>成績</th>
-		          </tr>
-		        </thead>
-		        <tbody>
-		          <c:forEach var="result" items="${searchResults}">
-		            <tr>
-		              <td>${result.year}</td>
-		              <td>${result.className}</td>
-		              <td>${result.studentId}</td>
-		              <td>${result.name}</td>
-		              <td>${result.grade}</td>
-		            </tr>
-		          </c:forEach>
-		        </tbody>
-		      </table>
-		    </c:if>
-  		</div>
-
 	</c:param>
 
 </c:import>

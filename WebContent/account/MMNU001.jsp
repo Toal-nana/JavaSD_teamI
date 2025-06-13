@@ -27,8 +27,8 @@
                 <div class="p-5 rounded shadow-sm h-100" style="background-color: #c3e0c4;">
                     <%-- 変更点: クラスに h4 を追加して文字サイズを大きくする --%>
                     <h5 class="mb-3 h4">成績管理</h5>
-                    <a href="" class="d-block mb-3 h4">成績登録</a>
-                    <a href="" class="d-block mb-3 h4">成績参照</a>
+                    <div class="d-block mb-3 h4"><a href="">成績登録</a></div>
+                    <div class="d-block mb-3 h4"><a href="">成績参照</a></div>
                 </div>
             </div>
 
