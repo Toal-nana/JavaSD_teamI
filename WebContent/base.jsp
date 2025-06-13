@@ -64,7 +64,7 @@
 
 	<%-- footer --%>
 	<footer
-		class="text-center text-body-secondary bg-secondary bg-opacity-25 py-2">
+		class="text-center text-body-secondary bg-secondary bg-opacity-25 py-2 mt-3">
 		<p class="m-0">@ 2023 TIC</p>
 		<p class="m-0">大原学園</p>
 	</footer>
