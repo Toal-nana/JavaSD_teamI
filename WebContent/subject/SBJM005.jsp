@@ -1,43 +1,25 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>科目変更（変更完了）</title>
-</head>
-<body>
+<%-- base.jsp を共通レイアウトとして読み込む --%>
+<c:import url="/base.jsp">
 
-  <h2>科目情報変更</h2>
+  <%-- ページタイトルを指定 --%>
+  <c:param name="title" value="科目変更（変更完了）" />
 
-  <!-- 登録完了メッセージ -->
-  <p style="color: green;">変更が完了しました</p>
+  <%-- 表示する本文の内容 --%>
+  <c:param name="body">
 
-  <table border="1">
+    <h2>科目情報変更</h2>
 
-    <c:forEach var="subject" items="${subjectList}">
-      <tr>
-        <td><c:out value="${subject.subjectId}" /></td>
-        <td><c:out value="${subject.subjectName}" /></td>
-        <td>
-          <a href="${pageContext.request.contextPath}/subject/update?subjectId=${subject.subjectId}">変更</a>
-          <a href="${pageContext.request.contextPath}/subject/deleteConfirm?subjectId=${subject.subjectId}">削除</a>
-        </td>
-      </tr>
-    </c:forEach>
-  </table>
+    <%-- 変更完了メッセージ表示 --%>
+    <p style="color: green;">変更が完了しました</p>
 
-  <br><br>
+    <%-- 科目一覧テーブル --%>
+    <table border="1"></table>
+    <br><br>
 
-  <!-- 一覧リンク -->
-  &nbsp;&nbsp;
-  <a href="${pageContext.request.contextPath}/subject/SBJM001">科目一覧</a>
-
-</body>
-
-<footer>
-	<p>@ 2023 TIC</p>
-	<p>大原学園</p>
-</footer>
-</html>
+    <%-- 科目一覧に戻るリンク --%>
+    <a href="${pageContext.request.contextPath}/subject/SBJM001">科目一覧</a>
+  </c:param>
+</c:import>

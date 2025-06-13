@@ -1,43 +1,24 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>科目情報削除（削除完了）</title>
-</head>
-<body>
+<%-- 共通レイアウトを適用するため base.jsp をインポート --%>
+<c:import url="/base.jsp">
 
-  <h2>科目情報削除</h2>
+  <%-- ページタイトルを指定 --%>
+  <c:param name="title" value="科目情報削除（削除完了）" />
 
-  <!-- 登録完了メッセージ -->
-  <p style="color: green;">削除が完了しました</p>
+  <%-- ページ本文の指定 --%>
+  <c:param name="body">
 
-  <table border="1">
+    <h2>科目情報削除</h2>
 
-    <c:forEach var="subject" items="${subjectList}">
-      <tr>
-        <td><c:out value="${subject.subjectId}" /></td>
-        <td><c:out value="${subject.subjectName}" /></td>
-        <td>
-          <a href="${pageContext.request.contextPath}/subject/update?subjectId=${subject.subjectId}">変更</a>
-          <a href="${pageContext.request.contextPath}/subject/deleteConfirm?subjectId=${subject.subjectId}">削除</a>
-        </td>
-      </tr>
-    </c:forEach>
-  </table>
+    <%-- 削除完了メッセージを表示 --%>
+    <p style="color: green;">削除が完了しました</p>
 
-  <br><br>
+    <br><br>
 
-  <!-- 一覧リンク -->
-  &nbsp;&nbsp;
-  <a href="${pageContext.request.contextPath}/subject/SBJM001">科目一覧</a>
+    <%-- 科目一覧への戻りリンク --%>
+    <a href="${pageContext.request.contextPath}/subject/SBJM001">科目一覧</a>
 
-</body>
-
-<footer>
-	<p>@ 2023 TIC</p>
-	<p>大原学園</p>
-</footer>
-</html>
+  </c:param>
+</c:import>
