@@ -31,13 +31,13 @@
         <div class="mb-4">
           <label class="form-label">クラス</label>
 
-          <select name="class" class="form-control" required>
+          <select name="class" class="form-select" required>
             <option value="">選択してください</option>
             <c:forEach var="cls" items="${classList}">
               <option value="${cls}">${cls}</option>
             </c:forEach>
           </select>
-          
+
         </div>
 
 
