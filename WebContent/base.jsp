@@ -42,18 +42,25 @@
 		</div>
 	</header>
 
-	<div class="row py-3">
-		<%-- サイドメニュー --%>
-		<div class="col-md-2 ">
-			<c:import url="/menu.jsp" />
-		</div>
-		<div class="col-md-1 d-flex flex-row-reverse container m-0 p-0">
-			<div class="vr p-0"></div>
-		</div>
-		<%-- 各要素のbody --%>
-		<div class="col-md-8">${ param.body }</div>
-	</div>
+<c:choose>
+  <%-- ログインしている場合の表示形式 --%>
+  <c:when test="${not empty session_user}">
+    <div class="row py-3">
+    <%-- サイドメニュー --%>
+    <div class="col-md-2 "><c:import url="/menu.jsp"/></div>
+    <div class="col-md-1 d-flex flex-row-reverse container m-0 p-0">
+      <div class="vr p-0"></div>
+    </div>
+    <%-- 各要素のbody --%>
+    <div class="col-md-8">${ param.body }</div>
+    </div>
+  </c:when>
 
+  <%-- ログインしていない場合の表示形式 --%>
+  <c:when test="${empty session_user }">
+    <div>${param.body}</div>
+  </c:when>
+</c:choose>
 
 	<%-- footer --%>
 	<footer

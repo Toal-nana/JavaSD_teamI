@@ -6,19 +6,16 @@
     <c:param name="title">得点管理システム</c:param>
 
     <c:param name="body">
-        <div class="col-md-6 mx-auto mt-5">
+        <%-- 変更点: 上の余白を mt-5 から mt-3 に変更しました --%>
+        <div class="col-md-6 mx-auto mt-3">
 
             <h2 class="p-3 mb-3 bg-light rounded h4">ログアウト</h2>
 
-            <%-- 「ログアウトしました」のメッセージ --%>
-            <%-- 変更点：py-2 を追加して、ボックス内の上下の余白（パディング）を小さくしました --%>
-            <p class="alert text-center mb-4 py-2" role="alert" style="background-color: #8ab79a; border-color: #7fa98b;">
+            <p class="alert text-center mb-5 py-2" role="alert" style="background-color: #8ab79a; border-color: #7fa98b;">
                 ログアウトしました
             </p>
 
-            <br>
-
-            <%-- ログイン画面へのリンク --%>
+            <%-- 変更点: mb-5 を追加して、リンクの下に大きな余白を設定しました --%>
             <a href="${pageContext.request.contextPath}/account/LOGI001.jsp">ログイン</a>
 
         </div>

@@ -3,10 +3,6 @@
 
 <div class="sidebar">
 
-	<%--<c:choose>--%>
-
-	<%-- ログインしている場合は表示:現在は確認のためコメントアウト --%>
-	<%--<c:when test="${not empty session_user}">--%>
 	<nav>
 		<ul class="nav flex-column">
 			<%-- メニューの内容 --%>
@@ -25,11 +21,6 @@
 				href="${pageContext.request.contextPath}/subject/SBJM001">科目管理</a></li>
 		</ul>
 	</nav>
-	<%--</c:when>--%>
-
-	<%-- 未ログインの場合は非表示 --%>
-
-	<%--</c:choose>--%>
 
 </div>
 
