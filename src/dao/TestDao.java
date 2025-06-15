@@ -11,10 +11,9 @@ import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.Test;
-import bean.TestListSubject;
 
 public class TestDao extends Dao {
-	private String baseSql = "select ent_year,t.class_num,student_no,name as student_name,point from test as t left join student as s on t.student_no = s.no";
+	private String baseSql = "select t.no,t.subject_cd, t.school_cd,ent_year,t.class_num,student_no,name as student_name,point from test as t left join student as s on t.student_no = s.no";
 
 	// 学生番号、科目番号、学校番号、回数で指定したtestインスタンスを一件返す
 	public Test get(Student student,Subject subject,School school, int no) throws Exception {
@@ -84,26 +83,26 @@ public class TestDao extends Dao {
 	// 検索結果の格納
 	private List<Test> postFilter(ResultSet rSet,School school) throws Exception {
 		List<Test> list = new ArrayList<>();
-		// 学生Dao、科目Dao、学校Dao
-		StudentDao studentDao = new StudentDao();
-		SubjectDao subjectDao = new SubjectDao();
-		SchoolDao schoolDao = new SchoolDao();
-
 		try {
-			while (rSet.next()) {
+			while(rSet.next()) {
 				Test test = new Test();
-
-				//学生インスタンスをセット
-				test.setStudent(studentDao.get(rSet.getString("student_no")));
-				//クラス番号をセット
+				// 学生インスタンスの要素はこの中に入れる
+				Student student = new Student();
+				// 入学年度
+				student.setEntYear(rSet.getInt("ent_year"));
+				// 学生番号
+				student.setNo(rSet.getString("student_no"));
+				// 氏名
+				student.setName(rSet.getString("student_name"));
+				// クラス
 				test.setClassNum(rSet.getString("class_num"));
-				//学校インスタンスをセット
-				test.setSchool(school);
-				//回数をセット
+				// 点数
 				test.setPoint(rSet.getInt("point"));
-				//得点をセット
-
-				// リストに追加
+				// 学校
+				test.setSchool(school);
+				// 作った学生インスタンスをテストインスタンスに入れる
+				test.setStudent(student);
+				// 作ったテストインスタンスを追加
 				list.add(test);
 			}
 		} catch (SQLException | NullPointerException e) {
@@ -113,9 +112,9 @@ public class TestDao extends Dao {
 	}
 
 
-	// 入学年度、クラス番号、科目、学校を指定して検索をかける
+	// 入学年度、クラス番号、科目、回数、学校を指定して検索をかける
 	public List<Test> filter(int entYear, String classNum,Subject subject,int num, School school) throws Exception {
-		List<TestListSubject> list = new ArrayList<>();
+		List<Test> list = new ArrayList<>();
 		// DBに接続
 		Connection connection = getConnection();
 		// SQL文を準備する変数
@@ -144,7 +143,7 @@ public class TestDao extends Dao {
 			// SQLの実行
 			rSet = statement.executeQuery();
 			// リストへの格納処理を実行
-			list = postFilter(rSet);
+			list = postFilter(rSet, school);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -169,21 +168,72 @@ public class TestDao extends Dao {
 
 	}
 
-	// 指定したテストを保存する
-	public boolean save(List<Test> list) {
-
+	// 更新後のデータを受け取って更新をかける
+	public boolean save(List<Test> list) throws Exception {
+		Connection connection = getConnection();
+		// 回数分saveを使う
+		// 検索結果を受け取り、リストの要素数を取得して、要素数によってループをかける
+		int count = 0;
+		// 一個ずつ取り出す
+		for (Test test : list) {
+		    this.save(test, connection);
+		    count++;
+		}
+		// DBを切断
+		if (connection != null) {
+			try {
+				connection.close();
+			} catch (SQLException sqle) {
+				throw sqle;
+			}
+		}
+		if (count > 0) {
+			// 実行件数が1件以上ある場合
+			return true;
+		} else {
+			// 実行件数が0件の場合
+			return false;
+		}
 	}
 
+	//更新後のデータを取得する
 	private boolean save(Test test, Connection connection) throws Exception {
-
-	}
-
-	public boolean delete(List<Test> list) throws Exception {
-
-	}
-
-	private boolean delete(Test test, Connection connection) throws Exception {
-
+		PreparedStatement statement = null;
+		// 実行件数
+		int count = 0;
+		// 点数の更新だけ出来る
+		// 受け取った点数情報を書き換えることが出来る
+		try {
+			// SQL文にupdate文を加え、テストの更新を行う
+			statement = connection.prepareStatement(
+					"update test set point=? where student_no=? and subject_cd=? and school_cd=? and no=?");
+			// SQL文の条件文に値をセット
+			// 受け取ったテストインスタンスから得点をセット
+			statement.setInt(1, test.getPoint());
+			statement.setString(2, test.getStudent().getNo());
+			statement.setString(3, test.getSubject().getCd());
+			statement.setString(4, test.getSchool().getCd());
+			statement.setInt(5, test.getNo());
+			// SQL文を実行
+			count = statement.executeUpdate();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			// SQL入力を終了
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+			if (count > 0) {
+				// 実行件数が1件以上ある場合
+				return true;
+			} else {
+				// 実行件数が0件の場合
+				return false;
+			}
 	}
 }
-
