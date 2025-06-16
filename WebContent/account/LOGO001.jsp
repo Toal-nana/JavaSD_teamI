@@ -11,11 +11,10 @@
         <div class="col-md-7 mx-auto mt-3">
 
             <%-- 見出し: ログアウト完了を示すタイトル --%>
-            <h2 class="p-3 mb-3 bg-light rounded h4">ログアウト</h2>
+            <h2 class="p-3 mb-3 bg-light">ログアウト</h2>
 
             <%-- 成功メッセージ: ログアウト完了をユーザーに通知 --%>
-            <p class="alert text-center mb-4 py-2" role="alert"
-               style="background-color: #8ab79a; border-color: #7fa98b;">
+            <p class="text-center mb-4 py-2" style="background-color: #8ab79a; border-color: #7fa98b;">
                 ログアウトしました
             </p>
 

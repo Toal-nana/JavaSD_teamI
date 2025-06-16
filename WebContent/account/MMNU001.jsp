@@ -39,7 +39,7 @@
                 <div class="p-5 rounded shadow-sm h-100 d-flex align-items-center justify-content-center" style="background-color: #c2c2e0;">
                     <%-- 科目管理画面へのナビゲーションリンク --%>
                     <h5 class="mb-0 h4">
-                        <a href="${pageContext.request.contextPath}/subject/SBJM001">科目管理</a>
+                        <a href="${pageContext.request.contextPath}/subject/list">科目管理</a>
                     </h5>
                 </div>
             </div>
