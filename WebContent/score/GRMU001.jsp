@@ -11,7 +11,7 @@
 			<h2 class="p-3 mb-4 bg-light rounded">成績管理</h2>
 
 			<%-- 検索フォーム --%>
-			<form method="execute" action="/score/subject">
+			<form method="get" action="subject">
 				<div class="bg-white p-3 rounded shadow-sm border mb-4 container"
 					style="width: fit-content;">
 					<table class="table table-borderless mb-0">
@@ -22,28 +22,29 @@
 									for="f1" class="form-label">入学年度</label> <select name="f1"
 									id="f1" class="form-select">
 										<option value="">--------</option>
-										<c:forEach var="years" items="${years}">
-											<option value="${years.year}">${years.year}</option>
+										<c:forEach var="years" items="${studentList}">
+											<option value="${years.entYear}">${years.entYear}</option>
 										</c:forEach>
 								</select></td>
 
 								<%-- クラス --%>
-								<td style="width: 120px; vertical-align: bottom;"><label
-									for="f2" class="form-label">クラス</label> <select name="f2"
-									id="f2" class="form-select">
-										<option value="">--------</option>
-										<c:forEach var="course" items="${courses}">
-											<option value="${course.num}">${course.num}</option>
-										</c:forEach>
-								</select></td>
+								<td style="width: 120px; vertical-align: bottom;">
+								    <label for="f2" class="form-label">クラス</label>
+								    <select name="f2" id="f2" class="form-select">
+								        <option value="">--------</option>
+								        <c:forEach var="course" items="${classNumList}">
+								            <option value="${course.class_num}">${course.class_num}</option>
+								        </c:forEach>
+								    </select>
+								</td>
 
 								<%-- 科目 --%>
 								<td style="width: 160px; vertical-align: bottom;"><label
 									for="f3" class="form-label">科目</label> <select name="f3"
 									id="f3" class="form-select">
 										<option value="">--------</option>
-										<c:forEach var="subject" items="${subjects}">
-											<option value="${subject.cd}">${subject.cd}</option>
+										<c:forEach var="subject" items="${subjectList}">
+											<option value="${subject.name}">${subject.name}</option>
 										</c:forEach>
 								</select></td>
 
@@ -52,9 +53,8 @@
 									for="f4" class="form-label">回数</label> <select name="f4"
 									id="f4" class="form-select">
 										<option value="">--------</option>
-										<c:forEach var="count" items="${counts}">
-											<option value="${count.num}">${count.num}</option>
-										</c:forEach>
+										<option value="1">1</option>
+										<option value="2">2</option>
 								</select></td>
 
 								<%-- 検索ボタン --%>

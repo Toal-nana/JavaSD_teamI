@@ -12,7 +12,7 @@ import bean.Student;
 
 public class StudentDao extends Dao {
 	// 学校ごとの表示に必要
-	private String baseSql = "select * from student where school_cd=?";
+	private String baseSql = "select * from student where school_cd=? ";
 
 	// idで指定した学生を学生インスタンスにして一件返す
 	// 存在しなかったらnullが入る
@@ -104,7 +104,7 @@ public class StudentDao extends Dao {
 		// SQL文の条件
 		String condition = "and ent_year=? and class_num=?";
 		// SQL文のソート
-		String order = "order by no asc";
+		String order = " order by no asc";
 
 		// SQL文の在学フラグ条件
 		String conditionIsAttend = "";
@@ -161,7 +161,7 @@ public class StudentDao extends Dao {
 		// SQL文の条件
 		String condition = "and ent_year=?";
 		// SQL文のソート
-		String order = "order by no asc";
+		String order = " order by no asc";
 
 		// SQL文の在学フラグ
 		String conditionIsAttend = "";
@@ -212,7 +212,7 @@ public class StudentDao extends Dao {
 		PreparedStatement statement = null;
 		ResultSet rSet = null;
 		// SQL文のソート
-		String order = "order by no asc";
+		String order = " order by no asc";
 
 		// SQL文の在学フラグ
 		String conditionIsAttend = "";

@@ -13,7 +13,7 @@ import bean.Subject;
 import bean.Test;
 
 public class TestDao extends Dao {
-	private String baseSql = "select t.no,t.subject_cd, t.school_cd,ent_year,t.class_num,student_no,name as student_name,point from test as t left join student as s on t.student_no = s.no";
+	private String baseSql = "select t.no,t.subject_cd, t.school_cd,ent_year,t.class_num,student_no,name as student_name,point from test as t left join student as s on t.student_no = s.no ";
 
 	// 学生番号、科目番号、学校番号、回数で指定したtestインスタンスを一件返す
 	public Test get(Student student,Subject subject,School school, int no) throws Exception {
@@ -123,7 +123,7 @@ public class TestDao extends Dao {
 		//SQLの条件 学校番号、クラス番号、学生番号、テスト回数による絞り込み
 		String condition = "where t.school_cd=? and ent_year=? and t.class_num=? and t.subject_cd=? and t.no=?";
 		// SQL文のソート
-		String order = "order by t.student_no asc";
+		String order = " order by t.student_no asc";
 
 		try {
 			// SQL文をセット 学校と学生番号による絞り込み
