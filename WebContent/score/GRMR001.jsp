@@ -30,6 +30,9 @@
 						<label class="form-label">クラス</label>
 						<select name="f2" class="form-select" >
 							<option value="">--------</option>
+							<c:forEach var="class" items="${classNumList}">
+								<option value="${class}">${student.entYear}</option>
+							</c:forEach>
 						</select>
 					</div>
 
@@ -37,6 +40,9 @@
 						<label class="form-label">科目</label>
 						<select name="f3" class="form-select" >
 							<option value="">--------</option>
+							<c:forEach var="student" items="${studentList}">
+								<option value="${student.entYear}">${student.entYear}</option>
+							</c:forEach>
 						</select>
 					</div>
 					<div class="col">
