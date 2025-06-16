@@ -6,15 +6,20 @@
     <c:param name="title">得点管理システム</c:param>
 
     <c:param name="body">
-        <%-- 変更点: 上の余白を mt-5 から mt-3 に変更しました --%>
+
+        <%-- メインコンテンツを中央寄せするコンテナ --%>
         <div class="col-md-7 mx-auto mt-3">
 
+            <%-- 見出し: ログアウト完了を示すタイトル --%>
             <h2 class="p-3 mb-3 bg-light rounded h4">ログアウト</h2>
 
-            <p class="alert text-center mb-4 py-2" role="alert" style="background-color: #8ab79a; border-color: #7fa98b;">
+            <%-- 成功メッセージ: ログアウト完了をユーザーに通知 --%>
+            <p class="alert text-center mb-4 py-2" role="alert"
+               style="background-color: #8ab79a; border-color: #7fa98b;">
                 ログアウトしました
             </p>
 
+            <%-- ログインページへのリンク: 再ログインを促す --%>
             <a href="${pageContext.request.contextPath}/account/LOGI001.jsp">ログイン</a>
 
         </div>

@@ -9,51 +9,62 @@ import bean.Teacher;
 import dao.TeacherDao;
 import tool.CommonServlet;
 
+/**
+ * ログイン処理を実行するコントローラクラス
+ * フォームから送信されたID／パスワードを検証し、
+ * 成功時はメニュー画面へ、失敗時はログイン画面へ遷移する
+ */
 @WebServlet(urlPatterns = { "/account/loginexecute" })
 public class LoginExecuteController extends CommonServlet {
 
-	@Override
-	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+    @Override
+    protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-	}
+    }
 
-	@Override
-	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    /**
+     * HTTP POST リクエストを受け取ったときの処理
+     * ログインフォームから送信された情報をもとに認証を行い、
+     * 結果に応じて画面遷移またはリダイレクトを行う
+     */
+    @Override
+    protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-		// 現在のセッションを取得（存在しない場合は新規作成）
-		HttpSession session = req.getSession();
+        // セッションを取得（存在しない場合は新規作成）
+        HttpSession session = req.getSession();
 
-		String id = req.getParameter("id");
-		String password = req.getParameter("password");
+        // フォームから送信されたパラメータを取得
+        String id = req.getParameter("id");
+        String password = req.getParameter("password");
 
-		TeacherDao dao = new TeacherDao();
-		Teacher teacher = new Teacher();
-		teacher = dao.login(id, password);
+        // DAO を利用して認証処理を実行
+        TeacherDao dao = new TeacherDao();
+        Teacher teacher = dao.login(id, password);
 
-		if (teacher != null) {
-            // 認証成功時：ユーザー情報をセッションに保存
+        if (teacher != null) {
+            // 認証成功時：
+            //  ・ユーザー情報をセッションに保存
             session.setAttribute("session_user", teacher);
 
-            // ログイン成功後、メニュー画面（/menu）にリダイレクト（ブラウザにURLを再要求させる）
+            //  ・メニュー画面へリダイレクト（ブラウザに新規リクエストを発行させる）
             resp.sendRedirect(req.getContextPath() + "/account/menu");
         } else {
-            // 認証失敗時：入力されたログイン名を再表示用にセット
+            // 認証失敗時：
+            //  ・入力値を再表示用にリクエスト属性としてセット
             req.setAttribute("id", id);
             req.setAttribute("password", password);
 
-            // エラーメッセージをリクエストに追加（JSP側で表示用）
+            //  ・エラーメッセージをリクエスト属性に追加
             req.setAttribute("error", "ログインに失敗しました。IDまたはパスワードが正しくありません");
 
-            // ログイン画面に戻る（入力ミスを修正して再試行させる）
+            //  ・ログイン画面へフォワードして再入力を促す
             req.getRequestDispatcher("LOGI001.jsp").forward(req, resp);
         }
-	}
+    }
 
-	@Override
-	protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+    @Override
+    protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-	}
+    }
 
 }
