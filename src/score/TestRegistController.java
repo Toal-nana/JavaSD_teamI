@@ -21,7 +21,7 @@ import dao.TestDao;
 import tool.CommonServlet;
 
 @WebServlet(urlPatterns = { "/score/subject" })
-public class SubjectListController extends CommonServlet {
+public class TestRegistController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
@@ -53,32 +53,31 @@ public class SubjectListController extends CommonServlet {
 		String testCountStr = req.getParameter("f4");
 
 		// 検索ボタンが押されたかを判断
-	    boolean isSearchRequest = entYearStr != null && !entYearStr.isEmpty() &&
-	                                classNumStr != null && !classNumStr.isEmpty() &&
-	                                subjectCd != null && !subjectCd.isEmpty() &&
-	    						    testCountStr != null && !testCountStr.isEmpty();
+		boolean isSearchRequest = entYearStr != null && !entYearStr.isEmpty() && classNumStr != null
+				&& !classNumStr.isEmpty() && subjectCd != null && !subjectCd.isEmpty() && testCountStr != null
+				&& !testCountStr.isEmpty();
 
-	    // 検索結果を格納するリスト
-	    List<Test> searchResults = null;
+		// 検索結果を格納するリスト
+		List<Test> searchResults = null;
 
-	    //検索ボタンが押されていた場合の処理
-	    if (isSearchRequest) {
-	    	System.out.println("検索処理を実行します。"); // 動作確認用ログ
+		// 検索ボタンが押されていた場合の処理
+		if (isSearchRequest) {
+			System.out.println("検索処理を実行します。"); // 動作確認用ログ
 
-//	    	検索条件を適切な型に変換
-            int entYear = Integer.parseInt(entYearStr);
-            int testNo = Integer.parseInt(testCountStr);
-            Subject selectedSubject = subjectDao.get(subjectCd, school);
-	        searchResults = new ArrayList<>();
+			// 検索条件を適切な型に変換
+			int entYear = Integer.parseInt(entYearStr);
+			int testNo = Integer.parseInt(testCountStr);
+			Subject selectedSubject = subjectDao.get(subjectCd, school);
+			searchResults = new ArrayList<>();
 
-	        if (selectedSubject != null) {
-                searchResults = testDao.filter(entYear, classNumStr, selectedSubject, testNo, school);
+			if (selectedSubject != null) {
+				searchResults = testDao.filter(entYear, classNumStr, selectedSubject, testNo, school);
 
-                // JSP表示用に選択された科目名と回数をセット
-                req.setAttribute("selectedSubjectName", selectedSubject.getName());
-                req.setAttribute("selectedCount", testNo);
-            }
-	    }
+				// JSP表示用に選択された科目名と回数をセット
+				req.setAttribute("selectedSubjectName", selectedSubject.getName());
+				req.setAttribute("selectedCount", testNo);
+			}
+		}
 
 		// session_userが所属している学校のクラスを取得
 		List<String> classList = classNumDao.filter(school);
@@ -101,10 +100,10 @@ public class SubjectListController extends CommonServlet {
 		req.setAttribute("subjectList", subjectList);
 		req.setAttribute("studentList", studentList);
 
-		//検索結果をリクエストに設定 (検索した場合のみ中身が入る)
+		// 検索結果をリクエストに設定 (検索した場合のみ中身が入る)
 		req.setAttribute("searchResults", searchResults);
 
-		//検索後のフォームの選択状態を維持するために、選択された値をリクエストに設定
+		// 検索後のフォームの選択状態を維持するために、選択された値をリクエストに設定
 		req.setAttribute("f1_selected", entYearStr);
 		req.setAttribute("f2_selected", classNumStr);
 		req.setAttribute("f3_selected", subjectCd);

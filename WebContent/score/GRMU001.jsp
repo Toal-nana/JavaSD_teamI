@@ -20,7 +20,6 @@
                                     <label for="f1" class="form-label">入学年度</label>
                                     <select name="f1" id="f1" class="form-select">
                                         <option value="">--------</option>
-                                        <%-- ★★★ 入学年度の重複を除去し、選択状態を維持 ★★★ --%>
                                         <c:set var="displayedYears" value="" />
                                         <c:forEach var="student" items="${studentList}">
                                             <c:if test="${not fn:contains(displayedYears, student.entYear)}">
@@ -52,7 +51,6 @@
                                     <select name="f3" id="f3" class="form-select">
                                         <option value="">--------</option>
                                         <c:forEach var="subject" items="${subjectList}">
-                                            <%-- ★★★ valueを科目コード(cd)に変更 ★★★ --%>
                                             <option value="${subject.cd}" <c:if test="${subject.cd == f3_selected}">selected</c:if>>
                                                 ${subject.name}
                                             </option>
@@ -86,13 +84,11 @@
                         <span class="fw-bold">科目：${selectedSubjectName}（${selectedCount}回）</span>
                     </div>
 
-                    <form method="post" action="score.ScoreRegistExecute">
-                        <%-- ★★★ デザイン再現のポイント 1: テーブル全体をdivで囲み、背景と枠線を設定 ★★★ --%>
-                        <div class="bg-white border rounded">
+                    <form method="post" action="testexecute">
                             <%-- table-borderlessでセルの縦横線をすべて消す --%>
                             <table class="table table-borderless mb-0" style="vertical-align: middle;">
-                                <thead class="table-light">
-                                    <%-- ★★★ デザイン再現のポイント 2: ヘッダー行の下にだけ線を引く ★★★ --%>
+                                <thead>
+                                    <%-- ヘッダー行の下にだけ線を引く --%>
                                     <tr class="border-bottom">
                                         <th class="text-center py-2" style="width: 15%;">入学年度</th>
                                         <th class="text-center py-2" style="width: 15%;">クラス</th>
@@ -103,29 +99,29 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach var="test" items="${searchResults}" varStatus="loop">
-                                        <%-- ★★★ デザイン再現のポイント 3: 各データ行の下に線を引く (最後の行は除く) ★★★ --%>
+                                        <%-- 各データ行の下に線を引く (最後の行は除く) --%>
                                         <tr <c:if test="${!loop.last}">class="border-bottom"</c:if>>
                                             <%-- 各セルの文字揃えと上下の余白(padding)を調整 --%>
-                                            <td class="text-center py-3">${test.student.entYear}</td>
-                                            <td class="text-center py-3">${test.classNum}</td>
-                                            <td class="text-center py-3">${test.student.no}</td>
-                                            <td class="py-3">${test.student.name}</td>
-                                            <td class="py-3">
-                                                <input type="number" name="point_${test.student.no}"
-                                                       class="form-control" value="${test.point}" min="0" max="100" style="width: 100px;">
+                                            <td class="text-center py-2">${test.student.entYear}</td>
+                                            <td class="text-center py-2">${test.classNum}</td>
+                                            <td class="text-center py-2">${test.student.no}</td>
+                                            <td class="text-center py-2">${test.student.name}</td>
+                                            <td class="text-center py-2">
+                                                <input type="text" name="point_${test.student.no}"
+                                                       class="form-control mx-auto" value="${test.point}" style="width: 100px;">
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                        </div>
+
 
                         <%-- 登録ボタン --%>
-                        <div class="my-4 text-center">
+                        <div class="my-4 text">
                             <button type="submit" class="btn btn-secondary px-4">登録して終了</button>
                         </div>
                     </form>
-                </div>
+                  </div>
             </c:if>
         </div>
     </c:param>
