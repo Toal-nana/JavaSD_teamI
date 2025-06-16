@@ -14,7 +14,7 @@ public class SubjectDao extends Dao {
 
 	// idで指定した科目を科目インスタンスにして一件返す
 	// 存在しなかったらnullが入る
-	public Subject get(String cd) throws Exception {
+	public Subject get(String cd, School school) throws Exception {
 		Subject subject = new Subject();
 		// DBに接続
 		Connection connection = getConnection();
@@ -23,9 +23,10 @@ public class SubjectDao extends Dao {
 
 		try {
 			// SQL文をセット
-			statement = connection.prepareStatement("select * from subject where cd=?");
+			statement = connection.prepareStatement("select * from subject where cd=? and school_cd=?");
 			// SQL文に科目番号を入れる
 			statement.setString(1, cd);
+			statement.setString(2, school.getCd());
 			// SQL文を実行
 			ResultSet rSet = statement.executeQuery();
 			// 学校Daoを初期化 科目インスタンスに学校コードをセットするため
@@ -131,7 +132,7 @@ public class SubjectDao extends Dao {
 
 		try {
 			//DBから学生を取得
-			Subject old = get(subject.getCd());
+			Subject old = get(subject.getCd(), subject.getSchool());
 			if (old == null) {
 				// 科目が存在しなかった場合
 				// SQL文にINSERT文をセット(新規登録)
