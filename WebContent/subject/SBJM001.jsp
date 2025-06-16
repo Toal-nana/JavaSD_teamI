@@ -15,7 +15,7 @@
 
       <!-- 新規登録リンク -->
       <div class="text-end mb-3">
-        <a href="${pageContext.request.contextPath}/subject/insertForm" class="btn btn-link">新規登録</a>
+        <a href="${pageContext.request.contextPath}/subject/SBJM002.jsp" class="btn btn-link">新規登録</a>
       </div>
 
       <!-- 科目一覧テーブル -->
