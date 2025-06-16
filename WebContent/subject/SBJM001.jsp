@@ -33,8 +33,8 @@
               <td><c:out value="${subject.subjectId}" /></td>
               <td><c:out value="${subject.subjectName}" /></td>
               <td>
-                <a href="${pageContext.request.contextPath}/subject/update?subjectId=${subject.subjectId}" class="btn btn-sm btn-warning">変更</a>
-                <a href="${pageContext.request.contextPath}/subject/deleteConfirm?subjectId=${subject.subjectId}" class="btn btn-sm btn-danger">削除</a>
+                <a href="${pageContext.request.contextPath}/subject/update subjectId=${subject.subjectId}" class="btn btn-sm btn-warning">変更</a>
+                <a href="${pageContext.request.contextPath}/subject/deleteConfirm subjectId=${subject.subjectId}" class="btn btn-sm btn-danger">削除</a>
               </td>
             </tr>
           </c:forEach>
