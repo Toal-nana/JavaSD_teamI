@@ -26,7 +26,8 @@ public class StudentListController extends CommonServlet {
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
-        Teacher teacher = (Teacher) session.getAttribute("teacher");
+     // 他のサーブレット（StudentCreateControllerなど）のコード
+        Teacher teacher = (Teacher) session.getAttribute("session_user");
 
         // ログインチェック
         if (teacher == null) {
@@ -110,7 +111,7 @@ public class StudentListController extends CommonServlet {
         }
 
         // JSPへフォワード（パスは環境に合わせてください）
-        request.getRequestDispatcher("/student/student_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/student/STDM001.jsp").forward(request, response);
     }
 
     @Override

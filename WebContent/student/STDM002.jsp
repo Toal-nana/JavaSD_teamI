@@ -12,7 +12,7 @@
       <h4 class="bg-light border shadow-sm p-3">学生情報登録フォーム</h4>
 
       <%-- 登録実行サーブレット(StudentCreateExecuteController)にデータを送信 --%>
-      <form action="${pageContext.request.contextPath}/student/insert" method="post">
+      <form action="${pageContext.request.contextPath}/student/StudentCreateExecuteController" method="post">
         <div class="mb-3">
           <label class="form-label">入学年度</label>
           <input type="text" name="year" class="form-control" required>
