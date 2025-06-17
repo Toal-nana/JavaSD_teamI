@@ -49,7 +49,7 @@
       <div class="vr p-0"></div>
     </div>
     <%-- 各要素のbody --%>
-    <div class="col-md-8">${ param.body }</div>
+    <div class="col-md-9">${ param.body }</div>
     </div>
   </c:when>
 
