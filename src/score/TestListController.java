@@ -37,8 +37,8 @@ public class TestListController extends CommonServlet {
 		SubjectDao subjectDao = new SubjectDao();
 		List<Subject> subjectList = subjectDao.filter(school);
 
-
 		List<String> classList = classNumDao.filter(school);
+
 		// StringリストをClassNumオブジェクトのリストに変換
 		List<ClassNum> classNumList = new ArrayList<>();
 		for (String classNumStrs : classList) {
@@ -66,17 +66,15 @@ public class TestListController extends CommonServlet {
 		String check = req.getParameter("f");
 
 		if (check == "sj") {
-			// 科目別成績一覧用
-			SubjectDao subjectDao = new SubjectDao();
 
 			// jspから検索条件を受け取り、検索を実行
 			String entYear = req.getParameter("f1");
 			String classNum = req.getParameter("f2");
-			Subject subject = subjectDao.get(req.getParameter("f3"),school);
+			String subjectCd = req.getParameter("f3");
 
 			req.setAttribute(entYear, "entYear");
 			req.setAttribute(classNum, "classNum");
-			req.setAttribute(subject, "subject");
+			req.setAttribute(subjectCd, "subjectCd");
 
 			req.getRequestDispatcher("/score/testlistsubject").forward(req, resp);
 		}else {
@@ -94,7 +92,7 @@ public class TestListController extends CommonServlet {
 		// 現在のセッションを取得（存在しない場合は新規作成）
 		HttpSession session = req.getSession();
 		// Teacherオブジェクトを取得
-		Teacher teacher = (Teacher) session.getAttribute("session_user");
+		teacher = (Teacher) session.getAttribute("session_user");
 
 		// teacherがnullの場合はログイン画面にリダイレクト
 		if (teacher == null) {

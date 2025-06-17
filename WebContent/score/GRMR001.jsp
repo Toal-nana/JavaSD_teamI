@@ -5,14 +5,14 @@
 	<c:param name="title">成績参照検索</c:param>
 	<c:param name="body">
 
-		<h2 class="h2 bg-body-tertiary m-3 p-2 ps-4">成績参照</h2>
+		<h2 class="h2 bg-body-tertiary mt-3 p-2 ps-4">成績参照</h2>
 
 		<%-- 科目情報による検索 --%>
-		<div class="border">
-			<form action="${pageContext.request.contextPath}/score/subject" method="get">
-				<div class="row mb-3">
-					<div class="col-md-2 ms-4 me-2">
-				    	<label class="fw-bold">科目情報</label>
+		<div class="border p-2 m-3 rounded">
+			<form action="${pageContext.request.contextPath}/score/testlist" method="get" class="border-bottom mb-3">
+				<div class="row mb-2">
+					<div class="col-md-2 ms-4">
+				    	<label class="form-label mt-4">科目情報</label>
 					</div>
 
 					<div class="col-md-2">
@@ -35,7 +35,7 @@
 						</select>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<label class="form-label">科目</label>
 						<select name="f3" class="form-select">
 							<option>--------</option>
@@ -45,7 +45,7 @@
 						</select>
 					</div>
 					<div class="col">
-						<button type="submit" class="btn btn-secondary m-3 ms-4" style="button {width:10em;}">検索</button>
+						<button type="submit" class="btn btn-secondary ms-2 mt-3">検索</button>
 					</div>
 					<input type="hidden" name="f" value="sj">
 				</div>
@@ -53,24 +53,35 @@
 
 
 			<%-- 学生情報による検索 --%>
-			<form action="${pageContext.request.contextPath}/score/" method="get" class="mb-4">
+			<form action="${pageContext.request.contextPath}/score/" method="get" class="mb-2">
 			<div class="row">
 				<div class="col-md-2 ms-4">
-					<label class="form-label fw-bold">学生情報</label>
+					<label class="form-label">学生情報</label>
 				</div>
 
 				<div class="col-md-4">
 					<label class="form-label">学生番号</label>
 					<input type="text" name="f4" value="${f4}" placeholder="学生番号を入力してください" class="form-control">
 				</div>
-				<div class="col ms-4 ">
-					<button type="submit" class="btn btn-secondary">検索</button>
+				<div class="col">
+					<button type="submit" class="btn btn-secondary ms-2 mt-3">検索</button>
 				</div>
 			</div>
 			<input type="hidden" name="f" value="st">
 			</form>
 		</div>
-		<p><label>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</label></p>
+		<%-- リストを受け取っていた場合、検索結果を表示 --%>
+		<c:if test="${not empty testListSubject}">
+			<table border="1"><thead><th>入学年度</th><th>クラス</th><th>学生番号</th><th>氏名</th><th>1回</th><th>2回</th></thead>
+			<c:forEach var="tLS" items="${testListSubject}">
+				<tr><td>${tLS.entYear}</td><td>${tLS.classNum}</td><td>${tLS.studentNo}</td><td>${tLS.studentName}</td><td>"-"</td><td>"-"</td></tr>
+			</c:forEach>
+			</table>
+		</c:if>
+		<%-- リストを受け取っていなかった場合、以下の文章を表示 --%>
+		<c:if test="${empty testListSubject}">
+			<p class="text-info">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p>
+		</c:if>
 	</c:param>
 
 </c:import>
