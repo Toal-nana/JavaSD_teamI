@@ -20,7 +20,7 @@ import dao.SubjectDao;
 import dao.TestDao;
 import tool.CommonServlet;
 
-@WebServlet(urlPatterns = { "/score/subject" })
+@WebServlet(urlPatterns = { "/score/test" })
 public class TestRegistController extends CommonServlet {
 
 	@Override
@@ -77,6 +77,25 @@ public class TestRegistController extends CommonServlet {
 				req.setAttribute("selectedSubjectName", selectedSubject.getName());
 				req.setAttribute("selectedCount", testNo);
 			}
+
+			// 検索条件や結果をセッションに保存
+			session.setAttribute("f1_selected", entYearStr);
+			session.setAttribute("f2_selected", classNumStr);
+			session.setAttribute("f3_selected", subjectCd);
+			session.setAttribute("f4_selected", testCountStr);
+			session.setAttribute("searchResults", searchResults);
+			session.setAttribute("selectedSubjectName", req.getAttribute("selectedSubjectName"));
+			session.setAttribute("selectedCount", req.getAttribute("selectedCount"));
+		} else {
+			// 検索ボタンが押されていない場合（初回表示や「戻る」で来た場合）
+			// セッションに残っている可能性のある検索関連の情報を削除する
+			session.removeAttribute("f1_selected");
+			session.removeAttribute("f2_selected");
+			session.removeAttribute("f3_selected");
+			session.removeAttribute("f4_selected");
+			session.removeAttribute("searchResults");
+			session.removeAttribute("selectedSubjectName");
+			session.removeAttribute("selectedCount");
 		}
 
 		// session_userが所属している学校のクラスを取得

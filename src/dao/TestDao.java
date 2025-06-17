@@ -220,6 +220,26 @@ public class TestDao extends Dao {
 			statement.setInt(5, test.getNo());
 			// SQL文を実行
 			count = statement.executeUpdate();
+
+			// 更新された行が0件の場合、追加を実行
+			if (count == 0) {
+				// 前のstatementを閉じる
+				statement.close();
+
+				// 追加処理を行う
+				statement = connection.prepareStatement(
+						"insert into test(student_no, subject_cd, school_cd, no, point, class_num) values(?, ?, ?, ?, ?, ?)");
+
+				statement.setString(1, test.getStudent().getNo());
+				statement.setString(2, test.getSubject().getCd());
+				statement.setString(3, test.getSchool().getCd());
+				statement.setInt(4, test.getNo());
+				statement.setInt(5, test.getPoint());
+				statement.setString(6, test.getClassNum());
+
+				// SQL文を実行
+				count = statement.executeUpdate();
+			}
 		} catch (Exception e) {
 			throw e;
 		} finally {
