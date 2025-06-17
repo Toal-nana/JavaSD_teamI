@@ -31,6 +31,7 @@ public class TeacherDao extends Dao {
 				// 検索に引っかかる先生がいた場合
 				// 先生インスタンスに検索結果をセット
 				teacher.setId(rSet.getString("id"));
+				teacher.setPassword(rSet.getString("password"));
 				teacher.setName(rSet.getString("name"));
 				// 学校フィールドには学校コードで検索した学校インスタンスをセット
 				teacher.setSchool(schoolDao.get(rSet.getString("school_cd")));
@@ -67,20 +68,12 @@ public class TeacherDao extends Dao {
 	public Teacher login(String id, String password) throws Exception {
 		// idに対応する先生インスタンスを取得
 		 Teacher teacher = new Teacher();
-		 TeacherDao teacherDao = new TeacherDao();
-		 teacher = teacherDao.get(id);
-		if (teacher == null) {
+		 teacher = this.get(id);
+		if (password != null && password.equals(teacher.getPassword())) {
+			return teacher;
+		} else {
 			return null; // ユーザーが存在しない場合
 		}
 
-		// idでハッシュを生成
-		String hashedInput = id;
-
-		// ハッシュが一致する場合はログイン成功
-		if (hashedInput==id) {
-			return teacher;
-		} else {
-			return null;
-		}
 	}
 }
