@@ -18,15 +18,25 @@ import dao.StudentDao;
 import dao.SubjectDao;
 import tool.CommonServlet;
 
-@WebServlet(urlPatterns = { "/score/testlist" })
-public class TestListController extends CommonServlet {
-	private Teacher teacher;
-	private School school;
+@WebServlet(urlPatterns = { "/score/testlistsubject" })
+public class TestListSubjectExecuteController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// ログイン確認とTeacherインスタンスからschoolを受け取る
-		this.execute(req, resp);
+
+		// 現在のセッションを取得（存在しない場合は新規作成）
+		HttpSession session = req.getSession();
+		// Teacherオブジェクトを取得
+		Teacher teacher = (Teacher) session.getAttribute("session_user");
+
+		// teacherがnullの場合はログイン画面にリダイレクト
+		if (teacher == null) {
+			resp.sendRedirect(req.getContextPath() + "/account/login");
+			return;
+		}
+
+		// 所属している学校をTeacherオブジェクトから取得
+		School school = teacher.getSchool();
 
 		// 入学年度一覧を受け取る ログインしている先生の学校コードを入れる
 		StudentDao studentDao = new StudentDao();
@@ -52,58 +62,17 @@ public class TestListController extends CommonServlet {
 		req.setAttribute("classNumList", classNumList);
 		req.setAttribute("subjectList", subjectList);
 
-		// 成績参照検索の画面に飛ぶ
 		req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
 	}
 
-
 	@Override
 	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// ログイン確認とTeacherインスタンスからschoolを受け取る
-		this.execute(req, resp);
 
-		// 科目別、学生別どちらで検索したかの判定用
-		String check = req.getParameter("f");
-
-		if (check == "sj") {
-			// 科目別成績一覧用
-			SubjectDao subjectDao = new SubjectDao();
-
-			// jspから検索条件を受け取り、検索を実行
-			String entYear = req.getParameter("f1");
-			String classNum = req.getParameter("f2");
-			Subject subject = subjectDao.get(req.getParameter("f3"),school);
-
-			req.setAttribute(entYear, "entYear");
-			req.setAttribute(classNum, "classNum");
-			req.setAttribute(subject, "subject");
-
-			req.getRequestDispatcher("/score/testlistsubject").forward(req, resp);
-		}else {
-
-			req.getRequestDispatcher("/score/testliststudent").forward(req, resp);
-
-		}
 	}
 
-
-	// get,postに共通する処理をまとめて書く (ログイン確認等)
 	@Override
 	protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-
-		// 現在のセッションを取得（存在しない場合は新規作成）
-		HttpSession session = req.getSession();
-		// Teacherオブジェクトを取得
-		Teacher teacher = (Teacher) session.getAttribute("session_user");
-
-		// teacherがnullの場合はログイン画面にリダイレクト
-		if (teacher == null) {
-			resp.sendRedirect(req.getContextPath() + "/account/login");
-			return;
-		}
-
-		// 所属している学校をTeacherオブジェクトから取得
-		school = teacher.getSchool();
+		// TODO 自動生成されたメソッド・スタブ
 
 	}
 

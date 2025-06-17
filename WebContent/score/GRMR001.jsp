@@ -9,7 +9,7 @@
 
 		<%-- 科目情報による検索 --%>
 		<div class="border">
-			<form action="/score/subject" method="get">
+			<form action="${pageContext.request.contextPath}/score/subject" method="get">
 				<div class="row mb-3">
 					<div class="col-md-2 ms-4 me-2">
 				    	<label class="fw-bold">科目情報</label>
@@ -37,8 +37,8 @@
 
 					<div class="col-md-3">
 						<label class="form-label">科目</label>
-						<select name="f3" class="form-select" >
-							<option value="">--------</option>
+						<select name="f3" class="form-select">
+							<option>--------</option>
 							<c:forEach var="subject" items="${subjectList}">
 								<option value="${subject.cd}">${subject.name}</option>
 							</c:forEach>
@@ -53,7 +53,7 @@
 
 
 			<%-- 学生情報による検索 --%>
-			<form action="/score/" method="get" class="mb-4">
+			<form action="${pageContext.request.contextPath}/score/" method="get" class="mb-4">
 			<div class="row">
 				<div class="col-md-2 ms-4">
 					<label class="form-label fw-bold">学生情報</label>
@@ -63,7 +63,7 @@
 					<label class="form-label">学生番号</label>
 					<input type="text" name="f4" value="${f4}" placeholder="学生番号を入力してください" class="form-control">
 				</div>
-				<div class="col ms-4">
+				<div class="col ms-4 ">
 					<button type="submit" class="btn btn-secondary">検索</button>
 				</div>
 			</div>
