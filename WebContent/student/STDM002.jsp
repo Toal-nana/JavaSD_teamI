@@ -41,12 +41,12 @@
 
         <div class="mt-4">
           <%-- 登録ボタンを追加 --%>
-          <button type="submit" class="btn btn-primary">登録する</button>
+          <button type="submit" class="btn btn-primary">登録して終了</button>
 
           <%-- 戻るボタン --%>
-          <a href="${pageContext.request.contextPath}/STDM001" class="btn btn-secondary">戻る</a>
+       <a href="${pageContext.request.contextPath}/student/list" class="btn btn-secondary">戻る</a>
         </div>
-        <%-- ここまで修正箇所 --%>
+
       </form>
     </div>
   </c:param>

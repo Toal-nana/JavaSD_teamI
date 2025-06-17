@@ -11,14 +11,14 @@ import bean.Teacher;
 import dao.ClassNumDao; // ★ StudentDaoからClassNumDaoに変更
 import tool.CommonServlet;
 
-@WebServlet("/student/StudentCreateController") // ★ URLを分かりやすいものに変更
+@WebServlet("/student/create") // ★ URLを分かりやすいものに変更
 public class StudentCreateController extends CommonServlet {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 
-    	//System.out.println("★★★★★★ StudentCreateControllerが呼ばれました ★★★★★★");
+    	System.out.println("★★★★★★ StudentCreateControllerが呼ばれました ★★★★★★");
 
         HttpSession session = request.getSession();
      // 他のサーブレット（StudentCreateControllerなど）のコード
@@ -27,7 +27,7 @@ public class StudentCreateController extends CommonServlet {
         // ログインチェック
         if (teacher == null) {
 
-        	System.out.println("★★★★★★ ログインしていません！リダイレクトします。 ★★★★★★");
+        	System.out.println("★ ログインしていません！リダイレクトします。★");
             // ログインページのパスは環境に合わせてください
             response.sendRedirect(request.getContextPath() + "/account/LOGI001.jsp");
             return;
@@ -41,7 +41,7 @@ public class StudentCreateController extends CommonServlet {
         List<String> classList = cNumDao.filter(teacher.getSchool());
 
         System.out.println("★★★★★★ classListの中身: " + classList);
-        System.out.println("★★★★★★ classListの件数: " + classList.size());
+
 
 
         // 作成したクラスリストをリクエストにセットしてJSPに渡す
@@ -49,8 +49,6 @@ public class StudentCreateController extends CommonServlet {
 
         // 登録フォームのJSPにフォワード
         request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
-
-
 
 
 

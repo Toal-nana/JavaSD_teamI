@@ -13,14 +13,14 @@ import tool.CommonServlet;
 // (import文は省略)
 
 // JSPのform actionに合わせてURLアノテーションを設定
-@WebServlet("/student/StudentCreateExecuteController")// ★ JSPのaction属性と一致させる
+@WebServlet("/student/createexecute")// ★ JSPのaction属性と一致させる
 public class StudentCreateExecuteController extends CommonServlet {
 
     @Override
     public void post(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // このメソッドの中身は変更不要です
         HttpSession session = request.getSession();
-        Teacher teacher = (Teacher) session.getAttribute("teacher");
+        Teacher teacher = (Teacher) session.getAttribute("session_user");
 
         // (以下、元のコードのまま)
         if (teacher == null) {
@@ -52,13 +52,13 @@ public class StudentCreateExecuteController extends CommonServlet {
         StudentDao sDao = new StudentDao();
         sDao.save(student);
 
-        response.sendRedirect(request.getContextPath() + "/STDM001");
+        response.sendRedirect(request.getContextPath() + "/list");
     }
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // GETで直接アクセスされた場合は一覧画面に戻す（このままでOK）
-        response.sendRedirect(request.getContextPath() + "/STDM001");
+        response.sendRedirect(request.getContextPath() + "/list");
     }
 
     @Override

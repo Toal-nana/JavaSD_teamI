@@ -22,7 +22,7 @@
     	<section class="mp=4">
     	<h1>学生管理</h1>
     	<div class="my-2 text-end px-4">
-    		<a href="STDM002.jsp">新規登録</a>
+    	<a href="${pageContext.request.contextPath}/student/STDM002.jsp">学生新規登録</a>
     		</div>
     		<form method="get">
     			 <div class="row border mx-3 mb-3 py-2 align-items-center rounded "id="filter">
@@ -83,9 +83,9 @@
 							<th></th>
 							<th></th>
 						</tr>
-						<c:forEach var="studet" items="${students }">
+						<c:forEach var="student" items="${students }">
 							<tr>
-								<td>${student.enYear }</td>
+								<td>${student.entYear }</td>
 								<td>${student.no }</td>
 								<td>${student.name }</td>
 								<td>${student.classNum }</td>
@@ -94,7 +94,7 @@
 								<c:choose>
 
 									<c:when test="${student.isAttend() }">
-
+										○
 									</c:when>
 									<c:otherwise>
 										×
@@ -103,8 +103,10 @@
 
 								</td>
 								<%--95、96行目のリンクは違うのでサーブレットつくってあとで直します。 --%>
-								<td><a href="StudentUpdate.action?no=${student.no }">変更</a></td>
-								<td><a href="StudentDelete.action?no=${student.no }">削除</a></td>
+								<td>
+  <a href="${pageContext.request.contextPath}/student/update?no=${student.no}">変更</a>
+</td>
+
 								</tr>
 
 
