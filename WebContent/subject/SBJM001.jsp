@@ -4,7 +4,7 @@
 <%-- base.jsp を読み込み、タイトルと本文をパラメータとして渡す --%>
 <c:import url="/base.jsp">
   <%-- ページタイトルを指定 --%>
-  <c:param name="title" value="科目管理" />
+  <c:param name="title">得点管理システム</c:param>
 
   <%-- body に表示するコンテンツを渡す --%>
   <c:param name="body">
@@ -30,11 +30,11 @@
         <tbody>
           <c:forEach var="subject" items="${subjectList}">
             <tr>
-              <td><c:out value="${subject.subjectId}" /></td>
-              <td><c:out value="${subject.subjectName}" /></td>
+              <td><c:out value="${subject.cd}" /></td>
+              <td><c:out value="${subject.name}" /></td>
               <td>
-                <a href="${pageContext.request.contextPath}/subject/update subjectId=${subject.subjectId}" class="btn btn-sm btn-warning">変更</a>
-                <a href="${pageContext.request.contextPath}/subject/deleteConfirm subjectId=${subject.subjectId}" class="btn btn-sm btn-danger">削除</a>
+                <a href="${pageContext.request.contextPath}/subject/update?cd=${subject.cd}">変更</a>
+                <a href="${pageContext.request.contextPath}/subject/deleteConfirm?cd=${subject.cd}">削除</a>
               </td>
             </tr>
           </c:forEach>

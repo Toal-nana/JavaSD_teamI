@@ -29,7 +29,7 @@ public class SchoolDao extends Dao {
 			if (rSet.next()) {
 				// 検索に引っかかる学校があった場合
 				// 学校インスタンスに検索結果をセット
-				school.setCd(rSet.getString("cd"));
+				school.setCd(rSet.getString("school_cd"));
 				school.setName(rSet.getString("name"));
 			} else {
 				// 検索に一件も引っかからなかった場合

@@ -14,17 +14,17 @@ import bean.Teacher;
 import dao.SubjectDao;
 import tool.CommonServlet;
 
-@WebServlet("/subject/list")
+@WebServlet(urlPatterns = { "/subject/list" })
 public class SubjectListController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		 HttpSession session = req.getSession();
-	        Teacher teacher = (Teacher) session.getAttribute("teacher");
+	        Teacher teacher = (Teacher) session.getAttribute("session_user");
 
 	        // ログインチェック
 	        if (teacher == null) {
-	            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+	        	resp.sendRedirect(req.getContextPath() + "/account/login");
 	        }
 
 	        try {
@@ -33,7 +33,7 @@ public class SubjectListController extends CommonServlet {
 	            List<Subject> subjectList = subjectDao.filter(school);
 
 	            req.setAttribute("subjectList", subjectList);
-	            req.getRequestDispatcher("/subject/SBJM001.jsp").forward(req, resp);
+	            req.getRequestDispatcher("SBJM001.jsp").forward(req, resp);
 	        } catch (Exception e) {
 	            // エラーが発生した場合、ServletExceptionにラップして上位にスロー
 	            throw new ServletException(e);

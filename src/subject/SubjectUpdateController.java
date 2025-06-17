@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Subject;
+import dao.SchoolDao;
 import dao.SubjectDao;
 import tool.CommonServlet;
 
-@WebServlet("/subject/Update")
+@WebServlet("/subject/update")
 public class SubjectUpdateController extends CommonServlet {
 
 	@Override
@@ -19,20 +21,23 @@ public class SubjectUpdateController extends CommonServlet {
 
 	        // ログインチェック
 	        if (session.getAttribute("session_user") == null) {
-	            resp.sendRedirect(req.getContextPath() + "/LOGI001.jsp");
+	        	resp.sendRedirect(req.getContextPath() + "/account/login");
 	        }
 
 	        try {
 	            SubjectDao subjectDao = new SubjectDao();
 	            String cd = req.getParameter("cd");
 
+	            SchoolDao schoolDao = new SchoolDao();
+	            School school = schoolDao.get(cd);
+
 	            // 変更対象の科目情報を取得
-	            Subject subjectToUpdate = subjectDao.get(cd);
+	            Subject subjectToUpdate = subjectDao.get(cd,school);
 
 	            // JSPに渡すためにリクエストスコープにセット
 	            req.setAttribute("subject", subjectToUpdate);
 
-	            req.getRequestDispatcher("/subject/SBJM004.jsp").forward(req, resp);
+	            req.getRequestDispatcher("SBJM004.jsp").forward(req, resp);
 	        } catch (Exception e) {
 	            throw new ServletException(e);
 	        }

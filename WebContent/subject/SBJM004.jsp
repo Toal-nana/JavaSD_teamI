@@ -22,13 +22,13 @@
       <div class="mb-3">
         <label for="subjectId" class="form-label">科目コード</label>
         <%-- readonly 属性を追加して、ユーザーによる編集を防ぐ --%>
-        <input type="text" class="form-control" id="subjectId" name="subjectId" value="<c:out value='${subject.subjectId}'/>" readonly>
+        <input type="text" class="form-control" id="subjectId" name="subjectId" value="<c:out value='${subject.cd}'/>" readonly>
       </div>
 
       <%-- 科目名 --%>
       <div class="mb-3">
         <label for="subjectName" class="form-label">科目名</label>
-        <input type="text" class="form-control" id="subjectName" name="subjectName" value="<c:out value='${subject.subjectName}'/>" placeholder="科目名を入力してください" required>
+        <input type="text" class="form-control" id="subjectName" name="subjectName" value="<c:out value='${subject.name}'/>" placeholder="科目名を入力してください" required>
       </div>
 
       <%-- 変更ボタン（フォーム送信） --%>
