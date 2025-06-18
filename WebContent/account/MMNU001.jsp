@@ -29,9 +29,9 @@
                     <%-- セクションタイトル --%>
                     <h4 class="mb-3">成績管理</h4>
                     <%-- 成績登録リンク --%>
-                    <h4 class="d-block mb-3"><a href="${pageContext.request.contextPath}/score/GRMU001">成績登録</a></h4>
+                    <h4 class="d-block mb-3"><a href="${pageContext.request.contextPath}/score/test">成績登録</a></h4>
                     <%-- 成績参照リンク --%>
-                    <h4 class="d-block mb-3 h4"><a href="${pageContext.request.contextPath}/score/GRMR001">成績参照</a></h4>
+                    <h4 class="d-block mb-3 h4"><a href="${pageContext.request.contextPath}/score/testlist">成績参照</a></h4>
                 </div>
             </div>
 

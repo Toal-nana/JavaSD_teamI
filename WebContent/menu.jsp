@@ -7,18 +7,18 @@
 		<ul class="nav flex-column">
 			<%-- メニューの内容 --%>
 			<li class="nav-item"><a class="nav-link"
-				href="${pageContext.request.contextPath}/MMNU001">メニュー</a></li>
+				href="${pageContext.request.contextPath}/account/menu">メニュー</a></li>
 			<li class="nav-item"><a class="nav-link"
-				href="${pageContext.request.contextPath}/student/STDM001">学生管理</a></li>
+				href="${pageContext.request.contextPath}/student/list">学生管理</a></li>
 			<li class="nav-item"><span class="d-block py-2 px-3">成績管理</span>
 				<ul class="nav flex-column ps-3">
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/score/GRMU001">成績登録</a></li>
+						href="${pageContext.request.contextPath}/score/test">成績登録</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/score/GRMR001">成績参照</a></li>
+						href="${pageContext.request.contextPath}/score/testlist">成績参照</a></li>
 				</ul></li>
 			<li class="nav-item"><a class="nav-link"
-				href="${pageContext.request.contextPath}/subject/SBJM001">科目管理</a></li>
+				href="${pageContext.request.contextPath}/subject/list">科目管理</a></li>
 		</ul>
 	</nav>
 
