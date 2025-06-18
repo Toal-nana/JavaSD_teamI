@@ -54,7 +54,7 @@ public class TestListStudentDao extends Dao {
 		try {
 			// SQL文をセット 学校と学生番号による絞り込み
 			statement = connection.prepareStatement(
-					 baseSql + condition + order);
+					 baseSql + " " + condition + " " + order);
 			// SQL文に学校番号を入れる
 			statement.setString(1,student.getSchool().getCd());
 			// SQL文に学生番号を入れる
