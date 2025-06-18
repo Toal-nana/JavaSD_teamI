@@ -73,7 +73,6 @@ public class TestListController extends CommonServlet {
 			String classNum = req.getParameter("f2");
 			String subjectCd = req.getParameter("f3");
 
-
 			req.setAttribute("entYear", entYear);
 			req.setAttribute("classNum", classNum);
 			req.setAttribute("subjectCd", subjectCd);
