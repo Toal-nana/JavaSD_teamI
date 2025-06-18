@@ -66,14 +66,18 @@
 
 								<%-- 回数 --%>
 								<td style="width: 120px; vertical-align: bottom;">
-									<label for="f4" class="form-label">回数</label> <select name="f4"
-									id="f4" class="form-select">
+									<label for="f4" class="form-label">回数</label>
+									<%-- 回数は登録していない分も表示できるようにしている --%>
+									<%-- 理由としては、機能として成績追加が出来る場所がないため、登録もできるように
+										 変更をしたから --%>
+									<select name="f4" id="f4" class="form-select">
 										<option value="">--------</option>
 										<option value="1"
 											<c:if test="${'1' == f4_selected}">selected</c:if>>1</option>
 										<option value="2"
 											<c:if test="${'2' == f4_selected}">selected</c:if>>2</option>
-								</select></td>
+									</select>
+								</td>
 
 								<td style="width: 80px; vertical-align: bottom;">
 									<button type="submit" class="btn btn-secondary w-100">検索</button>
@@ -106,6 +110,7 @@
 								</tr>
 							</thead>
 							<tbody>
+								<%-- 取り出したデータを繰り返しで表示 --%>
 								<c:forEach var="test" items="${searchResults}" varStatus="loop">
 									<%-- 各データ行の下に線を引く (最後の行は除く) --%>
 									<tr <c:if test="${!loop.last}">class="border-bottom"</c:if>>
@@ -114,15 +119,17 @@
 										<td class="text-center py-2">${test.classNum}</td>
 										<td class="text-center py-2">${test.student.no}</td>
 										<td class="text-center py-2">${test.student.name}</td>
-										<td class="text-center py-2"><input type="text"
-											name="point_${test.student.no}"
-											class="form-control mx-auto ${not empty errors[test.student.no] ? 'is-invalid' : ''}"
-											value="${not empty inputValues[test.student.no] ? inputValues[test.student.no] : test.point}"
-											style="width: 200px;"> <c:if
-												test="${not empty errors[test.student.no]}">
+										<td class="text-center py-2">
+										<input type="text"
+											   name="point_${test.student.no}"
+											   class="form-control mx-auto ${not empty errors[test.student.no] ? 'is-invalid' : ''}"
+											   value="${not empty inputValues[test.student.no] ? inputValues[test.student.no] : test.point}"
+											   style="width: 200px;">
+											   <%-- 点数入力のエラー表示 --%>
+											   <c:if test="${not empty errors[test.student.no]}">
 												<div class="invalid-feedback d-block">
 													${errors[test.student.no]}</div>
-											</c:if>
+											   </c:if>
 									</tr>
 								</c:forEach>
 							</tbody>

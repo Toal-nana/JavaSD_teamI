@@ -6,8 +6,13 @@
 
 	<c:param name="body">
 
-		<h1>学生別成績一覧</h1>
+		<p>氏名：${student.name}(${student.no})</p>
 
+		<table border="1"><thead><th>科目名</th><th>科目コード</th><th>回数</th><th>点数</th></thead>
+			<c:forEach var="tLS" items="${testListStudent}">
+				<tr><td>${tLS.subjectName}</td><td>${tLS.subjectCd}</td><td>${tLS.num}</td><td>${tLS.point}</td></tr>
+			</c:forEach>
+		</table>
 	</c:param>
 
 </c:import>
