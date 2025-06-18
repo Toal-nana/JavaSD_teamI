@@ -11,18 +11,17 @@
 
 		<%-- 登録完了メッセージ --%>
 		<p class="alert text-center alert-success shadow-sm  py-2"
-			role="alert" style="background-color: #8ab79a;">
+		   role="alert" style="background-color: #8ab79a;">
 			<label class="mb-0">変更が完了しました。</label>
 		</p>
 
+		<%-- リンク --%>
 		<div class="mt-4">
-
 			<%-- 成績管理一覧画面へ遷移するリンク --%>
 			<a href="${pageContext.request.contextPath}/score/test">戻る</a>
 
 			<%-- 成績参照検索画面へ遷移するリンク --%>
 			<a class="mx-5" href="${pageContext.request.contextPath}/score/testlist">成績参照</a>
-
 		</div>
 	</c:param>
 

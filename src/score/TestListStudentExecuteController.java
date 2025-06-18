@@ -2,6 +2,7 @@ package score;
 
 import java.util.List;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import dao.StudentDao;
 import dao.TestListStudentDao;
 import tool.CommonServlet;
 
+@WebServlet(urlPatterns={"/score/testliststudent"})
 public class TestListStudentExecuteController extends CommonServlet {
 
 	private Teacher teacher;

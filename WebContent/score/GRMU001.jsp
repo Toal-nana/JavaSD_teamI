@@ -12,55 +12,61 @@
 			<%-- 検索フォーム --%>
 			<form method="get" action="test">
 				<div class="bg-white p-3 rounded shadow-sm border mb-4 container"
-					style="width: fit-content;">
+					 style="width: fit-content;">
 					<table class="table table-borderless mb-0">
 						<tbody>
 							<tr>
 								<%-- 入学年度 --%>
-								<td style="width: 180px; vertical-align: bottom;"><label
-									for="f1" class="form-label">入学年度</label> <select name="f1"
-									id="f1" class="form-select">
+								<td style="width: 180px; vertical-align: bottom;">
+									<label for="f1" class="form-label">入学年度</label>
+									<select name="f1" id="f1" class="form-select">
 										<option value="">--------</option>
 										<c:set var="displayedYears" value="" />
+										<%-- 入学年度を繰り返しで表示 --%>
 										<c:forEach var="student" items="${studentList}">
-											<c:if
-												test="${not fn:contains(displayedYears, student.entYear)}">
+											<%-- 入学年度が重複しないように判断し表示 --%>
+											<c:if test="${not fn:contains(displayedYears, student.entYear)}">
 												<option value="${student.entYear}"
-													<c:if test="${student.entYear == f1_selected}">selected</c:if>>
-													${student.entYear}</option>
+													    <c:if test="${student.entYear == f1_selected}">selected</c:if>>
+												${student.entYear}</option>
 												<c:set var="displayedYears"
-													value="${displayedYears} ${student.entYear}" />
+													   value="${displayedYears} ${student.entYear}" />
 											</c:if>
 										</c:forEach>
-								</select></td>
+									</select>
+								</td>
 
 								<%-- クラス --%>
-								<td style="width: 120px; vertical-align: bottom;"><label
-									for="f2" class="form-label">クラス</label> <select name="f2"
-									id="f2" class="form-select">
+								<td style="width: 120px; vertical-align: bottom;">
+									<label for="f2" class="form-label">クラス</label>
+									<select name="f2" id="f2" class="form-select">
 										<option value="">--------</option>
+										<%-- クラスを繰り返しで表示 --%>
 										<c:forEach var="course" items="${classNumList}">
+											<%-- クラスが重複しないように表示 --%>
 											<option value="${course.class_num}"
 												<c:if test="${course.class_num == f2_selected}">selected</c:if>>
-												${course.class_num}</option>
+											${course.class_num}</option>
 										</c:forEach>
 								</select></td>
 
 								<%-- 科目 --%>
-								<td style="width: 160px; vertical-align: bottom;"><label
-									for="f3" class="form-label">科目</label> <select name="f3"
-									id="f3" class="form-select">
+								<td style="width: 160px; vertical-align: bottom;">
+									<label for="f3" class="form-label">科目</label>
+									<select name="f3" id="f3" class="form-select">
 										<option value="">--------</option>
+										<%-- 科目を繰り返しで表示 --%>
 										<c:forEach var="subject" items="${subjectList}">
+											<%-- 科目が重複しないように表示 --%>
 											<option value="${subject.cd}"
 												<c:if test="${subject.cd == f3_selected}">selected</c:if>>
-												${subject.name}</option>
+											${subject.name}</option>
 										</c:forEach>
 								</select></td>
 
 								<%-- 回数 --%>
-								<td style="width: 120px; vertical-align: bottom;"><label
-									for="f4" class="form-label">回数</label> <select name="f4"
+								<td style="width: 120px; vertical-align: bottom;">
+									<label for="f4" class="form-label">回数</label> <select name="f4"
 									id="f4" class="form-select">
 										<option value="">--------</option>
 										<option value="1"
