@@ -19,38 +19,6 @@ public class TestListStudentExecuteController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// ログイン確認とTeacherインスタンスからschoolを受け取る
-		this.execute(req, resp);
-
-		//DAOの準備
-		StudentDao studentDao = new StudentDao();
-		TestListStudentDao testListStudentDao = new TestListStudentDao();
-
-		//値を取得
-		String studentNo = req.getParameter("studentNo");
-
-		//学生情報を取得
-		Student student = studentDao.get(studentNo);
-
-		//受け取った学生情報から検索を実行
-		List<TestListStudent> testListStudent = testListStudentDao.filter(student);
-
-		//検索結果が入ったリストを渡す
-		req.setAttribute("testListStudent",testListStudent);
-
-		//フォワード
-		req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
-
-	}
-
-	@Override
-	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
-	@Override
-	protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		// 現在のセッションを取得（存在しない場合は新規作成）
 		HttpSession session = req.getSession();
 		// Teacherオブジェクトを取得
@@ -61,6 +29,54 @@ public class TestListStudentExecuteController extends CommonServlet {
 			resp.sendRedirect(req.getContextPath() + "/account/login");
 			return;
 		}
+
+		// DAOの準備
+		StudentDao studentDao = new StudentDao();
+		TestListStudentDao testListStudentDao = new TestListStudentDao();
+
+		// 値を取得
+		String studentNo = req.getParameter("f4");
+
+		//入力値の検証
+		if (studentNo == null || studentNo.isEmpty()) {
+			req.setAttribute("error_student", "学生番号を入力してください。");
+			// エラーがあっても検索画面は表示し続けるため、GRMR001.jspにフォワード
+			req.getRequestDispatcher("/score/GRMR001.jsp").forward(req, resp);
+			return;
+		}
+
+		// 学生情報を取得
+		Student student = studentDao.get(studentNo);
+
+		//学生の存在チェック
+		if (student == null) {
+			req.setAttribute("error_student", "指定された学生番号の学生は存在しません。");
+			req.setAttribute("f4", studentNo); // 入力された番号をフォームに保持
+			req.getRequestDispatcher("/score/GRMR001.jsp").forward(req, resp);
+			return;
+		}
+
+		// 受け取った学生情報から検索を実行
+		List<TestListStudent> testListStudent = testListStudentDao.filter(student);
+
+		// 検索結果をリクエスト属性にセット
+		req.setAttribute("student", student);
+		req.setAttribute("testListStudent", testListStudent);
+		req.setAttribute("f4", studentNo);
+
+		// フォワード
+		req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
+
+	}
+
+	@Override
+	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		get(req, resp);
+
+	}
+
+	@Override
+	protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
 	}
 
