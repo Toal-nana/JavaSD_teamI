@@ -1,19 +1,43 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/base.jsp">
 
-	<c:param name="title">科目別成績一覧</c:param>
+		<c:if test="${not empty testListSubject}">
+				<div class="search-results">
+					<div class="mb-3">
+						<span class="fw-bold">科目：${scuject.name}</span>
+					</div>
 
-	<c:param name="body">
-
-		<p>科目：${scuject.name}</p>
-
-		<table border="1"><thead><th>入学年度</th><th>クラス</th><th>学生番号</th><th>氏名</th><th>1回</th><th>2回</th></thead>
-			<c:forEach var="tLS" items="${testListSubject}">
-				<tr><td>${tLS.entYear}</td><td>${tLS.classNum}</td><td>${tLS.studentNo}</td><td>${tLS.studentName}</td><td>"-"</td><td>"-"</td></tr>
-			</c:forEach>
-		</table>
-
-	</c:param>
-
-</c:import>
+					<form method="post" action="testexecute">
+						<%-- table-borderlessでセルの縦横線をすべて消す --%>
+						<table class="table table-borderless mb-0"
+							style="vertical-align: middle;">
+							<thead>
+								<%-- ヘッダー行の下にだけ線を引く --%>
+								<tr class="border-bottom">
+									<th class="text-center py-2" style="width: 15%;">入学年度</th>
+									<th class="text-center py-2" style="width: 15%;">クラス</th>
+									<th class="text-center py-2" style="width: 20%;">学生番号</th>
+									<th class="text-center py-2" style="width: 30%;">氏名</th>
+									<th class="text-center py-2" style="width: 10%;">1回</th>
+									<th class="text-center py-2" style="width: 10%;">2回</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%-- 取り出したデータを繰り返しで表示 --%>
+								<c:forEach var="tLS" items="${testListSubject}" varStatus="loop">
+									<%-- 各データ行の下に線を引く (最後の行は除く) --%>
+									<tr <c:if test="${!loop.last}">class="border-bottom"</c:if>>
+										<%-- 各セルの文字揃えと上下の余白(padding)を調整 --%>
+										<td class="text-center py-2">${tLS.entYear}</td>
+										<td class="text-center py-2">${tLS.classNum}</td>
+										<td class="text-center py-2">${tLS.studentNo}</td>
+										<td class="text-center py-2">${tLS.studentName}</td>
+										<td class="text-center py-2">"-"</td>
+										<td class="text-center py-2">"-"</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</c:if>
