@@ -47,9 +47,9 @@ public class TestListStudentDao extends Dao {
 		PreparedStatement statement = null;
 		ResultSet rSet = null;
 		// SQL文の条件 (指定した学生の学生番号で絞り込み)
-		String condition = "where school_cd=? and student_no=?";
+		String condition = "where t.school_cd=? and cd=?";
 		// SQL文のソート
-		String order = "order by subject_cd asc";
+		String order = "order by cd asc";
 
 		try {
 			// SQL文をセット 学校と学生番号による絞り込み
