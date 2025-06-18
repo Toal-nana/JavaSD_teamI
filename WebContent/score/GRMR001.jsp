@@ -91,7 +91,7 @@
 		</c:if>
 
 		<%-- リストを受け取っていなかった場合、以下の文章を表示 --%>
-		<c:if test="${empty testListSubject}">
+		<c:if test="${empty testListSubject || empty testListStudent}">
 			<p class="text-info">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p>
 		</c:if>
 	</c:param>

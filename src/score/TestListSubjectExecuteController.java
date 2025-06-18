@@ -44,6 +44,7 @@ public class TestListSubjectExecuteController extends CommonServlet {
 		TestListSubjectDao testListSubjectDao = new TestListSubjectDao();
 		List<TestListSubject> testListSubject = testListSubjectDao.filter(entYear, classNum, subject, school);
 
+
 		// 検索結果が入ったリストを渡す
 		req.setAttribute("testListSubject",testListSubject);
 

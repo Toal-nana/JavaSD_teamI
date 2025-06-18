@@ -39,7 +39,6 @@ public class TestListController extends CommonServlet {
 		List<Subject> subjectList = subjectDao.filter(school);
 
 		List<String> classList = classNumDao.filter(school);
-
 		// StringリストをClassNumオブジェクトのリストに変換
 		List<ClassNum> classNumList = new ArrayList<>();
 		for (String classNumStrs : classList) {
@@ -73,6 +72,7 @@ public class TestListController extends CommonServlet {
 			int entYear = Integer.parseInt(req.getParameter("f1"));
 			String classNum = req.getParameter("f2");
 			String subjectCd = req.getParameter("f3");
+
 
 			req.setAttribute("entYear", entYear);
 			req.setAttribute("classNum", classNum);
