@@ -4,7 +4,7 @@
 		<c:if test="${not empty testListSubject}">
 				<div class="search-results">
 					<div class="mb-3">
-						<span class="fw-bold">科目：${scuject.name}</span>
+						<span class="fw-bold">科目：${testListSubject.studentName}</span>
 					</div>
 
 					<form method="post" action="testexecute">
