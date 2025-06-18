@@ -32,6 +32,12 @@ public class StudentCreateExecuteController extends CommonServlet {
         String no = request.getParameter("number");
         String name = request.getParameter("name");
         String classNum = request.getParameter("class");
+
+
+
+
+        // 重複していなければ、登録処理を続行
+
         boolean isAttend = true;
 
         int entYear = 0;
@@ -40,6 +46,7 @@ public class StudentCreateExecuteController extends CommonServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
 
         Student student = new Student();
         student.setNo(no);
@@ -51,6 +58,15 @@ public class StudentCreateExecuteController extends CommonServlet {
 
         StudentDao sDao = new StudentDao();
         sDao.save(student);
+
+
+       // if (sDao.get(no) != null) {
+            // ★ 重複していた場合の処理
+
+            // 1-1. エラーメッセージをリクエストスコープにセット
+           // request.setAttribute("error", "学生番号 '" + no + "' は既に使用されています。");
+
+
 
         request.getRequestDispatcher("/student/STDM003.jsp").forward(request, response);
     }

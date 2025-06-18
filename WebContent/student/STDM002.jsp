@@ -11,6 +11,15 @@
     <div class="container mt-2">
       <h4 class="bg-light border shadow-sm p-3">学生情報登録フォーム</h4>
 
+		 <%-- 1. エラーメッセージの表示エリアを追加 --%>
+		<c:if test="${not empty error }">
+
+			<div class="alert alert-danger" role="alert">
+				<c:out value="${error }"></c:out>
+			</div>
+
+		</c:if>
+
       <%-- 登録実行サーブレット(StudentCreateExecuteController)にデータを送信 --%>
       <form action="${pageContext.request.contextPath}/student/create_execute" method="post">
         <div class="mb-3">
