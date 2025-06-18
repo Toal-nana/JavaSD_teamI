@@ -6,13 +6,42 @@
 
 	<c:param name="body">
 
-		<p>氏名：${student.name}(${student.no})</p>
+			<c:if test="${not empty searchResults}">
+				<div class="search-results">
+					<div class="mb-3">
+						<span class="fw-bold">氏名：${student.name}(${student.no})</span>
+					</div>
 
-		<table border="1"><thead><th>科目名</th><th>科目コード</th><th>回数</th><th>点数</th></thead>
-			<c:forEach var="tLS" items="${testListStudent}">
-				<tr><td>${tLS.subjectName}</td><td>${tLS.subjectCd}</td><td>${tLS.num}</td><td>${tLS.point}</td></tr>
-			</c:forEach>
-		</table>
+					<form method="post" action="testexecute">
+						<%-- table-borderlessでセルの縦横線をすべて消す --%>
+						<table class="table table-borderless mb-0"
+							style="vertical-align: middle;">
+							<thead>
+								<%-- ヘッダー行の下にだけ線を引く --%>
+								<tr class="border-bottom">
+									<th class="text-center py-2" style="width: 15%;">科目名</th>
+									<th class="text-center py-2" style="width: 15%;">科目コード</th>
+									<th class="text-center py-2" style="width: 20%;">回数</th>
+									<th class="text-center py-2" style="width: 30%;">点数</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%-- 取り出したデータを繰り返しで表示 --%>
+								<c:forEach var="tLS" items="${testListStudent}" varStatus="loop">
+									<%-- 各データ行の下に線を引く (最後の行は除く) --%>
+									<tr <c:if test="${!loop.last}">class="border-bottom"</c:if>>
+										<%-- 各セルの文字揃えと上下の余白(padding)を調整 --%>
+										<td class="text-center py-2">${tLS.subjectName}</td>
+										<td class="text-center py-2">${tLS.subjectCd}</td>
+										<td class="text-center py-2">${tLS.num}</td>
+										<td class="text-center py-2">${tLS.point}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</c:if>
 	</c:param>
 
 </c:import>
