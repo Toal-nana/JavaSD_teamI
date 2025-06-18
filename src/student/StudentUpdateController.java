@@ -43,9 +43,7 @@ public class StudentUpdateController extends CommonServlet {
         req.setAttribute("classList", classList);
 
 
-     // ★★★★★ ここにデバッグ用のコードを追加 ★★★★★
-        System.out.println("★★★★ 転送先: /student/STDM003.jsp ★★★★");
-        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
 
 
         // 5. 更新フォームのJSPにフォワード (ファイル名は /student/STDM003.jsp とする)

@@ -13,7 +13,7 @@ import tool.CommonServlet;
 // (import文は省略)
 
 // JSPのform actionに合わせてURLアノテーションを設定
-@WebServlet("/student/createexecute")// ★ JSPのaction属性と一致させる
+@WebServlet("/student/create_execute")// ★ JSPのaction属性と一致させる
 public class StudentCreateExecuteController extends CommonServlet {
 
     @Override
@@ -52,7 +52,7 @@ public class StudentCreateExecuteController extends CommonServlet {
         StudentDao sDao = new StudentDao();
         sDao.save(student);
 
-        response.sendRedirect(request.getContextPath() + "/list");
+        request.getRequestDispatcher("/student/STDM003.jsp").forward(request, response);
     }
 
     @Override

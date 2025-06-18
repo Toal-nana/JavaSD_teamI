@@ -12,7 +12,7 @@
       <h4 class="bg-light border shadow-sm p-3">学生情報登録フォーム</h4>
 
       <%-- 登録実行サーブレット(StudentCreateExecuteController)にデータを送信 --%>
-      <form action="${pageContext.request.contextPath}/student/StudentCreateExecuteController" method="post">
+      <form action="${pageContext.request.contextPath}/student/create_execute" method="post">
         <div class="mb-3">
           <label class="form-label">入学年度</label>
           <input type="text" name="year" class="form-control" required>
@@ -38,14 +38,16 @@
           </select>
         </div>
 
+			<div class="mt-4">
+			  <%-- 登録ボタン（上） --%>
+			  <button type="submit" class="btn btn-secondary">登録して終了</button>
 
-        <div class="mt-4">
-          <%-- 登録ボタンを追加 --%>
-          <button type="submit" class="btn btn-primary">登録して終了</button>
+			  <%-- 戻るリンク（下、プレーンテキストリンク） --%>
+			  <div class="mt-2">
+			    <a href="${pageContext.request.contextPath}/student/list">戻る</a>
+			  </div>
+			</div>
 
-          <%-- 戻るボタン --%>
-       <a href="${pageContext.request.contextPath}/student/list" class="btn btn-secondary">戻る</a>
-        </div>
 
       </form>
     </div>

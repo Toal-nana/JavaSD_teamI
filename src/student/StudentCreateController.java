@@ -29,7 +29,7 @@ public class StudentCreateController extends CommonServlet {
 
         	System.out.println("★ ログインしていません！リダイレクトします。★");
             // ログインページのパスは環境に合わせてください
-            response.sendRedirect(request.getContextPath() + "/account/LOGI001.jsp");
+            response.sendRedirect(request.getContextPath() + "/account/LOGI001");
             return;
         }
 

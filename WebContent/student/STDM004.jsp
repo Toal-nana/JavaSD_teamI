@@ -47,10 +47,16 @@
           <label class="form-check-label" for="isAttendCheck">在学中</label>
         </div>
 
-        <div class="mt-4">
-          <button type="submit" class="btn btn-primary">変更を保存する</button>
-          <a href="${pageContext.request.contextPath}/student/STDM001.jsp" class="btn btn-secondary">戻る</a>
-        </div>
+		<div class="mt-4">
+			  <%-- 変更ボタン（上） --%>
+			  <button type="submit" class="btn btn-primary">変更</button>
+
+			  <%-- 戻るリンク（下） --%>
+			  <div class="mt-2">
+			    <a href="${pageContext.request.contextPath}/student/list">戻る</a>
+			  </div>
+</div>
+
       </form>
     </div>
   </c:param>
