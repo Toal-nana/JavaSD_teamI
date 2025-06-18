@@ -55,9 +55,9 @@ public class TestListSubjectDao extends Dao {
 		PreparedStatement statement = null;
 		ResultSet rSet = null;
 		//SQLの条件 入学年度、クラス番号、科目、学校による条件付け
-		String condition = "where t.school_cd=? and ent_year=? and t.class_num=? and t.subject_cd=?";
+		String condition = " where t.school_cd=? and ent_year=? and t.class_num=? and t.subject_cd=?";
 		// SQL文のソート
-		String order = "order by s.no asc";
+		String order = " order by s.no asc";
 
 		try {
 			// SQL文をセット 学校と学生番号による絞り込み
