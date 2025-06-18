@@ -23,10 +23,6 @@ public class TestListSubjectExecuteController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-	}
-
-	@Override
-	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		// ログイン確認とTeacherインスタンスからschoolを受け取る
 		this.execute(req, resp);
 
@@ -35,8 +31,8 @@ public class TestListSubjectExecuteController extends CommonServlet {
 		// サーブレットから値を受け取る
 		int entYear = (int)req.getAttribute("entYear");
 		String classNum = (String)req.getAttribute("classNum");
-	    String subjectCd = (String)req.getAttribute("subjectCd");
-	    Subject subject = subjectDao.get(subjectCd, school);
+		String subjectCd = (String)req.getAttribute("subjectCd");
+		Subject subject = subjectDao.get(subjectCd, school);
 
 		// テスト用
 		System.out.println("entYear = " + req.getAttribute("entYear"));  // nullならNG
@@ -53,6 +49,11 @@ public class TestListSubjectExecuteController extends CommonServlet {
 
 		req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
 
+	}
+
+	@Override
+	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		get(req, resp);
 	}
 
 	@Override

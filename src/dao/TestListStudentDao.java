@@ -22,9 +22,9 @@ public class TestListStudentDao extends Dao {
 				TestListStudent testListStudent = new TestListStudent();
 				// テストリストインスタンスに検索結果をセット
 				// 科目名をセット
-				testListStudent.setSubjectName("subject_name");
+				testListStudent.setSubjectName(rSet.getString("subject_name"));
 				// 科目コードをセット
-				testListStudent.setSubjectCd("subject_cd");
+				testListStudent.setSubjectCd(rSet.getString("subject_cd"));
 				// 回数のセット
 				testListStudent.setNum(rSet.getInt("no"));
 				// 点数のセット

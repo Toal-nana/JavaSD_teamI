@@ -81,10 +81,6 @@ public class TestListController extends CommonServlet {
 			req.getRequestDispatcher("/score/testlistsubject").forward(req, resp);
 		// 学生別検索の時の処理
 		}else {
-			// jspから検索条件を受け取り、検索実行用のサーブレットにフォワード
-			String studentNo = req.getParameter("f4");
-
-			req.setAttribute( "studentNo",studentNo);
 
 			req.getRequestDispatcher("/score/testliststudent").forward(req, resp);
 		}

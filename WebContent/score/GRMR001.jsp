@@ -53,7 +53,7 @@
 
 
 			<%-- 学生情報による検索 --%>
-			<form action="${pageContext.request.contextPath}/score/testlist" method="get" class="mb-2">
+			<form action="${pageContext.request.contextPath}/score/testlist" method="post" class="mb-2">
 			<div class="row">
 				<div class="col-md-2 ms-4">
 					<label class="form-label">学生情報</label>
