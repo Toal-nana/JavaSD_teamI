@@ -9,7 +9,7 @@
   <%-- body に表示するコンテンツを渡す --%>
   <c:param name="body">
       <!-- タイトル -->
-      <div class="bg-body-secondary p-3 rounded my-4">
+      <div class="bg-body-secondary p-3 my-4">
         <h2 class="mb-0">科目管理</h2>
       </div>
 

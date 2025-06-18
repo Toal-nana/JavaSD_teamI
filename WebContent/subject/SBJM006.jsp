@@ -11,7 +11,7 @@
   <c:param name="body">
 
     <%-- 画面見出し（他のページとスタイルを統一） --%>
-    <div class="bg-body-secondary p-3 rounded my-4">
+    <div class="bg-body-secondary p-3 my-4">
       <h2 class="mb-0">科目情報削除</h2>
     </div>
 
@@ -29,7 +29,7 @@
     </form>
 
     <%-- 戻るリンク --%>
-    <div class="mt-2 mb-5">
+    <div class="mt-5 mb-5">
       <a href="${pageContext.request.contextPath}/subject/list">戻る</a>
     </div>
 

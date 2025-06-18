@@ -11,7 +11,7 @@
   <c:param name="body">
 
     <%-- 画面見出し（他のページとスタイルを統一） --%>
-    <div class="bg-body-secondary p-3 rounded my-4">
+    <div class="bg-body-secondary p-3 my-4">
       <h2 class="mb-0">科目情報変更</h2>
     </div>
 

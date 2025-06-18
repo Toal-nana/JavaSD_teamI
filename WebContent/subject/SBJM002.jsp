@@ -11,7 +11,7 @@
   <c:param name="body">
 
     <%-- 画面見出し（登録完了ページとスタイルを統一） --%>
-    <div class="bg-body-secondary p-3 rounded my-4">
+    <div class="bg-body-secondary p-3 my-4">
       <h2 class="mb-0">科目情報登録</h2>
     </div>
 
@@ -22,6 +22,10 @@
         <label for="subjectId" class="form-label">科目コード</label>
         <input type="text" class="form-control" id="subjectId" name="cd" value="<c:out value='${subject.cd}'/>" placeholder="科目コードを入力してください" required>
       </div>
+
+      <c:if test="${error != null}">
+        <p>${error}</p>
+      </c:if>
 
       <%-- 科目名 --%>
       <div class="mb-3">

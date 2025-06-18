@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
@@ -33,17 +34,33 @@ public class SubjectCreateExecuteController extends CommonServlet {
 	        try {
 	            SubjectDao subjectDao = new SubjectDao();
 
+	            String cd = req.getParameter("cd");
+	            String name = req.getParameter("name");
+	            School school = teacher.getSchool();
+
 	            // フォームから送信された値でSubjectインスタンスを作成
 	            Subject subject = new Subject();
-	            subject.setCd(req.getParameter("cd"));
-	            subject.setName(req.getParameter("name"));
-	            subject.setSchool(teacher.getSchool());
+	            subject.setCd(cd);
+	            subject.setName(name);
+	            subject.setSchool(school);
 
-	            // DAOのsaveメソッドでDBに保存
-	            subjectDao.save(subject);
+	            Subject subject2 = subjectDao.get(cd, school);
 
-	            // 完了画面にフォワード
-	            req.getRequestDispatcher("/subject/SBJM003.jsp").forward(req, resp);
+	            if (subject2 == null) {
+	            	 // DAOのsaveメソッドでDBに保存
+		            subjectDao.save(subject);
+
+		            // 完了画面にフォワード
+		            req.getRequestDispatcher("/subject/SBJM003.jsp").forward(req, resp);
+				} else {
+					req.setAttribute("subject", subject);
+
+					req.setAttribute("error", "科目コードが重複しています");
+
+					req.getRequestDispatcher("SBJM002.jsp").forward(req, resp);
+
+				}
+
 	        } catch (Exception e) {
 	            throw new ServletException(e);
 	        }
