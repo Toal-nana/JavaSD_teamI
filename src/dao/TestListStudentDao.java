@@ -12,7 +12,7 @@ import bean.TestListStudent;
 
 public class TestListStudentDao extends Dao {
 	// testテーブルとsubjectテーブルのjoin
-	private String baseSql = "select name as subject_name,subject_cd,no,point from test as t left  join subject as s on t.subject_cd = s.cd";
+	private String baseSql = "select s.name as subject_name, t.subject_cd, t.no, t.point from test as t left join subject as s on t.subject_cd = s.cd";
 
 	//検索後のリストへの格納処理をするメソッド
 	private List<TestListStudent> postFilter(ResultSet rSet) throws Exception {
@@ -47,9 +47,9 @@ public class TestListStudentDao extends Dao {
 		PreparedStatement statement = null;
 		ResultSet rSet = null;
 		// SQL文の条件 (指定した学生の学生番号で絞り込み)
-		String condition = "where t.school_cd=? and cd=?";
+		String condition = "where t.school_cd=? and t.student_no=?";
 		// SQL文のソート
-		String order = "order by cd asc";
+		String order = "order by t.subject_cd asc";
 
 		try {
 			// SQL文をセット 学校と学生番号による絞り込み
