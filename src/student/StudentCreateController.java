@@ -18,7 +18,7 @@ public class StudentCreateController extends CommonServlet {
     public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 
-    	System.out.println("★★★★★★ StudentCreateControllerが呼ばれました ★★★★★★");
+
 
         HttpSession session = request.getSession();
      // 他のサーブレット（StudentCreateControllerなど）のコード
@@ -27,7 +27,7 @@ public class StudentCreateController extends CommonServlet {
         // ログインチェック
         if (teacher == null) {
 
-        	System.out.println("★ ログインしていません！リダイレクトします。★");
+
             // ログインページのパスは環境に合わせてください
             response.sendRedirect(request.getContextPath() + "/account/LOGI001");
             return;
@@ -40,7 +40,7 @@ public class StudentCreateController extends CommonServlet {
         // ログインしている教員の学校情報を基にクラス番号の一覧を取得
         List<String> classList = cNumDao.filter(teacher.getSchool());
 
-        System.out.println("★★★★★★ classListの中身: " + classList);
+
 
 
 
