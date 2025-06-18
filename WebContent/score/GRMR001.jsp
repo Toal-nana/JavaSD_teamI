@@ -18,7 +18,7 @@
 					<div class="col-md-2">
 						<label class="form-label">入学年度</label>
 						<select name="f1" class="form-select" >
-							<option value="" selected>--------</option>
+							<option value="null" selected>--------</option>
 							<c:forEach var="student" items="${studentList}">
 								<option value="${student.entYear}">${student.entYear}</option>
 							</c:forEach>
@@ -28,7 +28,7 @@
 					<div class="col-md-2">
 						<label class="form-label">クラス</label>
 						<select name="f2" class="form-select" >
-							<option value="">--------</option>
+							<option value="null">--------</option>
 							<c:forEach var="course" items="${classNumList}">
 								<option value="${course.class_num}">${course.class_num}</option>
 							</c:forEach>
@@ -38,7 +38,7 @@
 					<div class="col-md-4">
 						<label class="form-label">科目</label>
 						<select name="f3" class="form-select">
-							<option>--------</option>
+							<option value="null">--------</option>
 							<c:forEach var="subject" items="${subjectList}">
 								<option value="${subject.cd}">${subject.name}</option>
 							</c:forEach>
@@ -48,6 +48,9 @@
 						<button type="submit" class="btn btn-secondary ms-2 mt-3">検索</button>
 					</div>
 					<input type="hidden" name="f" value="sj">
+					<c:if test="${not empty sjError}">
+						<p class="text-emergency">${sjError}</p>
+					</c:if>
 				</div>
 			</form>
 
@@ -82,12 +85,7 @@
 
 		<%-- リストを受け取っていた場合、学生別検索結果を表示 --%>
 		<c:if test="${not empty testListStudent}">
-			<p>氏名：${student.name}(${student.no})</p>
-			<table border="1"><thead><th>科目名</th><th>科目コード</th><th>回数</th><th>点数</th></thead>
-			<c:forEach var="tLS" items="${testListStudent}">
-				<tr><td>${tLS.subjectName}</td><td>${tLS.subjectCd}</td><td>${tLS.num}</td><td>${tLS.point}</td></tr>
-			</c:forEach>
-			</table>
+			<c:import url="/score/GRMR003.jsp"/>
 		</c:if>
 
 		<%-- リストを受け取っていなかった場合、以下の文章を表示 --%>

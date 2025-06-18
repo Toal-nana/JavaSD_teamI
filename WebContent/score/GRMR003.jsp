@@ -1,10 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/base.jsp">
-
-	<c:param name="title">学生別成績一覧</c:param>
-
-	<c:param name="body">
 
 			<c:if test="${not empty searchResults}">
 				<div class="search-results">
@@ -42,6 +37,3 @@
 					</form>
 				</div>
 			</c:if>
-	</c:param>
-
-</c:import>

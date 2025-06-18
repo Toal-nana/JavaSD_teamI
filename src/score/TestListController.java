@@ -69,9 +69,19 @@ public class TestListController extends CommonServlet {
 		if ("sj".equals(check)) {
 
 			// jspから検索条件を受け取り、検索実行用のサーブレットにフォワード
-			int entYear = Integer.parseInt(req.getParameter("f1"));
+
+			String entYear = req.getParameter("f1");
 			String classNum = req.getParameter("f2");
 			String subjectCd = req.getParameter("f3");
+
+			// --------が三つのどこかに入っていたらGRMR001に戻り、エラー文の表示
+			if (entYear.equals("null") || classNum.equals("null") || subjectCd.equals("null")) {
+				String sjError = "入学年度とクラスと科目を選択してください";
+				req.setAttribute("sjError", sjError);
+
+				// 成績参照検索の画面に飛ぶ
+				req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
+			}
 
 			req.setAttribute("entYear", entYear);
 			req.setAttribute("classNum", classNum);
