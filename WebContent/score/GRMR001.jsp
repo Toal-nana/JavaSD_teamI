@@ -49,9 +49,9 @@
 					</div>
 					<input type="hidden" name="f" value="sj">
 					<c:if test="${not empty sjError}">
-						<p class="text-emergency">${sjError}</p>
 					</c:if>
 				</div>
+						<p class="text-warning ps-2 p-0">${sjError}</p>
 			</form>
 
 
@@ -64,7 +64,7 @@
 
 				<div class="col-md-4">
 					<label class="form-label">学生番号</label>
-					<input type="text" name="f4" value="${f4}" placeholder="学生番号を入力してください" class="form-control">
+					<input type="text" name="f4" value="${f4}" placeholder="学生番号を入力してください" class="form-control" required>
 				</div>
 				<div class="col">
 					<button type="submit" class="btn btn-secondary ms-2 mt-3">検索</button>
