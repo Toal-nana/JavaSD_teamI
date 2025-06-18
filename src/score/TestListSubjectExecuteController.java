@@ -29,7 +29,8 @@ public class TestListSubjectExecuteController extends CommonServlet {
 		SubjectDao subjectDao = new SubjectDao();
 
 		// サーブレットから値を受け取る
-		int entYear = (int)req.getAttribute("entYear");
+		String entYearStr = (String)req.getAttribute("entYear");
+		int entYear = Integer.parseInt(entYearStr);
 		String classNum = (String)req.getAttribute("classNum");
 		String subjectCd = (String)req.getAttribute("subjectCd");
 		Subject subject = subjectDao.get(subjectCd, school);

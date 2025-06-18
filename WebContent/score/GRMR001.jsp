@@ -76,7 +76,7 @@
 
 		<%-- リストを受け取っていた場合、科目別検索結果を表示 --%>
 		<c:if test="${not empty testListSubject}">
-			<table border="1"><thead><th>入学年度</th><th>クラス</th><th>学生番号</th><th>氏名</th><th>1回</th><th>2回</th></thead>
+			<table border="1" class="table table-striped"><thead><th>入学年度</th><th>クラス</th><th>学生番号</th><th>氏名</th><th>1回</th><th>2回</th></thead>
 			<c:forEach var="tLS" items="${testListSubject}">
 				<tr><td>${tLS.entYear}</td><td>${tLS.classNum}</td><td>${tLS.studentNo}</td><td>${tLS.studentName}</td><td>"-"</td><td>"-"</td></tr>
 			</c:forEach>
