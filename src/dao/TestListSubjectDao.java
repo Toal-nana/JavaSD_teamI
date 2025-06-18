@@ -15,7 +15,7 @@ import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
 	// testテーブルとstudentテーブルのjoin
-	private String baseSql = "select ent_year,t.class_num,student_no,name as student_name,point,'-' as point2 from test as t left join student as s on t.student_no = s.no" ;
+	private String baseSql = "select ent_year,t.class_num,student_no,name as student_name,t.no,point from test as t left join student as s on t.student_no = s.no" ;
 
 	// 検索結果の格納作業をする
 	private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
@@ -33,9 +33,12 @@ public class TestListSubjectDao extends Dao {
 				testListSubject.setStudentNo(rSet.getString("student_no"));
 				// 学生氏名をセット
 				testListSubject.setStudentName(rSet.getString("name"));
-				// 点数をセット
-				pointMap.put(1, rSet.getInt("point"));
-				pointMap.put(2, rSet.getInt("point2"));
+				// 回数をMapにセット
+				pointMap.put(1, rSet.getInt("no"));
+				// 点数をMapにセット
+				pointMap.put(2, rSet.getInt("point"));
+				// Mapをセット
+				testListSubject.setPoints(pointMap);
 				// リストに追加
 				list.add(testListSubject);
 			}
