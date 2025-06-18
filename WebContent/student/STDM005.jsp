@@ -17,6 +17,6 @@
 		</div>
 
 
-		<a href="${pageContext.request.contextPath}/student/STDM001">学生一覧</a>
+		<a href="${pageContext.request.contextPath}/student/list">学生一覧</a>
 	</c:param>
 </c:import>

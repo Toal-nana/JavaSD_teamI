@@ -22,7 +22,7 @@
     	<section class="mp=4">
     	<h1>学生管理</h1>
     	<div class="my-2 text-end px-4">
-    	<a href="${pageContext.request.contextPath}/student/STDM002.jsp">学生新規登録</a>
+    	<a href="${pageContext.request.contextPath}/student/create">新規登録</a>
     		</div>
     		<form method="get">
     			 <div class="row border mx-3 mb-3 py-2 align-items-center rounded "id="filter">
