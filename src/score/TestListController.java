@@ -75,12 +75,13 @@ public class TestListController extends CommonServlet {
 			String subjectCd = req.getParameter("f3");
 
 			// --------が三つのどこかに入っていたらGRMR001に戻り、エラー文の表示
-			if (entYear.equals("null") || classNum.equals("null") || subjectCd.equals("null")) {
-				String sjError = "入学年度とクラスと科目を選択してください";
-				req.setAttribute("sjError", sjError);
+			if (entYear.isEmpty() || classNum.isEmpty() || subjectCd.isEmpty()) {
+	            req.setAttribute("sjError", "入学年度とクラスと科目を選択してください");
+
+	            this.get(req, resp);
 
 				// 成績参照検索の画面に飛ぶ
-				req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
+				return;
 			}
 
 			req.setAttribute("entYear", entYear);
@@ -88,9 +89,9 @@ public class TestListController extends CommonServlet {
 			req.setAttribute("subjectCd", subjectCd);
 
 			req.getRequestDispatcher("/score/testlistsubject").forward(req, resp);
-		// 学生別検索の時の処理
-		}else {
 
+			// 学生別検索の時の処理
+		}else {
 			req.getRequestDispatcher("/score/testliststudent").forward(req, resp);
 		}
 	}

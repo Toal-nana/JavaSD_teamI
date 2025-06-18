@@ -1,5 +1,6 @@
 package score;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -7,10 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.ClassNum;
+import bean.School;
 import bean.Student;
+import bean.Subject;
 import bean.Teacher;
 import bean.TestListStudent;
+import dao.ClassNumDao;
 import dao.StudentDao;
+import dao.SubjectDao;
 import dao.TestListStudentDao;
 import tool.CommonServlet;
 
@@ -65,6 +71,28 @@ public class TestListStudentExecuteController extends CommonServlet {
 		req.setAttribute("student", student);
 		req.setAttribute("testListStudent", testListStudent);
 		req.setAttribute("f4", studentNo);
+
+		 School school = teacher.getSchool();
+	     ClassNumDao classNumDao = new ClassNumDao();
+	     SubjectDao subjectDao = new SubjectDao();
+
+	     // ドロップダウン用のリストを取得
+	     List<Student> studentListForDropdown = studentDao.filter(school, true);
+	     List<String> classListStr = classNumDao.filter(school);
+	     List<Subject> subjectList = subjectDao.filter(school);
+
+	     // ClassNumリストに変換
+	     List<ClassNum> classNumList = new ArrayList<>();
+	     for (String classNumStrs : classListStr) {
+	            ClassNum classNum = new ClassNum();
+	            classNum.setClass_num(classNumStrs);
+	            classNumList.add(classNum);
+	     }
+
+	     // ドロップダウン用リストをリクエストスコープにセット
+	     req.setAttribute("studentList", studentListForDropdown);
+	     req.setAttribute("classNumList", classNumList);
+	     req.setAttribute("subjectList", subjectList);
 
 		// フォワード
 		req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);

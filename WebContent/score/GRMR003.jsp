@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-			<c:if test="${not empty searchResults}">
+			<c:if test="${not empty testListStudent}">
 				<div class="search-results">
 					<div class="mb-3">
 						<span class="fw-bold">氏名：${student.name}(${student.no})</span>
