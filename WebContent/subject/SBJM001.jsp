@@ -15,7 +15,7 @@
 
       <!-- 新規登録リンク -->
       <div class="text-end mb-3">
-        <a href="${pageContext.request.contextPath}/subject/SBJM002.jsp" class="btn btn-link">新規登録</a>
+        <a href="${pageContext.request.contextPath}/subject/create" class="btn btn-link">新規登録</a>
       </div>
 
       <!-- 科目一覧テーブル -->
@@ -33,8 +33,8 @@
               <td><c:out value="${subject.cd}" /></td>
               <td><c:out value="${subject.name}" /></td>
               <td>
-                <a href="${pageContext.request.contextPath}/subject/update?cd=${subject.cd}">変更</a>
-                <a href="${pageContext.request.contextPath}/subject/deleteConfirm?cd=${subject.cd}">削除</a>
+                <a href="${pageContext.request.contextPath}/subject/update?cd=${subject.cd}&scd=${subject.school.cd}">変更</a>
+                <a href="${pageContext.request.contextPath}/subject/delete?cd=${subject.cd}&scd=${subject.school.cd}">削除</a>
               </td>
             </tr>
           </c:forEach>

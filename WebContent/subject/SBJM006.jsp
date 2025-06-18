@@ -18,13 +18,13 @@
     <%-- 削除確認メッセージ --%>
     <p class="my-4">
       <%-- 画像に合わせて科目コードも表示 --%>
-      「<c:out value="${subject.subjectName}"/><c:out value="${subject.subjectId}"/>」を削除してもよろしいですか？
+      「<c:out value="${subject.name}"/><c:out value="${subject.cd}"/>」を削除してもよろしいですか？
     </p>
 
     <%-- 削除を確定するフォーム --%>
-    <form action="${pageContext.request.contextPath}/subject/delete" method="post">
+    <form action="deleteexecute" method="post">
       <%-- 削除対象の科目IDを非表示で送信 --%>
-      <input type="hidden" name="subjectId" value="<c:out value='${subject.subjectId}'/>" />
+      <input type="hidden" name="cd" value="<c:out value='${subject.cd}'/>" />
       <button type="submit" class="btn btn-danger">削除</button>
     </form>
 

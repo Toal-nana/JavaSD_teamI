@@ -6,16 +6,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Subject;
+import dao.SchoolDao;
 import dao.SubjectDao;
 import tool.CommonServlet;
 
-@WebServlet("/subject/Delete")
+@WebServlet("/subject/delete")
 public class SubjectDeleteController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-HttpSession session = req.getSession();
+		HttpSession session = req.getSession();
 
         // ログインチェック
         if (session.getAttribute("session_user") == null) {
@@ -26,9 +28,12 @@ HttpSession session = req.getSession();
         try {
             SubjectDao subjectDao = new SubjectDao();
             String cd = req.getParameter("cd");
+            String scd = req.getParameter("scd");
 
+            SchoolDao schoolDao = new SchoolDao();
+            School school = schoolDao.get(scd);
             // 削除対象の科目情報を取得
-            Subject subjectToDelete = subjectDao.get(cd);
+            Subject subjectToDelete = subjectDao.get(cd,school);
 
             // JSPに渡すためにリクエストスコープにセット
             req.setAttribute("subject", subjectToDelete);

@@ -10,7 +10,7 @@ import bean.Subject;
 import dao.SubjectDao;
 import tool.CommonServlet;
 
-@WebServlet("/subject/DeleteExecute")
+@WebServlet("/subject/deleteexecute")
 public class SubjectDeleteExecuteController extends CommonServlet {
 
 	@Override

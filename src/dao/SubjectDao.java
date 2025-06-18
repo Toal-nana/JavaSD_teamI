@@ -146,8 +146,8 @@ public class SubjectDao extends Dao {
 				// UPDATE文をセット(上書き保存)
 				statement = connection.prepareStatement("update subject set name=? where cd=?");
 				// SQL文に値を入れる
-				statement.setString(1, subject.getCd());
-				statement.setString(2, subject.getName());
+				statement.setString(1, subject.getName());
+				statement.setString(2, subject.getCd());
 			}
 			// SQL文を実行し、更新件数を記録
 			count = statement.executeUpdate();

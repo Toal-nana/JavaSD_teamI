@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import tool.CommonServlet;
 
-@WebServlet("/subject/Create")
+@WebServlet("/subject/create")
 public class SubjectCreateController extends CommonServlet {
 
 	@Override

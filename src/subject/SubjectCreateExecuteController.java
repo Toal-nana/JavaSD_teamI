@@ -11,7 +11,7 @@ import bean.Teacher;
 import dao.SubjectDao;
 import tool.CommonServlet;
 
-@WebServlet("/subject/CreateExecute")
+@WebServlet("/subject/createexecute")
 public class SubjectCreateExecuteController extends CommonServlet {
 
 	@Override

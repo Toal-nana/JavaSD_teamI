@@ -27,9 +27,10 @@ public class SubjectUpdateController extends CommonServlet {
 	        try {
 	            SubjectDao subjectDao = new SubjectDao();
 	            String cd = req.getParameter("cd");
+	            String scd = req.getParameter("scd");
 
 	            SchoolDao schoolDao = new SchoolDao();
-	            School school = schoolDao.get(cd);
+	            School school = schoolDao.get(scd);
 
 	            // 変更対象の科目情報を取得
 	            Subject subjectToUpdate = subjectDao.get(cd,school);

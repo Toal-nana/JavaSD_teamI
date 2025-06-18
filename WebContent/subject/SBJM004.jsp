@@ -16,19 +16,19 @@
     </div>
 
     <%-- 科目情報変更フォーム --%>
-    <form action="${pageContext.request.contextPath}/subject/update" method="post">
+    <form action="updateexecute" method="post">
 
       <%-- 科目コード（主キーなので変更不可にする） --%>
       <div class="mb-3">
         <label for="subjectId" class="form-label">科目コード</label>
         <%-- readonly 属性を追加して、ユーザーによる編集を防ぐ --%>
-        <input type="text" class="form-control" id="subjectId" name="subjectId" value="<c:out value='${subject.cd}'/>" readonly>
+        <input type="text" class="form-control" id="subjectId" name="cd" value="<c:out value='${subject.cd}'/>" readonly>
       </div>
 
       <%-- 科目名 --%>
       <div class="mb-3">
         <label for="subjectName" class="form-label">科目名</label>
-        <input type="text" class="form-control" id="subjectName" name="subjectName" value="<c:out value='${subject.name}'/>" placeholder="科目名を入力してください" required>
+        <input type="text" class="form-control" id="subjectName" name="name" value="<c:out value='${subject.name}'/>" placeholder="科目名を入力してください" required>
       </div>
 
       <%-- 変更ボタン（フォーム送信） --%>
