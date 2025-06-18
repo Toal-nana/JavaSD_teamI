@@ -9,7 +9,7 @@
 
 		<%-- 科目情報による検索 --%>
 		<div class="border p-2 m-3 rounded">
-			<form action="${pageContext.request.contextPath}/score/testlist" method="get" class="border-bottom mb-3">
+			<form action="${pageContext.request.contextPath}/score/testlist" method="post" class="border-bottom mb-3">
 				<div class="row mb-2">
 					<div class="col-md-2 ms-4">
 				    	<label class="form-label mt-4">科目情報</label>
@@ -53,7 +53,7 @@
 
 
 			<%-- 学生情報による検索 --%>
-			<form action="${pageContext.request.contextPath}/score/" method="get" class="mb-2">
+			<form action="${pageContext.request.contextPath}/score/testlist" method="get" class="mb-2">
 			<div class="row">
 				<div class="col-md-2 ms-4">
 					<label class="form-label">学生情報</label>
@@ -70,7 +70,8 @@
 			<input type="hidden" name="f" value="st">
 			</form>
 		</div>
-		<%-- リストを受け取っていた場合、検索結果を表示 --%>
+
+		<%-- リストを受け取っていた場合、科目別検索結果を表示 --%>
 		<c:if test="${not empty testListSubject}">
 			<table border="1"><thead><th>入学年度</th><th>クラス</th><th>学生番号</th><th>氏名</th><th>1回</th><th>2回</th></thead>
 			<c:forEach var="tLS" items="${testListSubject}">
@@ -78,6 +79,17 @@
 			</c:forEach>
 			</table>
 		</c:if>
+
+		<%-- リストを受け取っていた場合、学生別検索結果を表示 --%>
+		<c:if test="${not empty testListStudent}">
+			<p>氏名：${student.name}(${student.no})</p>
+			<table border="1"><thead><th>科目名</th><th>科目コード</th><th>回数</th><th>点数</th></thead>
+			<c:forEach var="tLS" items="${testListStudent}">
+				<tr><td>${tLS.subjectName}</td><td>${tLS.subjectCd}</td><td>${tLS.num}</td><td>${tLS.point}</td></tr>
+			</c:forEach>
+			</table>
+		</c:if>
+
 		<%-- リストを受け取っていなかった場合、以下の文章を表示 --%>
 		<c:if test="${empty testListSubject}">
 			<p class="text-info">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p>

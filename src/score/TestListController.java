@@ -18,6 +18,7 @@ import dao.StudentDao;
 import dao.SubjectDao;
 import tool.CommonServlet;
 
+// 成績参照検索画面
 @WebServlet(urlPatterns = { "/score/testlist" })
 public class TestListController extends CommonServlet {
 	private Teacher teacher;
@@ -65,22 +66,27 @@ public class TestListController extends CommonServlet {
 		// 科目別、学生別どちらで検索したかの判定用
 		String check = req.getParameter("f");
 
-		if (check == "sj") {
+		// 科目別検索の時の処理
+		if ("sj".equals(check)) {
 
-			// jspから検索条件を受け取り、検索を実行
-			String entYear = req.getParameter("f1");
+			// jspから検索条件を受け取り、検索実行用のサーブレットにフォワード
+			int entYear = Integer.parseInt(req.getParameter("f1"));
 			String classNum = req.getParameter("f2");
 			String subjectCd = req.getParameter("f3");
 
-			req.setAttribute(entYear, "entYear");
-			req.setAttribute(classNum, "classNum");
-			req.setAttribute(subjectCd, "subjectCd");
+			req.setAttribute("entYear", entYear);
+			req.setAttribute("classNum", classNum);
+			req.setAttribute("subjectCd", subjectCd);
 
 			req.getRequestDispatcher("/score/testlistsubject").forward(req, resp);
+		// 学生別検索の時の処理
 		}else {
+			// jspから検索条件を受け取り、検索実行用のサーブレットにフォワード
+			String studentNo = req.getParameter("f4");
+
+			req.setAttribute( "studentNo",studentNo);
 
 			req.getRequestDispatcher("/score/testliststudent").forward(req, resp);
-
 		}
 	}
 

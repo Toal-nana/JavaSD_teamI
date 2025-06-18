@@ -23,14 +23,26 @@ public class TestListSubjectExecuteController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+	}
+
+	@Override
+	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		// ログイン確認とTeacherインスタンスからschoolを受け取る
 		this.execute(req, resp);
 
 		SubjectDao subjectDao = new SubjectDao();
 
-		int entYear = Integer.parseInt(req.getParameter("entYear"));
-		String classNum = req.getParameter("classNum");
-		Subject subject = subjectDao.get(req.getParameter("subjectCd"),school);
+		// サーブレットから値を受け取る
+		int entYear = (Integer)req.getAttribute("entYear");
+		String classNum = (String)req.getAttribute("classNum");
+	    String subjectCd = (String)req.getAttribute("subjectCd");
+	    Subject subject = subjectDao.get(subjectCd, school);
+
+		// テスト用
+		System.out.println("entYear = " + req.getAttribute("entYear"));  // nullならNG
+		System.out.println("classNum = " + req.getAttribute("classNum"));
+		System.out.println("subjectCd = " + req.getAttribute("subjectCd"));
+
 
 		// 受け取った検索条件を使って検索を実行
 		TestListSubjectDao testListSubjectDao = new TestListSubjectDao();
@@ -40,10 +52,6 @@ public class TestListSubjectExecuteController extends CommonServlet {
 		req.setAttribute("testListSubject",testListSubject);
 
 		req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
-	}
-
-	@Override
-	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
 	}
 
