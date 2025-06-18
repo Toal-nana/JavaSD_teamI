@@ -21,7 +21,7 @@
 			<a href="${pageContext.request.contextPath}/score/test">戻る</a>
 
 			<%-- 成績参照検索画面へ遷移するリンク --%>
-			<a class="mx-5" href="${page_context.request.contextPath}/">成績参照</a>
+			<a class="mx-5" href="${pageContext.request.contextPath}/score/testlist">成績参照</a>
 
 		</div>
 	</c:param>

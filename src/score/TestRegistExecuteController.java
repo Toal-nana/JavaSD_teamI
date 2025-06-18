@@ -50,7 +50,6 @@ public class TestRegistExecuteController extends CommonServlet {
 		List<Test> testsToSave = new ArrayList<>();
 
 		// セッションから検索条件や学校情報を取得
-		// これらはDBに保存する際にTestオブジェクトにセットするために必要
 		School school = teacher.getSchool();
 		String subjectCd = (String) session.getAttribute("f3_selected");
 		int testNo = Integer.parseInt((String) session.getAttribute("f4_selected"));
@@ -73,7 +72,7 @@ public class TestRegistExecuteController extends CommonServlet {
 		// "point_" で始まるパラメータをループしてチェック
 		for (String paramName : parameterMap.keySet()) {
 			if (paramName.startsWith("point_")) {
-				// "point_12345" から学生番号 "12345" を抽出
+				// 例："point_12345" から学生番号 "12345" を抽出
 				String studentNo = paramName.substring("point_".length());
 				String pointStr = parameterMap.get(paramName)[0];
 
