@@ -17,7 +17,7 @@ public class SubjectUpdateController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		 HttpSession session = req.getSession();
+		 	HttpSession session = req.getSession();
 
 	        // ログインチェック
 	        if (session.getAttribute("session_user") == null) {

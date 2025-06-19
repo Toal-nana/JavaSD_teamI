@@ -21,7 +21,7 @@
             <th>科目コード</th>
             <th>科目名</th>
             <!-- 変更・削除リンク用の見出し。text-endで右揃えに -->
-            <th class="text-end" style="width: 120px;"></th>
+            <th class="text-end" style="width: 200px;"></th>
           </tr>
         </thead>
         <tbody>
@@ -32,9 +32,9 @@
               <!-- 変更・削除リンクのセル。text-endで右揃えにする -->
               <td >
                 <!-- リンクを横並びに配置 -->
-                <a href="${pageContext.request.contextPath}/subject/update?cd=${subject.cd}">変更</a>
+                <a href="${pageContext.request.contextPath}/subject/update?cd=${subject.cd}&scd=${subject.school.cd}">変更</a>
                 <!-- ms-3で左側に余白を設ける -->
-                <a href="${pageContext.request.contextPath}/subject/delete?cd=${subject.cd}" class="ms-3">削除</a>
+                <a href="${pageContext.request.contextPath}/subject/delete?cd=${subject.cd}&scd=${subject.school.cd}" class="mx-5 ps-3">削除</a>
               </td>
             </tr>
           </c:forEach>
