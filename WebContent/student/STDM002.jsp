@@ -11,30 +11,29 @@
     <div class="container mt-2">
       <h4 class="bg-light border shadow-sm p-3">学生情報登録フォーム</h4>
 
-		 <%-- 1. エラーメッセージの表示エリアを追加 --%>
-		<c:if test="${not empty error }">
 
-			<div class="alert alert-danger" role="alert">
-				<c:out value="${error }"></c:out>
-			</div>
-
-		</c:if>
-
-      <%-- 登録実行サーブレット(StudentCreateExecuteController)にデータを送信 --%>
       <form action="${pageContext.request.contextPath}/student/create_execute" method="post">
         <div class="mb-3">
           <label class="form-label">入学年度</label>
-          <input type="text" name="year" class="form-control" required>
+          <%-- ★ value属性で入力値を再表示。0の場合は表示しない --%>
+          <input type="text" name="year" class="form-control" value="<c:out value='${student.entYear > 0 ? student.entYear : ""}'/>" required>
         </div>
 
         <div class="mb-3">
           <label class="form-label">学生番号</label>
-          <input type="text" name="number" class="form-control" required>
+          <%-- ★ value属性で入力値を再表示 --%>
+          <input type="text" name="number" class="form-control" value="<c:out value='${student.no}'/>" required>
+          <%-- ★ 学生番号のエラーメッセージのみ表示 --%>
         </div>
+
+        <c:if test="${error != null}">
+        	<p class="text-warning">${error}</p>
+      	</c:if>
 
         <div class="mb-3">
           <label class="form-label">氏名</label>
-          <input type="text" name="name" class="form-control" required>
+          <%-- ★ value属性で入力値を再表示 --%>
+          <input type="text" name="name" class="form-control" value="<c:out value='${student.name}'/>" required>
         </div>
 
         <div class="mb-4">
@@ -42,22 +41,18 @@
           <select name="class" class="form-select" required>
             <option value="">選択してください</option>
             <c:forEach var="cls" items="${classList}">
-              <option value="${cls}">${cls}</option>
+              <%-- ★ c:ifを使って選択された値を保持 (selected属性を付与) --%>
+              <option value="${cls}" <c:if test="${student.classNum == cls}">selected</c:if>>${cls}</option>
             </c:forEach>
           </select>
         </div>
 
-			<div class="mt-4">
-			  <%-- 登録ボタン（上） --%>
-			  <button type="submit" class="btn btn-secondary">登録して終了</button>
-
-			  <%-- 戻るリンク（下、プレーンテキストリンク） --%>
-			  <div class="mt-2">
-			    <a href="${pageContext.request.contextPath}/student/list">戻る</a>
-			  </div>
-			</div>
-
-
+        <div class="mt-4">
+          <button type="submit" class="btn btn-secondary">登録して終了</button>
+          <div class="mt-2">
+            <a href="${pageContext.request.contextPath}/student/list">戻る</a>
+          </div>
+        </div>
       </form>
     </div>
   </c:param>
