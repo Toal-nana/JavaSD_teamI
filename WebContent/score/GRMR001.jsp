@@ -15,7 +15,6 @@
 				    	<label class="form-label mt-4">科目情報</label>
 					</div>
 
-					<%-- 入学年度の選択 --%>
 					<div class="col-md-2">
 						<label class="form-label">入学年度</label>
 						<select name="f1" class="form-select" >
@@ -26,7 +25,6 @@
 						</select>
 					</div>
 
-					<%-- クラスの選択 --%>
 					<div class="col-md-2">
 						<label class="form-label">クラス</label>
 						<select name="f2" class="form-select" >

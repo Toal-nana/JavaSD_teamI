@@ -1,7 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-		<c:if test="${not empty testListSubject}">
 				<div class="search-results">
 					<div class="mb-3">
 						<span class="fw-bold">科目：${subject.name}</span>
@@ -32,7 +31,7 @@
 										<td class="text-center py-2">${tLS.classNum}</td>
 										<td class="text-center py-2">${tLS.studentNo}</td>
 										<td class="text-center py-2">${tLS.studentName}</td>
-										<td class="text-center py-2">${not empty tLS.points[1] ? tLS.points[1] : '-'}</td>
+										<td class="text-center py-2">${tLS.points[1]}</td>
 										<td class="text-center py-2">${not empty tLS.points[2] ? tLS.points[2] : '-'}</td>
 									</tr>
 								</c:forEach>
@@ -40,4 +39,3 @@
 						</table>
 					</form>
 				</div>
-			</c:if>

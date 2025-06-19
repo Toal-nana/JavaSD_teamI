@@ -22,6 +22,7 @@ public class TestListSubjectDao extends Dao {
 			// 学生番号をキーにして、学生情報を集約する為のMap
 			Map<String,TestListSubject> studentMap = new HashMap<>();
 
+		try {
 			while (rSet.next()) {
 				// 現在の行の学生番号を取得
 				String studentNo = rSet.getString("student_no");
@@ -34,8 +35,6 @@ public class TestListSubjectDao extends Dao {
 				if (!studentMap.containsKey(studentNo)) {
 					// 新しいTestListSubjectを作成
 					TestListSubject studentData = new TestListSubject();
-
-
 					// 入学年度をセット
 					studentData.setEntYear(rSet.getInt("ent_year"));
 					// クラス番号をセット
@@ -54,7 +53,9 @@ public class TestListSubjectDao extends Dao {
 				// その学生の点数Mapに、今回のテスト結果を追加
 				currentStudent.getPoints().put(testNo, point);
 			}
-
+		}catch (Exception e ) {
+			e.printStackTrace();
+		}
 			// Mapに集約された全てのTestListSubjectオブジェクトをListに変換して返す
 			return new ArrayList<>(studentMap.values());
 	}

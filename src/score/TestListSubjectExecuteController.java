@@ -40,6 +40,14 @@ public class TestListSubjectExecuteController extends CommonServlet {
 		String subjectCd = (String)req.getAttribute("subjectCd");
 		Subject subject = subjectDao.get(subjectCd, school);
 
+	    System.out.println("-------------------------------------------------");
+	    System.out.println("★ DAO.filter() に渡す直前のパラメータを確認します ★");
+	    System.out.println("  entYear   : " + entYear);
+	    System.out.println("  classNum  : '" + classNum + "'"); // シングルクォートで囲んでスペースを確認
+	    System.out.println("  subjectCd : '" + subject.getCd() + "'"); // subjectオブジェクトから取得した値
+	    System.out.println("  schoolCd  : '" + school.getCd() + "'");
+	    System.out.println("-------------------------------------------------");
+
 		// 受け取った検索条件を使って検索を実行
 		TestListSubjectDao testListSubjectDao = new TestListSubjectDao();
 		List<TestListSubject> testListSubject = testListSubjectDao.filter(entYear, classNum, subject, school);
@@ -71,10 +79,11 @@ public class TestListSubjectExecuteController extends CommonServlet {
 		req.setAttribute("classNumList", classNumList);
 		req.setAttribute("subjectList", subjectList);
 
-		// 選択された値を送る
-		req.setAttribute("entYear", entYear);
-		req.setAttribute("classNum", classNum);
-		req.setAttribute("subject", subject);
+        // JSPが「選択状態の保持」と「科目名表示」のために使う全ての値をセットする
+		req.setAttribute("entYear", entYearStr);    // String型の入学年度
+		req.setAttribute("classNum", classNum);       // String型のクラス番号
+		req.setAttribute("subjectCd", subjectCd);     // String型の科目コード
+		req.setAttribute("subject", subject);         // 科目名表示用のSubjectオブジェクト[
 
 		req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
 
