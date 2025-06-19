@@ -46,7 +46,7 @@ public class SubjectCreateExecuteController extends CommonServlet {
 
 	            Subject subject2 = subjectDao.get(cd, school);
 
-	            if (subject2 == null) {
+	            if (subject2 == null && cd.length() == 3) {
 	            	 // DAOのsaveメソッドでDBに保存
 		            subjectDao.save(subject);
 
@@ -55,10 +55,12 @@ public class SubjectCreateExecuteController extends CommonServlet {
 				} else {
 					req.setAttribute("subject", subject);
 
-					req.setAttribute("error", "科目コードが重複しています");
-
+					if (subject2 != null) {
+						req.setAttribute("error", "科目コードが重複しています");
+					} else {
+						req.setAttribute("error", "科目コードは3文字で入力してください");
+					}
 					req.getRequestDispatcher("SBJM002.jsp").forward(req, resp);
-
 				}
 
 	        } catch (Exception e) {
