@@ -56,20 +56,21 @@ public class TestListStudentExecuteController extends CommonServlet {
 		// 学生情報を取得
 		Student student = studentDao.get(studentNo);
 
-		//学生の存在チェック
+		//学生情報がない場合はエラーメッセージを表示
 		if (student == null) {
-			req.setAttribute("error_student", "指定された学生番号の学生は存在しません。");
-			req.setAttribute("f4", studentNo); // 入力された番号をフォームに保持
-			req.getRequestDispatcher("/score/GRMR001.jsp").forward(req, resp);
-			return;
-		}
+            // 学生が見つからなかった場合の処理
+            req.setAttribute("error_student", "指定された学生番号の学生は存在しません。");
+            // JSP側で ${testListStudent} がエラーにならないよう、空のリストをセットしておく
+            req.setAttribute("testListStudent", new ArrayList<TestListStudent>());
 
-		// 受け取った学生情報から検索を実行
-		List<TestListStudent> testListStudent = testListStudentDao.filter(student);
+        } else {
+            // 学生が見つかった場合の処理 (従来の処理)
+            List<TestListStudent> testListStudent = testListStudentDao.filter(student);
+            req.setAttribute("testListStudent", testListStudent);
+        }
 
 		// 検索結果をリクエスト属性にセット
 		req.setAttribute("student", student);
-		req.setAttribute("testListStudent", testListStudent);
 		req.setAttribute("f4", studentNo);
 
 		 School school = teacher.getSchool();

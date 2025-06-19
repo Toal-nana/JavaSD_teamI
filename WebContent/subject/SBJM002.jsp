@@ -24,7 +24,7 @@
       </div>
 
       <c:if test="${error != null}">
-        <p>${error}</p>
+        <p class="text-warning">${error}</p>
       </c:if>
 
       <%-- 科目名 --%>
