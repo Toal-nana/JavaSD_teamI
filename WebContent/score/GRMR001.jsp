@@ -50,10 +50,10 @@
 						<button type="submit" class="btn btn-secondary ms-2 mt-3">検索</button>
 					</div>
 					<input type="hidden" name="f" value="sj">
+					</div>
 					<c:if test="${not empty sjError}">
+					<p class="text-warning ps-2 p-0">${sjError}</p>
 					</c:if>
-				</div>
-						<p class="text-warning ps-2 p-0">${sjError}</p>
 			</form>
 
 
@@ -76,19 +76,26 @@
 			</form>
 		</div>
 
+		<%-- Controllerからセットされたエラーメッセージがあれば表示 --%>
+		<c:if test="${not empty error_student}">
+		    <div class="p-3">
+		        <p class="alert alert-danger">${error_student}</p>
+		    </div>
+		</c:if>
+
 		<%-- リストを受け取っていた場合、科目別検索結果を表示 --%>
 		<c:if test="${not empty testListSubject}">
 			<c:import url="/score/GRMR002.jsp"/>
 		</c:if>
 
 		<%-- リストを受け取っていた場合、学生別検索結果を表示 --%>
-		<c:if test="${not empty testListStudent}">
+		<c:if test="${not empty student}">
 			<c:import url="/score/GRMR003.jsp"/>
 		</c:if>
 
 		<%-- リストを受け取っていなかった場合、以下の文章を表示 --%>
-		<c:if test="${empty testListSubject && empty testListStudent}">
-			<p class="text-info">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p>
+		<c:if test="${empty testListSubject && empty student && empty error_student && empty sjError}">
+			<p class="text-info p-3">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p>
 		</c:if>
 	</c:param>
 
