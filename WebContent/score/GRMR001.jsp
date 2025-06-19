@@ -83,18 +83,18 @@
 		    </div>
 		</c:if>
 
-		<%-- リストを受け取っていた場合、科目別検索結果を表示 --%>
-		<c:if test="${not empty testListSubject}">
+		<%-- subjectを受け取っていた場合科目別検索結果を表示 --%>
+		<c:if test="${not empty subject}">
 			<c:import url="/score/GRMR002.jsp"/>
 		</c:if>
 
-		<%-- リストを受け取っていた場合、学生別検索結果を表示 --%>
+		<%-- studentを受け取っていた場合、学生別検索結果を表示 --%>
 		<c:if test="${not empty student}">
 			<c:import url="/score/GRMR003.jsp"/>
 		</c:if>
 
-		<%-- リストを受け取っていなかった場合、以下の文章を表示 --%>
-		<c:if test="${empty testListSubject && empty student && empty error_student && empty sjError}">
+		<%-- オブジェクトやエラーを受け取っていなかった場合、以下の文章を表示 --%>
+		<c:if test="${empty subject && empty student && empty error_student && empty sjError}">
 			<p class="text-info p-3">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p>
 		</c:if>
 	</c:param>
