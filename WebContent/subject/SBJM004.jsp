@@ -25,6 +25,10 @@
         <input type="text" class="form-control" id="subjectId" name="cd" value="<c:out value='${subject.cd}'/>" readonly>
       </div>
 
+      <c:if test="${error != null}">
+        <p class="text-warning">${error}</p>
+      </c:if>
+
       <%-- 科目名 --%>
       <div class="mb-3">
         <label for="subjectName" class="form-label">科目名</label>
