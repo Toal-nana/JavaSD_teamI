@@ -40,16 +40,9 @@ public class TestListSubjectExecuteController extends CommonServlet {
 		String subjectCd = (String)req.getAttribute("subjectCd");
 		Subject subject = subjectDao.get(subjectCd, school);
 
-	    System.out.println("-------------------------------------------------");
-	    System.out.println("★ DAO.filter() に渡す直前のパラメータを確認します ★");
-	    System.out.println("  entYear   : " + entYear);
-	    System.out.println("  classNum  : '" + classNum + "'"); // シングルクォートで囲んでスペースを確認
-	    System.out.println("  subjectCd : '" + subject.getCd() + "'"); // subjectオブジェクトから取得した値
-	    System.out.println("  schoolCd  : '" + school.getCd() + "'");
-	    System.out.println("-------------------------------------------------");
-
 		// 受け取った検索条件を使って検索を実行
 		TestListSubjectDao testListSubjectDao = new TestListSubjectDao();
+		// こいつの中にはstudentMapのTestListSubjectが入ってる
 		List<TestListSubject> testListSubject = testListSubjectDao.filter(entYear, classNum, subject, school);
 
 		// 検索結果が入ったリストを渡す

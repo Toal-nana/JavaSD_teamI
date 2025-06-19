@@ -52,7 +52,7 @@
 					<input type="hidden" name="f" value="sj">
 					</div>
 					<c:if test="${not empty sjError}">
-					<p class="text-warning ps-2 p-0">${sjError}</p>
+					<p class="text-warning ms-4 mb-0">${sjError}</p>
 					</c:if>
 			</form>
 
@@ -61,7 +61,7 @@
 			<form action="${pageContext.request.contextPath}/score/testlist" method="post" class="mb-2">
 			<div class="row">
 				<div class="col-md-2 ms-4">
-					<label class="form-label">学生情報</label>
+					<label class="form-label mt-4">学生情報</label>
 				</div>
 
 				<div class="col-md-4">
@@ -94,8 +94,8 @@
 		</c:if>
 
 		<%-- オブジェクトやエラーを受け取っていなかった場合、以下の文章を表示 --%>
-		<c:if test="${empty subject && empty student && empty error_student && empty sjError}">
-			<p class="text-info p-3">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p>
+		<c:if test="${empty subject && empty student && empty error_student}">
+			<p class="text-info">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p>
 		</c:if>
 	</c:param>
 

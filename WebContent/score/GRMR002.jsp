@@ -1,6 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+			<c:if test="${not empty testListSubject}">
 				<div class="search-results">
 					<div class="mb-3">
 						<span class="fw-bold">科目：${subject.name}</span>
@@ -31,11 +31,38 @@
 										<td class="text-center py-2">${tLS.classNum}</td>
 										<td class="text-center py-2">${tLS.studentNo}</td>
 										<td class="text-center py-2">${tLS.studentName}</td>
-										<td class="text-center py-2">${tLS.points[1]}</td>
-										<td class="text-center py-2">${not empty tLS.points[2] ? tLS.points[2] : '-'}</td>
+
+
+										<td class="text-center py-2">
+											<%-- 1. デフォルト値をハイフンに設定 --%>
+							                <c:set var="point1" value="-"/>
+							                <%-- 2. Mapをループ --%>
+							                <c:forEach var="pointEntry" items="${tLS.points}">
+							                	<%-- 3. キーが1かどうかチェック --%>
+							                    <c:if test="${pointEntry.key == 1}">
+							                    	<%-- 4. 一致したら値を上書き --%>
+							                        <c:set var="point1" value="${pointEntry.value}"/>
+							                    </c:if>
+							                </c:forEach>
+							                <%-- 5. 最終的な値を表示 --%>
+							                ${point1}
+							            </td>
+							            <%-- 2回目の点数表示 (こちらも同じ書き方に統一するとより安全です) --%>
+							            <td class="text-center py-2">
+							                <c:set var="point2" value="-"/>
+							                <c:forEach var="pointEntry" items="${tLS.points}">
+							                    <c:if test="${pointEntry.key == 2}">
+							                        <c:set var="point2" value="${pointEntry.value}"/>
+							                    </c:if>
+							                </c:forEach>
+							                ${point2}
+							            </td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</form>
 				</div>
+			</c:if>
+
+			<c:if test="${empty testListSubject}"><p>学生情報が存在しませんでした</p></c:if>
