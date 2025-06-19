@@ -1,9 +1,12 @@
 package score;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,86 +36,97 @@ public class TestRegistExecuteController extends CommonServlet {
 		HttpSession session = req.getSession();
 		TestDao testDao = new TestDao();
 
-		// Teacherオブジェクトを取得
+		// Teacherオブジェクトを取得（認証チェック）
 		Teacher teacher = (Teacher) session.getAttribute("session_user");
-
-		// teacherがnullの場合はログイン画面にリダイレクト
 		if (teacher == null) {
 			resp.sendRedirect(req.getContextPath() + "/account/login");
 			return;
 		}
 
-		// エラーメッセージを格納するMap (キー:学生番号, 値:エラーメッセージ)
-		Map<String, String> errors = new HashMap<>();
-		// ユーザーの入力値を保持するMap (キー:学生番号, 値:入力された点数)
-		Map<String, String> inputValues = new HashMap<>();
+		// 処理対象のTestオブジェクトを格納する単一のリスト
+		List<Test> testsToProcess = new ArrayList<>();
 
-		List<Test> testsToSave = new ArrayList<>();
+		// エラーメッセージとユーザーの入力値を保持するMap
+		Map<String, String> errors = new HashMap<>();
+		Map<String, String> inputValues = new HashMap<>();
 
 		// セッションから検索条件や学校情報を取得
 		School school = teacher.getSchool();
 		String subjectCd = (String) session.getAttribute("f3_selected");
 		int testNo = Integer.parseInt((String) session.getAttribute("f4_selected"));
 
-		// 全リクエストパラメータのMapを取得します
-		Map<String, String[]> parameterMap = req.getParameterMap();
-
-		// セッションから画面に表示されている検索結果リストを取得
+		// セッションから画面に表示されていた検索結果リストを取得
 		@SuppressWarnings("unchecked")
 		List<Test> searchResults = (List<Test>) session.getAttribute("searchResults");
 
-		// 学生番号をキー、クラス番号を値とするMapを作成して、後でクラス番号を簡単に取り出せるようにする
-		Map<String, String> classNumMap = new HashMap<>();
-		if (searchResults != null) { // searchResultsがnullでないことを確認
-			for (Test t : searchResults) {
-				classNumMap.put(t.getStudent().getNo(), t.getClassNum());
-			}
+		// 削除対象としてチェックされた学生番号のリストを取得し、高速検索のためにSetに変換
+		String[] deleteStudentNos = req.getParameterValues("delete_students");
+		Set<String> deleteSet = new HashSet<>();
+		if (deleteStudentNos != null) {
+			deleteSet.addAll(Arrays.asList(deleteStudentNos));
 		}
 
-		// "point_" で始まるパラメータをループしてチェック
-		for (String paramName : parameterMap.keySet()) {
-			if (paramName.startsWith("point_")) {
-				// 例："point_12345" から学生番号 "12345" を抽出
-				String studentNo = paramName.substring("point_".length());
-				String pointStr = parameterMap.get(paramName)[0];
+		// 画面に表示されていた全学生をループして、入力値をチェック
+		if (searchResults != null) {
+			for (Test displayedTest : searchResults) {
+				String studentNo = displayedTest.getStudent().getNo();
 
-				// どの学生の入力値も保持しておく（エラー時の再表示のため）
+				// "point_学籍番号" というname属性を持つ入力フィールドの値を取得
+				String pointStr = req.getParameter("point_" + studentNo);
+
+				// エラー時の再表示のために、入力された値を保持
 				inputValues.put(studentNo, pointStr);
 
-				// 入力値が空文字でなければバリデーションを実行
-				if (pointStr != null && !pointStr.isEmpty()) {
+				// 処理対象かどうかを判定するフラグ
+				boolean isTarget = false;
+
+				// DAOに渡すための新しいTestオブジェクトを生成
+				Test test = new Test();
+
+				// 【判断ロジック】
+				// 優先順位1: 削除チェックボックスがONの場合
+				if (deleteSet.contains(studentNo)) {
+					test.setToDelete(true); // Test Beanの削除フラグを立てる
+					isTarget = true;
+
+				// 優先順位2: 点数が入力されている場合（削除チェックされていない場合のみ）
+				} else if (pointStr != null && !pointStr.isEmpty()) {
 					try {
 						int point = Integer.parseInt(pointStr);
 						if (point < 0 || point > 100) {
-							// 0-100の範囲外の場合
+							// 0-100の範囲外の場合、エラーメッセージをセット
 							errors.put(studentNo, "0～100の数値を入力してください。");
 						} else {
-							// 正常な場合、保存用リストに追加するTestオブジェクトを作成
-							Test test = new Test();
-							Student student = new Student();
-							student.setNo(studentNo);
-							test.setStudent(student);
-
-							// 先ほど作ったMapから、この学生のクラス番号を取得してセットする
-							// これにより、DAOでINSERTが必要になった場合にclass_numを登録できる
-							test.setClassNum(classNumMap.get(studentNo));
-
-							Subject subject = new Subject();
-							subject.setCd(subjectCd);
-							test.setSubject(subject);
-
-							test.setSchool(school);
-							test.setNo(testNo);
+							// 正常な場合、点数をセット
 							test.setPoint(point);
-
-							testsToSave.add(test);
+							isTarget = true;
 						}
 					} catch (NumberFormatException e) {
-						// そもそも数値でない場合
+						// そもそも数値でない場合、エラーメッセージをセット
 						errors.put(studentNo, "数値を入力してください。");
 					}
 				}
-				// 空文字の場合は何もしない（DB更新対象外とする）
+
+				// 処理対象（削除 or 点数入力あり）の場合、リストに追加
+				if (isTarget) {
+					// どのTestオブジェクトにも共通の情報をセット
+					Student student = new Student();
+					student.setNo(studentNo);
+					test.setStudent(student);
+
+					// クラス番号をセット（元の表示データから取得）
+					test.setClassNum(displayedTest.getClassNum());
+
+					Subject subject = new Subject();
+					subject.setCd(subjectCd);
+					test.setSubject(subject);
+
+					test.setSchool(school);
+					test.setNo(testNo);
+
+					// 処理リストに追加
+					testsToProcess.add(test);
+				}
 			}
 		}
 
@@ -129,7 +143,6 @@ public class TestRegistExecuteController extends CommonServlet {
 			req.setAttribute("selectedSubjectName", session.getAttribute("selectedSubjectName"));
 			req.setAttribute("selectedCount", session.getAttribute("selectedCount"));
 			// 検索フォームの選択状態を維持するためのデータも戻す
-			req.setAttribute("studentList", session.getAttribute("studentList"));
 			req.setAttribute("classNumList", session.getAttribute("classNumList"));
 			req.setAttribute("subjectList", session.getAttribute("subjectList"));
 			req.setAttribute("f1_selected", session.getAttribute("f1_selected"));
@@ -142,12 +155,24 @@ public class TestRegistExecuteController extends CommonServlet {
 
 		} else {
 			// エラーがなかった場合
+			try {
+				// DAOのsaveメソッドに処理リストを渡して、DBに保存（登録・更新・削除）
+				testDao.save(testsToProcess);
 
-			// DAOを使ってDBに保存
-			testDao.save(testsToSave);
+				// 完了画面にリダイレクト
+				resp.sendRedirect("GRMU002.jsp");
 
-			// 完了画面にリダイレクト
-			resp.sendRedirect("GRMU002.jsp");
+			} catch (Exception e) {
+				// データベース処理でエラーが発生した場合
+				e.printStackTrace(); // サーバーのコンソールにエラー詳細を出力
+				req.setAttribute("error_message", "データベース処理中にエラーが発生しました。");
+
+				// エラーメッセージを持って元の画面に戻る（フォワード処理は上記エラー時と同じ）
+				req.setAttribute("searchResults", session.getAttribute("searchResults"));
+				req.setAttribute("selectedSubjectName", session.getAttribute("selectedSubjectName"));
+				// ... (以下、再表示に必要なデータをセット)
+				req.getRequestDispatcher("GRMU001.jsp").forward(req, resp);
+			}
 		}
 	}
 

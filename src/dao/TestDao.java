@@ -174,90 +174,107 @@ public class TestDao extends Dao {
 
 	// 更新後のデータを受け取って更新をかける
 	public boolean save(List<Test> list) throws Exception {
-		Connection connection = getConnection();
-		// 回数分saveを使う
-		// 検索結果を受け取り、リストの要素数を取得して、要素数によってループをかける
-		int count = 0;
-		// 一個ずつ取り出す
-		for (Test test : list) {
-			this.save(test, connection);
-			count++;
-		}
-		// DBを切断
-		if (connection != null) {
-			try {
-				connection.close();
-			} catch (SQLException sqle) {
-				throw sqle;
-			}
-		}
-		if (count > 0) {
-			// 実行件数が1件以上ある場合
-			return true;
-		} else {
-			// 実行件数が0件の場合
-			return false;
-		}
+		// 処理対象がなければ何もしない
+	    if (list == null || list.isEmpty()) {
+	        return false;
+	    }
+
+	    Connection connection = getConnection();
+	    boolean result = false;
+
+	    try {
+	        // トランザクションを開始
+	        connection.setAutoCommit(false);
+
+	        // リストの要素を一つずつ処理
+	        for (Test test : list) {
+	            // 内部用のsaveメソッドを呼び出す
+	            this.save(test, connection);
+	        }
+
+	        // 全ての処理が成功したらコミット
+	        connection.commit();
+	        result = true;
+
+	    } catch (Exception e) {
+	        // エラーが発生したらロールバック
+	        connection.rollback();
+	        throw e; // エラーを呼び出し元にスロー
+	    } finally {
+	        // 後処理
+	        if (connection != null) {
+	            try {
+	                connection.setAutoCommit(true); // オートコミットをデフォルトに戻す
+	                connection.close(); // コネクションを閉じる
+	            } catch (SQLException sqle) {
+	                // ここでの例外は無視して良い
+	            }
+	        }
+	    }
+	    return result;
 	}
 
 	// 更新後のデータを取得する
 	private boolean save(Test test, Connection connection) throws Exception {
 		PreparedStatement statement = null;
-		// 実行件数
-		int count = 0;
-		// 点数の更新だけ出来る
-		// 受け取った点数情報を書き換えることが出来る
-		try {
-			// SQL文にupdate文を加え、テストの更新を行う
-			statement = connection.prepareStatement(
-					"update test set point=? where student_no=? and subject_cd=? and school_cd=? and no=?");
-			// SQL文の条件文に値をセット
-			// 受け取ったテストインスタンスから得点をセット
-			statement.setInt(1, test.getPoint());
-			statement.setString(2, test.getStudent().getNo());
-			statement.setString(3, test.getSubject().getCd());
-			statement.setString(4, test.getSchool().getCd());
-			statement.setInt(5, test.getNo());
-			// SQL文を実行
-			count = statement.executeUpdate();
+	    int count = 0;
 
-			// 更新された行が0件の場合、追加を実行
-			if (count == 0) {
-				// 前のstatementを閉じる
-				statement.close();
+	    try {
+	        // ★ Step 1: 削除フラグをチェック
+	        if (test.isToDelete()) {
+	            // 削除処理
+	            statement = connection.prepareStatement(
+	                "DELETE FROM test WHERE student_no=? AND subject_cd=? AND school_cd=? AND no=?");
+	            statement.setString(1, test.getStudent().getNo());
+	            statement.setString(2, test.getSubject().getCd());
+	            statement.setString(3, test.getSchool().getCd());
+	            statement.setInt(4, test.getNo());
 
-				// 追加処理を行う
-				statement = connection.prepareStatement(
-						"insert into test(student_no, subject_cd, school_cd, no, point, class_num) values(?, ?, ?, ?, ?, ?)");
+	            count = statement.executeUpdate();
 
-				statement.setString(1, test.getStudent().getNo());
-				statement.setString(2, test.getSubject().getCd());
-				statement.setString(3, test.getSchool().getCd());
-				statement.setInt(4, test.getNo());
-				statement.setInt(5, test.getPoint());
-				statement.setString(6, test.getClassNum());
+	        } else {
+	            // ★ Step 2: 既存の登録・更新処理
+	            // まずUPDATEを試みる
+	            statement = connection.prepareStatement(
+	                    "UPDATE test SET point=? WHERE student_no=? AND subject_cd=? AND school_cd=? AND no=?");
+	            statement.setInt(1, test.getPoint());
+	            statement.setString(2, test.getStudent().getNo());
+	            statement.setString(3, test.getSubject().getCd());
+	            statement.setString(4, test.getSchool().getCd());
+	            statement.setInt(5, test.getNo());
 
-				// SQL文を実行
-				count = statement.executeUpdate();
-			}
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			// SQL入力を終了
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
-		if (count > 0) {
-			// 実行件数が1件以上ある場合
-			return true;
-		} else {
-			// 実行件数が0件の場合
-			return false;
-		}
+	            count = statement.executeUpdate();
+
+	            // UPDATEで更新された行が0件なら、INSERTを実行
+	            if (count == 0) {
+	                // 古いstatementを閉じてから新しいものを作成
+	                statement.close();
+
+	                statement = connection.prepareStatement(
+	                        "INSERT INTO test(student_no, subject_cd, school_cd, no, point, class_num) VALUES(?, ?, ?, ?, ?, ?)");
+	                statement.setString(1, test.getStudent().getNo());
+	                statement.setString(2, test.getSubject().getCd());
+	                statement.setString(3, test.getSchool().getCd());
+	                statement.setInt(4, test.getNo());
+	                statement.setInt(5, test.getPoint());
+	                statement.setString(6, test.getClassNum());
+
+	                count = statement.executeUpdate();
+	            }
+	        }
+	    } catch (Exception e) {
+	        throw e; // エラーは呼び出し元のトランザクション処理に任せる
+	    } finally {
+	        // statementは毎回閉じる
+	        if (statement != null) {
+	            try {
+	                statement.close();
+	            } catch (SQLException sqle) {
+	                throw sqle;
+	            }
+	        }
+	    }
+
+	    return count > 0;
 	}
 }

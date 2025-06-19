@@ -9,6 +9,7 @@ public class Test implements Serializable {
 	private School school;
 	private int no;
 	private int point;
+	private boolean toDelete = false;
 
 	public Student getStudent() {
 		return student;
@@ -45,5 +46,11 @@ public class Test implements Serializable {
 	}
 	public void setPoint(int point) {
 		this.point = point;
+	}
+	public boolean isToDelete() {
+		return toDelete;
+	}
+	public void setToDelete(boolean toDelete) {
+		this.toDelete = toDelete;
 	}
 }

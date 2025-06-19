@@ -107,6 +107,7 @@
 									<th class="text-center py-2" style="width: 20%;">学生番号</th>
 									<th class="text-center py-2" style="width: 30%;">氏名</th>
 									<th class="text-center py-2" style="width: 20%;">点数</th>
+									<th class="text-center py-2" style="width: 10%;">削除</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -124,17 +125,20 @@
 											   name="point_${test.student.no}"
 											   class="form-control mx-auto ${not empty errors[test.student.no] ? 'is-invalid' : ''}"
 											   value="${not empty inputValues[test.student.no] ? inputValues[test.student.no] : test.point}"
-											   style="width: 200px;">
+											   style="width: 150px;">
 											   <%-- 点数入力のエラー表示 --%>
 											   <c:if test="${not empty errors[test.student.no]}">
 												<div class="invalid-feedback d-block">
 													${errors[test.student.no]}</div>
 											   </c:if>
+										<%-- 削除のチェックボックス --%>
+										<td class="text-center py-2">
+                        					<input type="checkbox" name="delete_students" value="${test.student.no}" class="form-check-input">
+                        				</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-
 
 						<%-- 登録ボタン --%>
 						<div class="my-4 text">
