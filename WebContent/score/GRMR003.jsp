@@ -2,11 +2,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 				<div class="search-results">
+					<%-- 学生名と学生番号の表示 --%>
 					<div class="mb-3">
 						<span class="fw-bold">氏名：${student.name}(${student.no})</span>
 					</div>
 
 					<c:choose>
+						<%-- 学生の成績情報が存在する場合、一覧を表示 --%>
 						<c:when test="${not empty testListStudent}">
 								<%-- table-borderlessでセルの縦横線をすべて消す --%>
 								<table class="table table-borderless mb-0"
@@ -25,7 +27,7 @@
 										<c:forEach var="tLS" items="${testListStudent}" varStatus="loop">
 											<%-- 各データ行の下に線を引く (最後の行は除く) --%>
 											<tr <c:if test="${!loop.last}">class="border-bottom"</c:if>>
-												<%-- 各セルの文字揃えと上下の余白(padding)を調整 --%>
+												<%--科目名と科目コード、回数と点数を表示 --%>
 												<td class="text-center py-2">${tLS.subjectName}</td>
 												<td class="text-center py-2">${tLS.subjectCd}</td>
 												<td class="text-center py-2">${tLS.num}</td>
@@ -35,7 +37,7 @@
 									</tbody>
 								</table>
 						</c:when>
-						<%-- otherwise: リストが空の場合 -> メッセージを表示 --%>
+						<%-- 学生の成績情報が存在しない場合メッセージを表示 --%>
             			<c:otherwise>
                 			<p>成績情報が存在しませんでした</p>
             			</c:otherwise>
