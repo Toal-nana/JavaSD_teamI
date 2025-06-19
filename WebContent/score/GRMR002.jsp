@@ -4,7 +4,7 @@
 		<c:if test="${not empty testListSubject}">
 				<div class="search-results">
 					<div class="mb-3">
-						<span class="fw-bold">科目：${testListSubject.studentName}</span>
+						<span class="fw-bold">科目：${subject.name}</span>
 					</div>
 
 					<form method="post" action="testexecute">
@@ -32,6 +32,7 @@
 										<td class="text-center py-2">${tLS.classNum}</td>
 										<td class="text-center py-2">${tLS.studentNo}</td>
 										<td class="text-center py-2">${tLS.studentName}</td>
+										<c:if test="${not empty tLS.points}">${tLS.points}</c:if>
 										<td class="text-center py-2">"-"</td>
 										<td class="text-center py-2">"-"</td>
 									</tr>

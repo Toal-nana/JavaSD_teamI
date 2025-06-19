@@ -24,6 +24,7 @@ public class TestListController extends CommonServlet {
 	private Teacher teacher;
 	private School school;
 
+	// 画面表示に使う
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		// ログイン確認とTeacherインスタンスからschoolを受け取る
@@ -39,6 +40,7 @@ public class TestListController extends CommonServlet {
 		List<Subject> subjectList = subjectDao.filter(school);
 
 		List<String> classList = classNumDao.filter(school);
+
 		// StringリストをClassNumオブジェクトのリストに変換
 		List<ClassNum> classNumList = new ArrayList<>();
 		for (String classNumStrs : classList) {
@@ -57,6 +59,7 @@ public class TestListController extends CommonServlet {
 	}
 
 
+	// jspから受け取った値をTestListSubjectEcecuteControllerに送る
 	@Override
 	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		// ログイン確認とTeacherインスタンスからschoolを受け取る
@@ -84,6 +87,7 @@ public class TestListController extends CommonServlet {
 				return;
 			}
 
+			// 選択された値を送る
 			req.setAttribute("entYear", entYear);
 			req.setAttribute("classNum", classNum);
 			req.setAttribute("subjectCd", subjectCd);

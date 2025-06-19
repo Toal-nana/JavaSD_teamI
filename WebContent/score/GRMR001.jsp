@@ -18,19 +18,20 @@
 					<div class="col-md-2">
 						<label class="form-label">入学年度</label>
 						<select name="f1" class="form-select" >
-							<option value="null" selected>--------</option>
-							<c:forEach var="student" items="${studentList}">
-								<option value="${student.entYear}">${student.entYear}</option>
-							</c:forEach>
+					 		<option value="">--------</option>
+        					<c:forEach var="student" items="${studentList}">
+                				<option value="${student.entYear}" <c:if test="${student.entYear == entYear}">selected</c:if>>${student.entYear}</option>
+        					</c:forEach>
 						</select>
 					</div>
 
 					<div class="col-md-2">
 						<label class="form-label">クラス</label>
 						<select name="f2" class="form-select" >
-							<option value="null">--------</option>
+							<option value="">--------</option>
 							<c:forEach var="course" items="${classNumList}">
-								<option value="${course.class_num}">${course.class_num}</option>
+								<%-- 選択されたものを保持 --%>
+								<option value="${course.class_num}" <c:if test="${course.class_num == classNum}">selected</c:if>>${course.class_num}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -38,9 +39,10 @@
 					<div class="col-md-4">
 						<label class="form-label">科目</label>
 						<select name="f3" class="form-select">
-							<option value="null">--------</option>
+							<option value="">--------</option>
 							<c:forEach var="subject" items="${subjectList}">
-								<option value="${subject.cd}">${subject.name}</option>
+								<%-- 選択されたものを保持 --%>
+								<option value="${subject.cd}" <c:if test="${subject.cd == subjectCd}">selected</c:if>>${subject.name}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -76,11 +78,7 @@
 
 		<%-- リストを受け取っていた場合、科目別検索結果を表示 --%>
 		<c:if test="${not empty testListSubject}">
-			<table border="1" class="table table-striped"><thead><th>入学年度</th><th>クラス</th><th>学生番号</th><th>氏名</th><th>1回</th><th>2回</th></thead>
-			<c:forEach var="tLS" items="${testListSubject}">
-				<tr><td>${tLS.entYear}</td><td>${tLS.classNum}</td><td>${tLS.studentNo}</td><td>${tLS.studentName}</td><td>"-"</td><td>"-"</td></tr>
-			</c:forEach>
-			</table>
+			<c:import url="/score/GRMR002.jsp"/>
 		</c:if>
 
 		<%-- リストを受け取っていた場合、学生別検索結果を表示 --%>
