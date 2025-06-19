@@ -32,9 +32,8 @@
 										<td class="text-center py-2">${tLS.classNum}</td>
 										<td class="text-center py-2">${tLS.studentNo}</td>
 										<td class="text-center py-2">${tLS.studentName}</td>
-										<c:if test="${not empty tLS.points}">${tLS.points}</c:if>
-										<td class="text-center py-2">"-"</td>
-										<td class="text-center py-2">"-"</td>
+										<td class="text-center py-2">${not empty tLS.points[1] ? tLS.points[1] : '-'}</td>
+										<td class="text-center py-2">${not empty tLS.points[2] ? tLS.points[2] : '-'}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
