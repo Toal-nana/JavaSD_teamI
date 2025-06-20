@@ -19,8 +19,8 @@
 						<label class="form-label">入学年度</label>
 						<select name="f1" class="form-select" >
 					 		<option value="">--------</option>
-        					<c:forEach var="student" items="${studentList}">
-                				<option value="${student.entYear}" <c:if test="${student.entYear == entYear}">selected</c:if>>${student.entYear}</option>
+        					<c:forEach var="selectEntYear" items="${entYearList}">
+                				<option value="${selectEntYear}" <c:if test="${selectEntYear == entYear}">selected</c:if>>${selectEntYear}</option>
         					</c:forEach>
 						</select>
 					</div>

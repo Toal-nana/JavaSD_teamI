@@ -2,6 +2,7 @@ package score;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +80,11 @@ public class TestListStudentExecuteController extends CommonServlet {
 
 	     // ドロップダウン用のリストを取得
 	     List<Student> studentListForDropdown = studentDao.filter(school, true);
+	     // 学生リストから入学年度を重複なく抽出し、ソートする
+	  	List<Integer> entYearList = studentListForDropdown.stream().map(Student::getEntYear)
+	  					.distinct()                    // 重複を除去する
+	  				    .sorted()                      // 昇順にソートする
+	  				    .collect(Collectors.toList()); // 結果をListに変換する
 	     List<String> classListStr = classNumDao.filter(school);
 	     List<Subject> subjectList = subjectDao.filter(school);
 
@@ -91,7 +97,7 @@ public class TestListStudentExecuteController extends CommonServlet {
 	     }
 
 	     // ドロップダウン用リストをリクエストスコープにセット
-	     req.setAttribute("studentList", studentListForDropdown);
+	     req.setAttribute("entYearList", entYearList);
 	     req.setAttribute("classNumList", classNumList);
 	     req.setAttribute("subjectList", subjectList);
 
