@@ -148,22 +148,42 @@
 										<td class="text-center py-2">${test.student.no}</td>
 										<td class="text-center py-2">${test.student.name}</td>
 										<td class="text-center py-2">
-										<input type="text"
-											   name="point_${test.student.no}"
-											   class="form-control mx-auto ${not empty errors[test.student.no] ? 'is-invalid' : ''}"
-											   value="${not empty inputValues[test.student.no] ? inputValues[test.student.no] : test.point}"
-											   style="width: 150px;">
+										    <input type="text"
+										           name="point_${test.student.no}"
+										           class="form-control mx-auto ${not empty errors[test.student.no] ? 'is-invalid' : ''}"
+										           style="width: 150px; text-align: center;"
 
-											   <%-- 点数入力のエラー表示 --%>
-											   <c:if test="${not empty errors[test.student.no]}">
-												<div class="invalid-feedback d-block">
-													${errors[test.student.no]}</div>
-											   </c:if>
+										           <%-- 点数表示分岐 --%>
+										           <c:choose>
+										               <%-- エラー時の再表示値 --%>
+										               <c:when test="${not empty inputValues[test.student.no]}">
+										                   value="${inputValues[test.student.no]}"
+										               </c:when>
+
+										               <%-- DBに点数のデータがある場合 --%>
+										               <c:when test="${test.point > 0}">
+										                   value="${test.point}"
+										               </c:when>
+
+										               <%-- DBに点数のデータがない場合、プレースホルダーを表示 --%>
+										               <c:otherwise>
+										                   placeholder="点数を入力"
+										               </c:otherwise>
+										           </c:choose>
+										      >
+
+										    <%-- 点数入力のエラー表示 --%>
+										    <c:if test="${not empty errors[test.student.no]}">
+										        <div class="invalid-feedback d-block">
+										            ${errors[test.student.no]}
+										        </div>
+										    </c:if>
+										</td>
 
 										<%-- 削除のチェックボックス --%>
 										<td class="text-center py-2">
-                        					<input type="checkbox" name="delete_students" value="${test.student.no}" class="form-check-input">
-                        				</td>
+											<input type="checkbox" name="delete_students" value="${test.student.no}" class="form-check-input">
+										</td>
 
 									</tr>
 								</c:forEach>
