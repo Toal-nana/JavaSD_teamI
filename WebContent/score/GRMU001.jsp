@@ -9,13 +9,23 @@
 		<div class="container">
 			<h2 class="p-3 mb-4 bg-light rounded">成績管理</h2>
 
+				<%-- sessionが切れた時のエラーメッセージ --%>
+				<c:if test="${not empty page_error}">
+	                <div class="alert alert-danger" role="alert">
+	                    ${page_error}
+	                </div>
+            	</c:if>
+
 			<%-- 検索フォーム --%>
 			<form method="get" action="test">
+			<input type="hidden" name="search" value="true">
 				<div class="bg-white p-3 rounded shadow-sm border mb-4 container"
 					 style="width: fit-content;">
 					<table class="table table-borderless mb-0">
 						<tbody>
+
 							<tr>
+
 								<%-- 入学年度 --%>
 								<td style="width: 180px; vertical-align: bottom;">
 									<label for="f1" class="form-label">入学年度</label>
@@ -48,7 +58,8 @@
 												<c:if test="${course.class_num == f2_selected}">selected</c:if>>
 											${course.class_num}</option>
 										</c:forEach>
-								</select></td>
+									</select>
+								</td>
 
 								<%-- 科目 --%>
 								<td style="width: 160px; vertical-align: bottom;">
@@ -62,7 +73,8 @@
 												<c:if test="${subject.cd == f3_selected}">selected</c:if>>
 											${subject.name}</option>
 										</c:forEach>
-								</select></td>
+									</select>
+								</td>
 
 								<%-- 回数 --%>
 								<td style="width: 120px; vertical-align: bottom;">
@@ -79,14 +91,28 @@
 									</select>
 								</td>
 
+								<%-- 検索ボタン --%>
 								<td style="width: 80px; vertical-align: bottom;">
 									<button type="submit" class="btn btn-secondary w-100">検索</button>
 								</td>
+
 							</tr>
+
 						</tbody>
 					</table>
+
+					<%-- 入力エラー表示 --%>
+					<c:if test="${not empty error_message}">
+						<div class="invalid-feedback d-block">
+							${error_message}
+						</div>
+					</c:if>
+
 				</div>
 			</form>
+
+
+
 
 			<%-- 検索結果の表示エリア --%>
 			<c:if test="${not empty searchResults}">
@@ -97,19 +123,20 @@
 
 					<form method="post" action="testexecute">
 						<%-- table-borderlessでセルの縦横線をすべて消す --%>
-						<table class="table table-borderless mb-0"
-							style="vertical-align: middle;">
+						<table class="table table-borderless mb-0" style="vertical-align: middle;">
+
 							<thead>
 								<%-- ヘッダー行の下にだけ線を引く --%>
 								<tr class="border-bottom">
 									<th class="text-center py-2" style="width: 15%;">入学年度</th>
 									<th class="text-center py-2" style="width: 15%;">クラス</th>
-									<th class="text-center py-2" style="width: 20%;">学生番号</th>
-									<th class="text-center py-2" style="width: 30%;">氏名</th>
+									<th class="text-center py-2" style="width: 15%;">学生番号</th>
+									<th class="text-center py-2" style="width: 25%;">氏名</th>
 									<th class="text-center py-2" style="width: 20%;">点数</th>
-									<th class="text-center py-2" style="width: 10%;">削除</th>
+									<th class="text-center py-2" style="width: 15%;">削除</th>
 								</tr>
 							</thead>
+
 							<tbody>
 								<%-- 取り出したデータを繰り返しで表示 --%>
 								<c:forEach var="test" items="${searchResults}" varStatus="loop">
@@ -126,15 +153,18 @@
 											   class="form-control mx-auto ${not empty errors[test.student.no] ? 'is-invalid' : ''}"
 											   value="${not empty inputValues[test.student.no] ? inputValues[test.student.no] : test.point}"
 											   style="width: 150px;">
+
 											   <%-- 点数入力のエラー表示 --%>
 											   <c:if test="${not empty errors[test.student.no]}">
 												<div class="invalid-feedback d-block">
 													${errors[test.student.no]}</div>
 											   </c:if>
+
 										<%-- 削除のチェックボックス --%>
 										<td class="text-center py-2">
                         					<input type="checkbox" name="delete_students" value="${test.student.no}" class="form-check-input">
                         				</td>
+
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -144,6 +174,7 @@
 						<div class="my-4 text">
 							<button type="submit" class="btn btn-secondary px-4">登録して終了</button>
 						</div>
+
 					</form>
 				</div>
 			</c:if>
