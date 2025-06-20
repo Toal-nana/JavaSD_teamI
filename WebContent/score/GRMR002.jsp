@@ -31,23 +31,21 @@
 										<td class="text-center py-2">${tLS.classNum}</td>
 										<td class="text-center py-2">${tLS.studentNo}</td>
 										<td class="text-center py-2">${tLS.studentName}</td>
-
-
 										<td class="text-center py-2">
-											<%-- 1. デフォルト値をハイフンに設定 --%>
+											<%-- デフォルト値をハイフンに設定 --%>
 							                <c:set var="point1" value="-"/>
 							                <%-- 2. Mapをループ --%>
 							                <c:forEach var="pointEntry" items="${tLS.points}">
-							                	<%-- 3. キーが1かどうかチェック --%>
+							                	<%-- キーが1かどうかチェック --%>
 							                    <c:if test="${pointEntry.key == 1}">
-							                    	<%-- 4. 一致したら値を上書き --%>
+							                    	<%-- 一致したら値を上書き --%>
 							                        <c:set var="point1" value="${pointEntry.value}"/>
 							                    </c:if>
 							                </c:forEach>
-							                <%-- 5. 最終的な値を表示 --%>
+							                <%-- 最終的な値を表示 --%>
 							                ${point1}
 							            </td>
-							            <%-- 2回目の点数表示 (こちらも同じ書き方に統一するとより安全です) --%>
+							            <%-- 2回目の点数表示 --%>
 							            <td class="text-center py-2">
 							                <c:set var="point2" value="-"/>
 							                <c:forEach var="pointEntry" items="${tLS.points}">
@@ -64,5 +62,5 @@
 					</form>
 				</div>
 			</c:if>
-
+			<%-- 情報が存在しない場合メッセージを表示 --%>
 			<c:if test="${empty testListSubject}"><p>学生情報が存在しませんでした</p></c:if>
