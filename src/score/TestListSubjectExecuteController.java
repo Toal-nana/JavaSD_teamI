@@ -1,6 +1,7 @@
 package score;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,12 @@ public class TestListSubjectExecuteController extends CommonServlet {
 		TestListSubjectDao testListSubjectDao = new TestListSubjectDao();
 		// こいつの中にはstudentMapのTestListSubjectが入ってる
 		List<TestListSubject> testListSubject = testListSubjectDao.filter(entYear, classNum, subject, school);
+
+
+		if (testListSubject != null) {
+			// testListSubjectリストを、各要素のstudentNo(学生番号)の昇順でソートする
+			testListSubject.sort(Comparator.comparing(TestListSubject::getStudentNo));
+		}
 
 		// 検索結果が入ったリストを渡す
 		req.setAttribute("testListSubject",testListSubject);
