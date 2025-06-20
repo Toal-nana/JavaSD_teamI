@@ -12,15 +12,14 @@
 			<%-- 検索フォーム --%>
 			<form method="get" action="test">
 			<input type="hidden" name="search" value="true">
-				<div class="bg-white p-3 rounded shadow-sm border mb-4 container"
-					 style="width: fit-content;">
+				<div class="bg-white p-3 rounded shadow-sm border mb-4 container">
 					<table class="table table-borderless mb-0">
 						<tbody>
 
 							<tr>
 
 								<%-- 入学年度 --%>
-								<td style="width: 180px; vertical-align: bottom;">
+								<td style="width: 120px; vertical-align: bottom;">
 									<label for="f1" class="form-label">入学年度</label>
 									<select name="f1" id="f1" class="form-select">
 										<option value="">--------</option>
