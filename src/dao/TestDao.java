@@ -98,7 +98,13 @@ public class TestDao extends Dao {
 				// クラス
 				test.setClassNum(rSet.getString("class_num"));
 				// 点数
-				test.setPoint(rSet.getInt("point"));
+				 int point = rSet.getInt("point");
+		            if (rSet.wasNull()) {
+		            	//	未受験の場合の値
+		                test.setPoint(-1);
+		            } else {
+		                test.setPoint(point);
+		            }
 				// 学校
 				test.setSchool(school);
 				// 作った学生インスタンスをテストインスタンスに入れる

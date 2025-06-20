@@ -9,13 +9,6 @@
 		<div class="container">
 			<h2 class="p-3 mb-4 bg-light rounded">成績管理</h2>
 
-				<%-- sessionが切れた時のエラーメッセージ --%>
-				<c:if test="${not empty page_error}">
-	                <div class="alert alert-danger" role="alert">
-	                    ${page_error}
-	                </div>
-            	</c:if>
-
 			<%-- 検索フォーム --%>
 			<form method="get" action="test">
 			<input type="hidden" name="search" value="true">
@@ -161,7 +154,7 @@
 										               </c:when>
 
 										               <%-- DBに点数のデータがある場合 --%>
-										               <c:when test="${test.point > 0}">
+										               <c:when test="${test.point >= 0}">
 										                   value="${test.point}"
 										               </c:when>
 
@@ -189,6 +182,20 @@
 								</c:forEach>
 							</tbody>
 						</table>
+
+						<%-- 登録して再度入力ボタンが押された際に、成功した場合はメッセージを表示 --%>
+						<c:if test="${not empty success_message}">
+			                <div class="alert alert-success" role="alert">
+			                    ${success_message}
+			                </div>
+            			</c:if>
+
+            			<%-- sessionが切れた時などのエラーメッセージ --%>
+						<c:if test="${not empty page_error}">
+			                <div class="alert alert-danger" role="alert">
+			                    ${page_error}
+			                </div>
+		            	</c:if>
 
 						<div class="my-4 d-flex justify-content">
 

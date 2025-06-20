@@ -28,6 +28,17 @@ public class TestRegistController extends CommonServlet {
 
 		// ログイン状態の確認と基本情報の取得
 		HttpSession session = req.getSession();
+
+		// フラッシュメッセージ（成功メッセージ）の処理
+		String successMessage = (String) session.getAttribute("success_message");
+
+		if (successMessage != null) {
+			// セッションにメッセージがあれば、リクエストスコープに移し替える
+			req.setAttribute("success_message", successMessage);
+			// 一度表示したら消すため、セッションからは削除する
+			session.removeAttribute("success_message");
+		}
+
 		Teacher teacher = (Teacher) session.getAttribute("session_user");
 
 		//認証チェック

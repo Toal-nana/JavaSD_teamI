@@ -33,6 +33,7 @@ public class TestRegistExecuteController extends CommonServlet {
 
 		// ログイン状態の確認と基本情報の取得
 		HttpSession session = req.getSession();
+
 		Teacher teacher = (Teacher) session.getAttribute("session_user");
 
 		//認証チェック
@@ -199,27 +200,14 @@ public class TestRegistExecuteController extends CommonServlet {
 
 				if ("continue".equals(action)) {
 					// 「再度入力」ボタンが押された場合
+					// 成功メッセージをセッションにセット
+		            session.setAttribute("success_message", "登録は正常に完了しました");
 
-					// 検索条件をセッションから取得
+		         // 検索条件を維持したまま検索画面にリダイレクト
 					String entYear = (String) session.getAttribute("f1_selected");
 					String classNum = (String) session.getAttribute("f2_selected");
-					String subjectCode = (String) session.getAttribute("f3_selected");
-					String testNumber = (String) session.getAttribute("f4_selected");
-
-					// 処理完了後に不要になったセッション情報をクリア
-					session.removeAttribute("f1_selected");
-					session.removeAttribute("f2_selected");
-					session.removeAttribute("f3_selected");
-					session.removeAttribute("f4_selected");
-					session.removeAttribute("searchResults");
-					session.removeAttribute("selectedSubjectName");
-					session.removeAttribute("selectedCount");
-
-					// リダイレクト先のURLを構築
-					String redirectUrl = String.format(
-						"test?search=true&f1=%s&f2=%s&f3=%s&f4=%s",
-						entYear, classNum, subjectCode, testNumber
-					);
+					String redirectUrl = String.format("test?search=true&f1=%s&f2=%s&f3=%s&f4=%s",
+													   entYear, classNum, subjectCd, testNoStr);
 					resp.sendRedirect(redirectUrl);
 
 				} else {
