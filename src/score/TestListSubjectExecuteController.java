@@ -34,7 +34,7 @@ public class TestListSubjectExecuteController extends CommonServlet {
 
 		SubjectDao subjectDao = new SubjectDao();
 
-		// サーブレットから値を受け取る
+		// サーブレットから値を受け取る DB検索用
 		String entYearStr = (String)req.getAttribute("entYear");
 		int entYear = Integer.parseInt(entYearStr);
 		String classNum = (String)req.getAttribute("classNum");
@@ -75,16 +75,21 @@ public class TestListSubjectExecuteController extends CommonServlet {
 			classNumList.add(classNumForPullDown);
 		}
 
+
+
 		// 受け取った一覧をjspに渡す
 		req.setAttribute("entYearList", entYearList);
 		req.setAttribute("classNumList", classNumList);
 		req.setAttribute("subjectList", subjectList);
 
+
+
         // JSPが「選択状態の保持」と「科目名表示」のために使う全ての値をセットする
 		req.setAttribute("entYear", entYearStr);    // String型の入学年度
 		req.setAttribute("classNum", classNum);       // String型のクラス番号
 		req.setAttribute("subjectCd", subjectCd);     // String型の科目コード
-		req.setAttribute("subject", subject);         // 科目名表示用のSubjectオブジェクト[
+		req.setAttribute("subject", subject);         // 科目名表示用のSubjectオブジェクト
+
 
 		req.getRequestDispatcher("GRMR001.jsp").forward(req, resp);
 

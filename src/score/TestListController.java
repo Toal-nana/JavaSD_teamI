@@ -85,15 +85,22 @@ public class TestListController extends CommonServlet {
 			String classNum = req.getParameter("f2");
 			String subjectCd = req.getParameter("f3");
 
+
 			// --------が三つのどこかに入っていたらGRMR001に戻り、エラー文の表示
 			if (entYear.isEmpty() || classNum.isEmpty() || subjectCd.isEmpty()) {
 	            req.setAttribute("sjError", "入学年度とクラスと科目を選択してください");
 
-	            this.get(req, resp);
+	            // JSPが「選択状態の保持」と「科目名表示」のために使う全ての値をセットする
+	    		req.setAttribute("entYear", entYear);    	  // String型の入学年度
+	    		req.setAttribute("classNum", classNum);       // String型のクラス番号
+	    		req.setAttribute("subjectCd", subjectCd);     // String型の科目コード
 
+	            this.get(req, resp);
 				// 成績参照検索の画面に飛ぶ
 				return;
 			}
+
+
 
 			// 選択された値を送る
 			req.setAttribute("entYear", entYear);
