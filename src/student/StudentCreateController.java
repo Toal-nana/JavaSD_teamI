@@ -1,5 +1,7 @@
 package student;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -26,9 +28,6 @@ public class StudentCreateController extends CommonServlet {
 
         // ログインチェック
         if (teacher == null) {
-
-
-            // ログインページのパスは環境に合わせてください
             response.sendRedirect(request.getContextPath() + "/account/LOGI001");
             return;
         }
@@ -41,11 +40,22 @@ public class StudentCreateController extends CommonServlet {
         List<String> classList = cNumDao.filter(teacher.getSchool());
 
 
-
-
-
         // 作成したクラスリストをリクエストにセットしてJSPに渡す
         request.setAttribute("classList", classList);
+
+
+        List<Integer> entYearSet = new ArrayList<>();
+        // 現在の年を取得
+        int currentYear = LocalDate.now().getYear();
+        // 10年前から1年後までをリストに追加
+        for (int i = currentYear + 10; i >= currentYear - 10; i--) {
+            entYearSet.add(i);
+        }
+
+        // 作成した年度リストをリクエストにセット
+        request.setAttribute("entYearSet", entYearSet);
+
+
 
         // 登録フォームのJSPにフォワード
         request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);

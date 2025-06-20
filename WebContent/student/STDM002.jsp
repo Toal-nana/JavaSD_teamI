@@ -1,6 +1,7 @@
 <%-- /student/STDM002.jsp --%>
 <%@page contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.time.LocalDate" %>
 
 <c:import url="/base.jsp">
   <%-- タイトルを base.jsp に渡す --%>
@@ -11,13 +12,39 @@
     <div class="container mt-2">
       <h4 class="bg-light border shadow-sm p-3">学生情報登録フォーム</h4>
 
+	 <%--  現在の年をJSPの変数としてセット --%>
+      <c:set var="currentYear" value="<%= LocalDate.now().getYear() %>" />
+
 
       <form action="${pageContext.request.contextPath}/student/create_execute" method="post">
-        <div class="mb-3">
+        <%--  <div class="mb-3">
           <label class="form-label">入学年度</label>
-          <%-- ★ value属性で入力値を再表示。0の場合は表示しない --%>
+          <%--  value属性で入力値を再表示。0の場合は表示しない
           <input type="text" name="year" class="form-control" value="<c:out value='${student.entYear > 0 ? student.entYear : ""}'/>" required>
         </div>
+        --%>
+
+          <div class="mb-3">
+          <label class="form-label">入学年度</label>
+          <select name="year" class="form-select" >
+              <%-- エラーで戻ってきたとき、または初期表示時 --%>
+              <option value="">-------</option>
+              <c:forEach var="year" items="${entYearSet}">
+
+
+
+                  <option value="${year}">
+                    ${year}
+                  </option>
+              </c:forEach>
+          </select>
+         </div>
+
+          <c:if test="${error1 != null}">
+        	<p class="text-warning">${error1}</p>
+      	</c:if>
+
+
 
         <div class="mb-3">
           <label class="form-label">学生番号</label>
@@ -26,8 +53,8 @@
           <%-- ★ 学生番号のエラーメッセージのみ表示 --%>
         </div>
 
-        <c:if test="${error != null}">
-        	<p class="text-warning">${error}</p>
+        <c:if test="${error2 != null}">
+        	<p class="text-warning">${error2}</p>
       	</c:if>
 
         <div class="mb-3">
