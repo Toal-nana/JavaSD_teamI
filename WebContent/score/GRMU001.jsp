@@ -194,8 +194,13 @@
 						<div class="my-4 text">
 							<button type="submit" class="btn btn-secondary px-4">登録して終了</button>
 						</div>
-
 					</form>
+
+					<%-- 再度入力ボタン --%>
+					<div class="my-4 text">
+						<button type="submit" class="btn btn-secondary px-4">再度入力ボタン</button>
+					</div>
+
 				</div>
 			</c:if>
 		</div>
