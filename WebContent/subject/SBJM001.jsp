@@ -9,8 +9,12 @@
   <%-- body に表示するコンテンツを渡す --%>
   <c:param name="body">
       <!-- ヘッダー部分（見出しと新規登録リンクをFlexboxで横並びにする） -->
-      <div class="d-flex justify-content-between align-items-center my-4">
+      <div class="bg-body-secondary p-3 my-4">
         <h2 class="mb-0">科目管理</h2>
+      </div>
+
+      <!-- 新規登録リンクをdivで囲み、text-endで右揃えにする -->
+      <div class="text-end mb-3">
         <a href="${pageContext.request.contextPath}/subject/create">新規登録</a>
       </div>
 
