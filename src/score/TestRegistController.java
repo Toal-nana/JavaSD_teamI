@@ -63,8 +63,8 @@ public class TestRegistController extends CommonServlet {
 			boolean isAllFieldsFilled = !entYearStr.isEmpty() && !classNumStr.isEmpty() && !subjectCd.isEmpty()
 					&& !testCountStr.isEmpty();
 
+			// 全項目入力済みの場合
 			if (isAllFieldsFilled) {
-				// 全項目入力済みの場合、DB検索を実行
 				System.out.println("検索処理を実行します。");
 
 				int entYear = Integer.parseInt(entYearStr);
@@ -73,6 +73,7 @@ public class TestRegistController extends CommonServlet {
 
 				searchResults = new ArrayList<>();
 
+				//検索実行
 				if (selectedSubject != null) {
 
 					searchResults = testDao.filter(entYear, classNumStr, selectedSubject, testNo, school);
@@ -83,6 +84,7 @@ public class TestRegistController extends CommonServlet {
 					session.setAttribute("f2_selected", classNumStr);
 					session.setAttribute("f3_selected", subjectCd);
 					session.setAttribute("f4_selected", testCountStr);
+
 					session.setAttribute("searchResults", searchResults);
 					session.setAttribute("selectedSubjectName", selectedSubject.getName());
 					session.setAttribute("selectedCount", testNo);
@@ -91,6 +93,11 @@ public class TestRegistController extends CommonServlet {
 			} else {
 				//一つでも選択項目が欠けていた場合、エラーを表示
 				req.setAttribute("error_message", "入学年度とクラスと科目と回数を選択してください");
+
+				// 前回の検索結果が画面に残り続けないようセッションから関連情報を削除
+			    session.removeAttribute("searchResults");
+			    session.removeAttribute("selectedSubjectName");
+			    session.removeAttribute("selectedCount");
 			}
 		} else {
 			// 初回アクセスの場合のセッションクリア処理
