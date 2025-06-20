@@ -195,8 +195,8 @@
 							<%-- 「登録して終了」ボタン --%>
 							<button type="submit" name="action" value="commit" class="btn btn-primary px-4 mx-2">登録して終了</button>
 
-							<%-- 「再度入力」ボタン --%>
-							<button type="submit" name="action" value="continue" class="btn btn-secondary px-4 mx-2">再度入力</button>
+							<%-- 「登録して再度入力」ボタン --%>
+							<button type="submit" name="action" value="continue" class="btn btn-secondary px-4 mx-2">登録して再度入力</button>
 
 						</div>
 					</form>
