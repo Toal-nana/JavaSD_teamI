@@ -194,16 +194,49 @@ public class TestRegistExecuteController extends CommonServlet {
 				TestDao testDao = new TestDao();
 				testDao.save(testsToProcess);
 
-				// 処理完了後に不要になったセッション情報をクリア
-				session.removeAttribute("f1_selected");
-				session.removeAttribute("f2_selected");
-				session.removeAttribute("f3_selected");
-				session.removeAttribute("f4_selected");
-				session.removeAttribute("searchResults");
-				session.removeAttribute("selectedSubjectName");
-				session.removeAttribute("selectedCount");
+				// どのボタンが押されたかを取得
+				String action = req.getParameter("action");
 
-				resp.sendRedirect("GRMU002.jsp");
+				if ("continue".equals(action)) {
+					// 「再度入力」ボタンが押された場合
+
+					// 検索条件をセッションから取得
+					String entYear = (String) session.getAttribute("f1_selected");
+					String classNum = (String) session.getAttribute("f2_selected");
+					String subjectCode = (String) session.getAttribute("f3_selected");
+					String testNumber = (String) session.getAttribute("f4_selected");
+
+					// 処理完了後に不要になったセッション情報をクリア
+					session.removeAttribute("f1_selected");
+					session.removeAttribute("f2_selected");
+					session.removeAttribute("f3_selected");
+					session.removeAttribute("f4_selected");
+					session.removeAttribute("searchResults");
+					session.removeAttribute("selectedSubjectName");
+					session.removeAttribute("selectedCount");
+
+					// リダイレクト先のURLを構築
+					String redirectUrl = String.format(
+						"test?search=true&f1=%s&f2=%s&f3=%s&f4=%s",
+						entYear, classNum, subjectCode, testNumber
+					);
+					resp.sendRedirect(redirectUrl);
+
+				} else {
+					// 「登録して終了」ボタンが押された場合
+
+					// 処理完了後に不要になったセッション情報をクリア
+					session.removeAttribute("f1_selected");
+					session.removeAttribute("f2_selected");
+					session.removeAttribute("f3_selected");
+					session.removeAttribute("f4_selected");
+					session.removeAttribute("searchResults");
+					session.removeAttribute("selectedSubjectName");
+					session.removeAttribute("selectedCount");
+
+					// 完了画面へリダイレクト
+					resp.sendRedirect("GRMU002.jsp");
+				}
 
 			} catch (Exception e) {
 				e.printStackTrace();

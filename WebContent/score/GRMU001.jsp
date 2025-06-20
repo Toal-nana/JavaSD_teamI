@@ -190,17 +190,16 @@
 							</tbody>
 						</table>
 
-						<%-- 登録ボタン --%>
-						<div class="my-4 text">
-							<button type="submit" class="btn btn-secondary px-4">登録して終了</button>
+						<div class="my-4 d-flex justify-content">
+
+							<%-- 「登録して終了」ボタン --%>
+							<button type="submit" name="action" value="commit" class="btn btn-primary px-4 mx-2">登録して終了</button>
+
+							<%-- 「再度入力」ボタン --%>
+							<button type="submit" name="action" value="continue" class="btn btn-secondary px-4 mx-2">再度入力</button>
+
 						</div>
 					</form>
-
-					<%-- 再度入力ボタン --%>
-					<div class="my-4 text">
-						<button type="submit" class="btn btn-secondary px-4">再度入力ボタン</button>
-					</div>
-
 				</div>
 			</c:if>
 		</div>
