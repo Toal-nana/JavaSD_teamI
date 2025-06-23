@@ -69,7 +69,7 @@ public class TeacherDao extends Dao {
 		// idに対応する先生インスタンスを取得
 		 Teacher teacher = new Teacher();
 		 teacher = this.get(id);
-		if (password != null && password.equals(teacher.getPassword())) {
+		if (password != null && teacher != null && password.equals(teacher.getPassword())) {
 			return teacher;
 		} else {
 			return null; // ユーザーが存在しない場合
