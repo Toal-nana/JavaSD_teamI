@@ -6,7 +6,7 @@
     <c:param name="title">得点管理システム</c:param>
 
     <c:param name="body">
-      <div class="mb-5 pb-5">
+      <div class="mb-5">
         <%-- メニュータイトル --%>
         <h2 class="px-3 py-2 mb-5 me-3 bg-light">メニュー</h2>
 
