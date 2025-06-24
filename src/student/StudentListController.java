@@ -112,6 +112,13 @@ public class StudentListController extends CommonServlet {
     	            request.setAttribute("f3", "t");
     	        }
 
+    	        // クラスのみ入力されている場合エラーメッセージをセット
+    	        if ("0".equals(entYearStr) && !"0".equals(classNum)) {
+    	            request.setAttribute("error", "クラスを指定する場合は入学年度も指定してください");
+    	        }
+
+
+
     	        // JSPへフォワード（パスは環境に合わせてください）
     	        request.getRequestDispatcher("/student/STDM001.jsp").forward(request, response);
     	    }
