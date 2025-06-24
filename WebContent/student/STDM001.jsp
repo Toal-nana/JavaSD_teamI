@@ -31,7 +31,7 @@
     			 <select class="form-select" id="student-f1-select" name="f1">
     			 <option value="0"></option>
     			 <c:forEach var="year" items="${ent_year_set }">
-    			 <option value="${year }"><c:if test="${year==f1 }">selected</c:if>>${year }</option>
+    			 <option value="${year}" <c:if test="${year==f1 }">selected</c:if>>${year }</option>
 
     			 </c:forEach>
 
