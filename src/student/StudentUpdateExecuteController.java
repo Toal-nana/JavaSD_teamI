@@ -56,7 +56,10 @@ public class StudentUpdateExecuteController extends CommonServlet {
         sDao.save(student); // 既存のsaveメソッドが主キーの存在をチェックしてUPDATEしてくれる
 
         // 更新完了後、学生一覧画面にリダイレクト
-        resp.sendRedirect(req.getContextPath() + "/student/list");
+        //resp.sendRedirect(req.getContextPath() + "/student/list");
+
+     // 完了画面にフォワード
+        req.getRequestDispatcher("/student/STDM005.jsp").forward(req, resp);
     }
 
 

@@ -46,7 +46,7 @@ public class StudentUpdateController extends CommonServlet {
 
 
 
-        // 5. 更新フォームのJSPにフォワード (ファイル名は /student/STDM003.jsp とする)
+        // 5. 更新フォームのJSPにフォワード
         req.getRequestDispatcher("/student/STDM004.jsp").forward(req, resp);
 
 	}
