@@ -5,7 +5,7 @@
   <c:param name="title">学生情報編集</c:param>
   <c:param name="body">
     <div class="container mt-2">
-      <h4 class="bg-light border shadow-sm p-3">学生情報変更フォーム</h4>
+      <h4 class="bg-light border shadow-sm p-3">学生情報変更</h4>
 
       <%-- 更新実行サーブレットにデータを送信
       		ここのactionはあとで変更　--%>
@@ -16,13 +16,13 @@
 
         <div class="mb-3">
           <label class="form-label">入学年度</label>
-          <input type="text" name="entYear" value="${student.entYear}" class="form-control" required>
+          <input type="text" name="entYear" value="${student.entYear}" class="form-control-plaintext" readonly>
         </div>
 
         <div class="mb-3">
           <label class="form-label">学生番号</label>
           <%-- 学生番号は主キーなので変更不可 (readonly) にする --%>
-          <input type="text" value="${student.no}" class="form-control" readonly>
+          <input type="text" value="${student.no}" class="form-control-plaintext" readonly>
         </div>
 
         <div class="mb-3">
