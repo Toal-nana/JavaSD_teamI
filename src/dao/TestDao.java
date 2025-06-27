@@ -13,7 +13,7 @@ import bean.Subject;
 import bean.Test;
 
 public class TestDao extends Dao {
-	private String baseSql = "select s.ent_year, s.no as student_no, s.name as student_name, s.class_num, t.point from student as s left join test as t on s.no = t.student_no and t.subject_cd = ? and t.no = ? ";
+	private String baseSql = "select s.ent_year, s.no as student_no, s.name as student_name, s.class_num, t.point from student as s left join test as t on s.no = t.student_no and t.subject_cd = ? and t.no = ? and t.school_cd = ? ";
 
 	// 学生番号、科目番号、学校番号、回数で指定したtestインスタンスを一件返す
 	public Test get(Student student, Subject subject, School school, int no) throws Exception {
@@ -139,16 +139,20 @@ public class TestDao extends Dao {
 		try {
 			// SQL文をセット 学校と学生番号による絞り込み
 			statement = connection.prepareStatement(baseSql + condition + order);
-			// SQLに学校を入れる
+			// SQLに科目を入れる
 			statement.setString(1, subject.getCd());
-			// SQL文に入学年度を入れる
+			// SQL文にテスト回数を入れる
 			statement.setInt(2, num);
-			// SQLにクラス番号を入れる
+			// SQLに学校コードを入れる
 			statement.setString(3, school.getCd());
-			// SQLに科目番号を入れる
-			statement.setInt(4, entYear);
-			// SQLにテスト回数を入れる
-			statement.setString(5, classNum);
+
+			//where文の方
+			// SQLに学校コードを入れる
+			statement.setString(4, school.getCd());
+			// SQLに入学年度を入れる
+			statement.setInt(5, entYear);
+			// SQLにクラス番号を入れる
+			statement.setString(6, classNum);
 
 			// SQLの実行
 			rSet = statement.executeQuery();
@@ -221,7 +225,7 @@ public class TestDao extends Dao {
 	    return result;
 	}
 
-	// 更新後のデータを一軒ずつ保存する
+	// 更新後のデータを一件ずつ保存する
 	private boolean save(Test test, Connection connection) throws Exception {
 		PreparedStatement statement = null;
 	    int count = 0;
