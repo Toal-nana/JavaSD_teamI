@@ -95,7 +95,7 @@
 
 					<%-- 入力エラー表示 --%>
 					<c:if test="${not empty error_message}">
-						<div class="invalid-feedback d-block">
+						<div class="text-warning d-block">
 							${error_message}
 						</div>
 					</c:if>
@@ -142,7 +142,7 @@
 										<td class="text-center py-2">
 										    <input type="text"
 										           name="point_${test.student.no}"
-										           class="form-control mx-auto ${not empty errors[test.student.no] ? 'is-invalid' : ''}"
+										           class="form-control mx-auto"
 										           style="width: 150px; text-align: center;"
 
 										           <%-- 点数表示分岐 --%>
@@ -166,7 +166,7 @@
 
 										    <%-- 点数入力のエラー表示 --%>
 										    <c:if test="${not empty errors[test.student.no]}">
-										        <div class="invalid-feedback d-block">
+										        <div class="text-warning d-block" style="font-size: 0.9rem;">
 										            ${errors[test.student.no]}
 										        </div>
 										    </c:if>
