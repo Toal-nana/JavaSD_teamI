@@ -12,7 +12,7 @@ import bean.TestListStudent;
 
 public class TestListStudentDao extends Dao {
 	// testテーブルとsubjectテーブルのjoin
-	private String baseSql = "select s.name as subject_name, t.subject_cd, t.no, t.point from test as t left join subject as s on t.subject_cd = s.cd";
+	private String baseSql = "select s.name as subject_name, t.subject_cd, t.no, t.point from test as t left join subject as s on t.subject_cd = s.cd and t.school_cd = s.school_cd";
 
 	//検索後のリストへの格納処理をするメソッド
 	private List<TestListStudent> postFilter(ResultSet rSet) throws Exception {
