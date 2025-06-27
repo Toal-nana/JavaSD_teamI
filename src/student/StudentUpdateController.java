@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -20,11 +21,15 @@ public class StudentUpdateController extends CommonServlet {
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
         HttpSession session = req.getSession();
+
         Teacher teacher = (Teacher) session.getAttribute("session_user");
         if (teacher == null) {
             resp.sendRedirect(req.getContextPath() + "/login/LOGI001.jsp");
             return;
         }
+
+        //学校コードの取得
+        School school = teacher.getSchool();
 
         //  URLから変更対象の学生番号を取得
         String no = req.getParameter("no");
@@ -33,7 +38,7 @@ public class StudentUpdateController extends CommonServlet {
         ClassNumDao cNumDao = new ClassNumDao();
 
         //  学生番号を基にDBから学生情報を取得
-        Student student = sDao.get(no);
+        Student student = sDao.get(no, school);
 
         //  クラスのプルダウン用に、クラスの一覧を取得
         List<String> classList = cNumDao.filter(teacher.getSchool());

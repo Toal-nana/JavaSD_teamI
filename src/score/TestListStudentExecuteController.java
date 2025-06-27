@@ -54,8 +54,11 @@ public class TestListStudentExecuteController extends CommonServlet {
 			return;
 		}
 
+		//学校コードの取得
+        School school = teacher.getSchool();
+
 		// 学生情報を取得
-		Student student = studentDao.get(studentNo);
+		Student student = studentDao.get(studentNo, school);
 
 		//学生情報がない場合はエラーメッセージを表示
 		if (student == null) {
@@ -74,7 +77,6 @@ public class TestListStudentExecuteController extends CommonServlet {
 		req.setAttribute("student", student);
 		req.setAttribute("f4", studentNo);
 
-		 School school = teacher.getSchool();
 	     ClassNumDao classNumDao = new ClassNumDao();
 	     SubjectDao subjectDao = new SubjectDao();
 

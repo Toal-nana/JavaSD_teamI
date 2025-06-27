@@ -16,7 +16,7 @@ public class StudentDao extends Dao {
 
 	// idで指定した学生を学生インスタンスにして一件返す
 	// 存在しなかったらnullが入る
-	public Student get(String no) throws Exception {
+	public Student get(String no, School school) throws Exception {
 		Student student = new Student();
 		// DBに接続
 		Connection connection = getConnection();
@@ -25,24 +25,23 @@ public class StudentDao extends Dao {
 
 		try {
 			// SQL文をセット
-			statement = connection.prepareStatement("select * from student where no=?");
+			statement = connection.prepareStatement("select * from student where no=? and school_cd=?");
 			// SQL文に学生番号を入れる
 			statement.setString(1, no);
+			// SQL文に学校コードを入れる
+			statement.setString(2, school.getCd());
 			// SQL文を実行
 			ResultSet rSet = statement.executeQuery();
-			// 学校Daoを初期化(学校コードをセットするため)
-			SchoolDao schoolDao = new SchoolDao();
 
 			if (rSet.next()) {
-				// 検索に引っかかった科目がある場合
 				// 学生インスタンスに検索結果をセット
-				student.setNo(rSet.getString("no"));
-				student.setName(rSet.getString("name"));
-				student.setEntYear(rSet.getInt("ent_year"));
-				student.setClassNum(rSet.getString("class_num"));
-				student.setAttend(rSet.getBoolean("is_attend"));
-				// SchoolDaoを使って学校コードをセット
-				student.setSchool(schoolDao.get(rSet.getString("school_cd")));
+		        student.setNo(rSet.getString("no"));
+		        student.setName(rSet.getString("name"));
+		        student.setEntYear(rSet.getInt("ent_year"));
+		        student.setClassNum(rSet.getString("class_num"));
+		        student.setAttend(rSet.getBoolean("is_attend"));
+		        // 引数で受け取ったschoolオブジェクトをそのままセットする
+		        student.setSchool(school);
 			} else {
 				// 検索に一件も引っかからなかった場合
 				// 学生インスタンスにnullをセット
@@ -265,7 +264,7 @@ public class StudentDao extends Dao {
 
 		try {
 			//DBから学生を取得
-			Student old = get(student.getNo());
+			Student old = get(student.getNo(), student.getSchool());
 			if (old == null) {
 				// 学生が存在しなかった場合
 				// SQL文にinsert文を加え、学生の新規登録を行う
