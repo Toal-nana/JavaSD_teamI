@@ -178,7 +178,7 @@ public class TestDao extends Dao {
 
 	}
 
-	// 更新後のデータを受け取って更新をかける
+	// 更新後のデータを受け取り、DBに保存する
 	public boolean save(List<Test> list) throws Exception {
 		// 処理対象がなければ何もしない
 	    if (list == null || list.isEmpty()) {
@@ -205,32 +205,33 @@ public class TestDao extends Dao {
 	    } catch (Exception e) {
 	        // エラーが発生したらロールバック
 	        connection.rollback();
-	        throw e; // エラーを呼び出し元にスロー
+	        throw e;
 	    } finally {
 	        // 後処理
 	        if (connection != null) {
 	            try {
-	                connection.setAutoCommit(true); // オートコミットをデフォルトに戻す
-	                connection.close(); // コネクションを閉じる
+	            	 // オートコミットをデフォルトに戻す
+	                connection.setAutoCommit(true);
+	                connection.close();
 	            } catch (SQLException sqle) {
-	                // ここでの例外は無視して良い
+	                // ここの例外処理は無視
 	            }
 	        }
 	    }
 	    return result;
 	}
 
-	// 更新後のデータを取得する
+	// 更新後のデータを一軒ずつ保存する
 	private boolean save(Test test, Connection connection) throws Exception {
 		PreparedStatement statement = null;
 	    int count = 0;
 
 	    try {
-	        // ★ Step 1: 削除フラグをチェック
+	        // 削除フラグをチェック
 	        if (test.isToDelete()) {
 	            // 削除処理
 	            statement = connection.prepareStatement(
-	                "DELETE FROM test WHERE student_no=? AND subject_cd=? AND school_cd=? AND no=?");
+	                "delete from test where student_no=? and subject_cd=? and school_cd=? and no=?");
 	            statement.setString(1, test.getStudent().getNo());
 	            statement.setString(2, test.getSubject().getCd());
 	            statement.setString(3, test.getSchool().getCd());
@@ -239,10 +240,10 @@ public class TestDao extends Dao {
 	            count = statement.executeUpdate();
 
 	        } else {
-	            // ★ Step 2: 既存の登録・更新処理
-	            // まずUPDATEを試みる
+	            // 既存の登録・更新処理
+	        	// 更新処理
 	            statement = connection.prepareStatement(
-	                    "UPDATE test SET point=? WHERE student_no=? AND subject_cd=? AND school_cd=? AND no=?");
+	                    "update test set point=? where student_no=? and subject_cd=? and school_cd=? and no=?");
 	            statement.setInt(1, test.getPoint());
 	            statement.setString(2, test.getStudent().getNo());
 	            statement.setString(3, test.getSubject().getCd());
@@ -251,13 +252,13 @@ public class TestDao extends Dao {
 
 	            count = statement.executeUpdate();
 
-	            // UPDATEで更新された行が0件なら、INSERTを実行
+	            // 更新件数が0件の場合、登録処理を行う
 	            if (count == 0) {
 	                // 古いstatementを閉じてから新しいものを作成
 	                statement.close();
 
 	                statement = connection.prepareStatement(
-	                        "INSERT INTO test(student_no, subject_cd, school_cd, no, point, class_num) VALUES(?, ?, ?, ?, ?, ?)");
+	                        "insert into test(student_no, subject_cd, school_cd, no, point, class_num) values(?, ?, ?, ?, ?, ?)");
 	                statement.setString(1, test.getStudent().getNo());
 	                statement.setString(2, test.getSubject().getCd());
 	                statement.setString(3, test.getSchool().getCd());
@@ -269,9 +270,9 @@ public class TestDao extends Dao {
 	            }
 	        }
 	    } catch (Exception e) {
-	        throw e; // エラーは呼び出し元のトランザクション処理に任せる
+	    	// エラーは呼び出し元のトランザクション処理に任せる
+	        throw e;
 	    } finally {
-	        // statementは毎回閉じる
 	        if (statement != null) {
 	            try {
 	                statement.close();
