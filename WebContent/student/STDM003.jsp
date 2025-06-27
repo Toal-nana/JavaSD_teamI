@@ -17,12 +17,10 @@
 
       <div class="d-flex my-5 py-5">
 		<div class="text-center ms-1 me-5">
-        <%-- ★修正箇所：登録フォーム表示サーブレットのURLへ --%>
         <a href="${pageContext.request.contextPath}/student/create">戻る</a>
       </div>
 
       <div class="text-center">
-        <%-- ★修正箇所：学生一覧表示サーブレットのURLへ --%>
         <a href="${pageContext.request.contextPath}/student/list">学生一覧</a>
       </div>
 

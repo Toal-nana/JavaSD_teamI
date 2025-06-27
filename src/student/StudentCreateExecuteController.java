@@ -42,7 +42,7 @@ public class StudentCreateExecuteController extends CommonServlet {
         String name = request.getParameter("name");        // 学生名
         String classNum = request.getParameter("class");   // クラス番号
 
-        StudentDao sDao = new StudentDao();  // 学生DAO生成
+        StudentDao sDao = new StudentDao();
 
         // 入力値を仮保存するオブジェクト
         Student student = new Student();
@@ -91,7 +91,7 @@ public class StudentCreateExecuteController extends CommonServlet {
             newStudent.setAttend(true);                 // 出席ステータスはtrue
             newStudent.setSchool(teacher.getSchool());  // 教師の所属校を設定
 
-            // 永続化
+
             sDao.save(newStudent);
 
             // 完了画面にフォワード

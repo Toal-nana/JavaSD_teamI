@@ -28,12 +28,12 @@ public class StudentListController extends CommonServlet {
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	  HttpSession session = request.getSession();
-    	     // 他のサーブレット（StudentCreateControllerなど）のコード
+
     	        Teacher teacher = (Teacher) session.getAttribute("session_user");
 
     	        // ログインチェック
     	        if (teacher == null) {
-    	            // ログインページへリダイレクト（パスは環境に合わせてください）
+
     	            response.sendRedirect(request.getContextPath() + "/account/LOGI001.jsp");
     	            return;
     	        }
@@ -43,26 +43,24 @@ public class StudentListController extends CommonServlet {
     	        // ログイン中の教員の学校情報を取得
     	        School school = teacher.getSchool();
 
-    	        // --- DAOを変更しないための対応 ---
-    	        // JSPのドロップダウンリスト用のデータをサーブレット側で作成する
 
-    	        // 1. まず、学校に所属する全学生のリストを取得する (在学中かどうかは問わない)
-    	        //    sDao.filter(school, false) を呼び出し、在学生・卒業生の両方を取得
+    	        // 学校に所属する全学生のリストを取得する (在学中かどうかは問わない)
+
     	        List<Student> allStudents = sDao.filter(school, false);
 
-    	        // 2. 全学生リストから、重複しない「入学年度」のリストを作成する
+    	        // 全ての学生リストから、重複しない「入学年度」のリストを作成する
     	        List<Integer> entYearSet = allStudents.stream()
-    	            .map(Student::getEntYear) // 各StudentオブジェクトからentYearを取得
-    	            .distinct()               // 重複を除外
+    	            .map(Student::getEntYear) // 各StudentオブジェクトからentYearを取得する
+    	            .distinct()               // 重複を除外する
     	            .sorted(Collections.reverseOrder()) // 降順にソート (新しい年度が上)
-    	            .collect(Collectors.toList());    // リストに変換
+    	            .collect(Collectors.toList());    // リストに変換する
 
-    	        // 3. 全学生リストから、重複しない「クラス番号」のリストを作成する
+    	        // 全ての学生リストから、重複しない「クラス番号」のリストを作成する
     	        List<String> classNumSet = allStudents.stream()
-    	            .map(Student::getClassNum) // 各StudentオブジェクトからclassNumを取得
-    	            .distinct()                // 重複を除外
-    	            .sorted()                  // 昇順にソート
-    	            .collect(Collectors.toList());     // リストに変換
+    	            .map(Student::getClassNum) // 各StudentオブジェクトからclassNumを取得する
+    	            .distinct()                // 重複を除外する
+    	            .sorted()                  // 昇順にソートする
+    	            .collect(Collectors.toList());     // リストに変換する
 
 
     	        // --- ここから絞り込み処理 ---
@@ -119,7 +117,7 @@ public class StudentListController extends CommonServlet {
 
 
 
-    	        // JSPへフォワード（パスは環境に合わせてください）
+
     	        request.getRequestDispatcher("/student/STDM001.jsp").forward(request, response);
     	    }
 
@@ -132,6 +130,6 @@ public class StudentListController extends CommonServlet {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // このクラスでは使用しない
+
     }
 }

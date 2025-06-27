@@ -18,7 +18,7 @@ public class StudentUpdateController extends CommonServlet {
 
 	@Override
 	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		  // ログインチェック (キーは "session_user" に統一)
+
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("session_user");
         if (teacher == null) {
@@ -26,27 +26,23 @@ public class StudentUpdateController extends CommonServlet {
             return;
         }
 
-        // 1. URLから変更対象の学生番号を取得
+        //  URLから変更対象の学生番号を取得
         String no = req.getParameter("no");
 
         StudentDao sDao = new StudentDao();
         ClassNumDao cNumDao = new ClassNumDao();
 
-        // 2. 学生番号を基にDBから学生情報を取得
+        //  学生番号を基にDBから学生情報を取得
         Student student = sDao.get(no);
 
-        // 3. クラスのプルダウン用に、クラスの一覧を取得
+        //  クラスのプルダウン用に、クラスの一覧を取得
         List<String> classList = cNumDao.filter(teacher.getSchool());
 
-        // 4. 取得した学生情報とクラス一覧をリクエストスコープにセット
+        //  取得した学生情報とクラス一覧をリクエストスコープにセット
         req.setAttribute("student", student);
         req.setAttribute("classList", classList);
 
 
-
-
-
-        // 5. 更新フォームのJSPにフォワード
         req.getRequestDispatcher("/student/STDM004.jsp").forward(req, resp);
 
 	}

@@ -13,7 +13,7 @@ import bean.Teacher;
 import dao.ClassNumDao; // ★ StudentDaoからClassNumDaoに変更
 import tool.CommonServlet;
 
-@WebServlet("/student/create") // ★ URLを分かりやすいものに変更
+@WebServlet("/student/create")
 public class StudentCreateController extends CommonServlet {
 
     @Override
@@ -73,6 +73,6 @@ public class StudentCreateController extends CommonServlet {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // このクラスでは使用しません
+
     }
 }

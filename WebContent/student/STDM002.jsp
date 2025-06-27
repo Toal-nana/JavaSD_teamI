@@ -1,4 +1,3 @@
-<%-- /student/STDM002.jsp --%>
 <%@page contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.time.LocalDate" %>
@@ -10,16 +9,16 @@
   <%-- 本文（body）を base.jsp に渡す --%>
   <c:param name="body">
     <div class="container mt-2">
-      <h4 class="bg-light border shadow-sm p-3">学生情報登録フォーム</h4>
+      <h4 class="bg-light border shadow-sm p-3">学生情報登録</h4>
 
-	 <%--  現在の年をJSPの変数としてセット --%>
+	 <%-- 現在の年をJSPの変数としてセット --%>
       <c:set var="currentYear" value="<%= LocalDate.now().getYear() %>" />
 
 
       <form action="${pageContext.request.contextPath}/student/create_execute" method="post">
         <%--  <div class="mb-3">
           <label class="form-label">入学年度</label>
-          <%--  value属性で入力値を再表示。0の場合は表示しない
+          <%-- value属性で入力値を再表示。0の場合は表示しない
           <input type="text" name="year" class="form-control" value="<c:out value='${student.entYear > 0 ? student.entYear : ""}'/>" required>
         </div>
         --%>
@@ -48,9 +47,9 @@
 
         <div class="mb-3">
           <label class="form-label">学生番号</label>
-          <%-- ★ value属性で入力値を再表示 --%>
+          <%-- value属性で入力値を再表示 --%>
           <input type="text" name="number" class="form-control" value="<c:out value='${student.no}'/>" required>
-          <%-- ★ 学生番号のエラーメッセージのみ表示 --%>
+          <%-- 学生番号のエラーメッセージのみ表示 --%>
         </div>
 
         <c:if test="${error2 != null}">
@@ -59,7 +58,7 @@
 
         <div class="mb-3">
           <label class="form-label">氏名</label>
-          <%-- ★ value属性で入力値を再表示 --%>
+          <%-- value属性で入力値を再表示 --%>
           <input type="text" name="name" class="form-control" value="<c:out value='${student.name}'/>" required>
         </div>
 
@@ -68,7 +67,7 @@
           <select name="class" class="form-select" required>
             <option value="">選択してください</option>
             <c:forEach var="cls" items="${classList}">
-              <%-- ★ c:ifを使って選択された値を保持 (selected属性を付与) --%>
+              <%-- c:ifを使って選択された値を保持 (selected属性を付与) --%>
               <option value="${cls}" <c:if test="${student.classNum == cls}">selected</c:if>>${cls}</option>
             </c:forEach>
           </select>

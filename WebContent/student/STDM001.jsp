@@ -1,4 +1,3 @@
-<%--諸々リンクが違うのであとで作ります。 --%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -9,15 +8,7 @@
     <c:param name="title">学生管理</c:param>
 
 
-
     <c:param name="body">
-
-
-
-    <!-- Bootstrap CSS -->
-
-
-
 
     	<section class="mp=4">
     	<h1>学生管理</h1>
@@ -107,7 +98,7 @@
 								</c:choose>
 
 								</td>
-								<%--95、96行目のリンクは違うのでサーブレットつくってあとで直します。 --%>
+
 								<td>
   <a href="${pageContext.request.contextPath}/student/update?no=${student.no}">変更</a>
 </td>
@@ -131,12 +122,5 @@
     		</section>
 
 
-    		 <!-- Bootstrap JavaScript -->
-
-
-
-
     </c:param>
 </c:import>
-
-

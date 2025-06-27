@@ -49,16 +49,16 @@ public class StudentUpdateExecuteController extends CommonServlet {
         student.setEntYear(entYear);
         student.setClassNum(classNum);
         student.setAttend(isAttend);
-        student.setSchool(teacher.getSchool()); // school情報も忘れずにセット
+        student.setSchool(teacher.getSchool());
 
         // StudentDaoを使ってDBを更新
         StudentDao sDao = new StudentDao();
-        sDao.save(student); // 既存のsaveメソッドが主キーの存在をチェックしてUPDATEしてくれる
+        sDao.save(student);
 
         // 更新完了後、学生一覧画面にリダイレクト
         //resp.sendRedirect(req.getContextPath() + "/student/list");
 
-     // 完了画面にフォワード
+        // 完了画面にフォワード
         req.getRequestDispatcher("/student/STDM005.jsp").forward(req, resp);
     }
 
