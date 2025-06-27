@@ -56,10 +56,10 @@ public class TestRegistController extends CommonServlet {
 		TestDao testDao = new TestDao();
 
 		// フォームから送信された検索条件を取得
-		String entYearStr = req.getParameter("f1");
-		String classNumStr = req.getParameter("f2");
-		String subjectCd = req.getParameter("f3");
-		String testCountStr = req.getParameter("f4");
+		String entYearStr = req.getParameter("f1"); 	//入学年度
+		String classNumStr = req.getParameter("f2");	//クラス
+		String subjectCd = req.getParameter("f3");		//科目
+		String testCountStr = req.getParameter("f4");	//テスト回数
 
 		// JSPに追加した隠しフィールドの値を取得
 		String searchFlag = req.getParameter("search");
@@ -91,11 +91,13 @@ public class TestRegistController extends CommonServlet {
 					req.setAttribute("selectedSubjectName", selectedSubject.getName());
 					req.setAttribute("selectedCount", testNo);
 
+					//検索実行時に検索条件をボックスに残せるようセッションに保存
 					session.setAttribute("f1_selected", entYearStr);
 					session.setAttribute("f2_selected", classNumStr);
 					session.setAttribute("f3_selected", subjectCd);
 					session.setAttribute("f4_selected", testCountStr);
 
+					//画面表示用にリクエストスコープにもセットする
 					session.setAttribute("searchResults", searchResults);
 					session.setAttribute("selectedSubjectName", selectedSubject.getName());
 					session.setAttribute("selectedCount", testNo);
@@ -132,6 +134,7 @@ public class TestRegistController extends CommonServlet {
 		}
 
 		List<Subject> subjectList = subjectDao.filter(school);
+		//true ＝ 在学中の学生
 		List<Student> studentList = studentDao.filter(school, true);
 
 		// JSPへ渡すデータをリクエストスコープにセット

@@ -56,52 +56,43 @@ public class TestRegistExecuteController extends CommonServlet {
 
 			req.setAttribute("page_error", "セッションが切れました。再度検索からやり直してください。");
 
-			//エラーの場合のドロップダウンリストのデータ取得
-			ClassNumDao classNumDaoForError = new ClassNumDao();
-			SubjectDao subjectDaoForError = new SubjectDao();
-			StudentDao studentDaoForError = new StudentDao();
-
-			List<String> classListForError = classNumDaoForError.filter(school);
-			List<ClassNum> classNumListForError = new ArrayList<>();
-
-			for (String classNumStrs : classListForError) {
-				ClassNum classNum = new ClassNum();
-				classNum.setClass_num(classNumStrs);
-				classNumListForError.add(classNum);
-			}
-
-			List<Subject> subjectListForError = subjectDaoForError.filter(school);
-			List<Student> studentListForError = studentDaoForError.filter(school, true);
-
-			req.setAttribute("classNumList", classNumListForError);
-			req.setAttribute("subjectList", subjectListForError);
-			req.setAttribute("studentList", studentListForError);
-
-			req.getRequestDispatcher("GRMU001.jsp").forward(req, resp);
+			//executeで画面遷移の処理
+			this.execute(req, resp);
 
 			return;
 		}
 
 		//入力値の解析とバリデーション
+
+		//前画面から引き継いだテスト回数を文字型から整数型に変換
 		int testNo = Integer.parseInt(testNoStr);
 
+		//入力値のチェック中にエラーが発生した場合、どの学生でどんなエラーが発生したのかを保存する
 		Map<String, String> errors = new HashMap<>();
+		//エラー発生時に再表示する際、ユーザーの入力値も再表示できるよう保存する
 		Map<String, String> inputValues = new HashMap<>();
 
+		//DB更新の際に、入力値を一時的に保存しておく場所
 		List<Test> testsToProcess = new ArrayList<>();
 
+		//削除対象の学生かを判断し保存する
 		String[] deleteStudentNos = req.getParameterValues("delete_students");
 		Set<String> deleteSet = (deleteStudentNos != null) ? new HashSet<>(Arrays.asList(deleteStudentNos))
 				: new HashSet<>();
 
+		//画面に表示された学生情報を繰り返しで入手
 		for (Test displayedTest : searchResults) {
 
+			//学生番号とテスト点数を取り出す
 			String studentNo = displayedTest.getStudent().getNo();
 			String pointStr = req.getParameter("point_" + studentNo);
 
+			//学生番号とテスト点数を格納
 			inputValues.put(studentNo, pointStr);
 
+			//削除対象の判断
 			boolean isDeleteTarget = deleteSet.contains(studentNo);
+			//点数入力欄の判断
 			boolean hasPointInput = pointStr != null && !pointStr.isEmpty();
 
 			if (isDeleteTarget || hasPointInput) {
@@ -121,30 +112,42 @@ public class TestRegistExecuteController extends CommonServlet {
 
 						//0～100の数値以外だった場合
 						if (point < 0 || point > 100) {
+
 							errors.put(studentNo, "0～100で入力してください。");
+
 						} else {
+
 							test.setPoint(point);
+
 						}
 
 						//数値以外だった場合
 					} catch (NumberFormatException e) {
+
 						errors.put(studentNo, "数値を入力してください。");
+
 					}
 				}
 
 				//入力情報に問題が無かった場合、データベースに値を渡すための準備をする。
 				if (!errors.containsKey(studentNo)) {
 
+					//学生情報を型にセット
 					Student student = new Student();
 					student.setNo(studentNo);
 					test.setStudent(student);
 					test.setClassNum(displayedTest.getClassNum());
 
+					//科目情報を型にセット
 					Subject subject = new Subject();
 					subject.setCd(subjectCd);
+
+					//テスト情報を型にセット
 					test.setSubject(subject);
 					test.setSchool(school);
 					test.setNo(testNo);
+
+					//DB更新のための情報を保存
 					testsToProcess.add(test);
 				}
 			}
@@ -166,28 +169,8 @@ public class TestRegistExecuteController extends CommonServlet {
 			req.setAttribute("f3_selected", session.getAttribute("f3_selected"));
 			req.setAttribute("f4_selected", session.getAttribute("f4_selected"));
 
-			// ドロップダウンリストのデータ処理
-			ClassNumDao classNumDao = new ClassNumDao();
-			SubjectDao subjectDao = new SubjectDao();
-			StudentDao studentDao = new StudentDao();
-
-			List<String> classList = classNumDao.filter(school);
-			List<ClassNum> classNumList = new ArrayList<>();
-
-			for (String classNumStrs : classList) {
-				ClassNum classNum = new ClassNum();
-				classNum.setClass_num(classNumStrs);
-				classNumList.add(classNum);
-			}
-
-			List<Subject> subjectList = subjectDao.filter(school);
-			List<Student> studentList = studentDao.filter(school, true);
-
-			req.setAttribute("classNumList", classNumList);
-			req.setAttribute("subjectList", subjectList);
-			req.setAttribute("studentList", studentList);
-
-			req.getRequestDispatcher("GRMU001.jsp").forward(req, resp);
+			//executeで画面遷移の処理
+			this.execute(req, resp);
 
 		} else {
 			//エラーがなかった場合
@@ -241,28 +224,9 @@ public class TestRegistExecuteController extends CommonServlet {
 				req.setAttribute("f3_selected", session.getAttribute("f3_selected"));
 				req.setAttribute("f4_selected", session.getAttribute("f4_selected"));
 
-				//ドロップダウンリストのデータ取得（DBエラー時用）
-				ClassNumDao classNumDao = new ClassNumDao();
-				SubjectDao subjectDao = new SubjectDao();
-				StudentDao studentDao = new StudentDao();
+				//executeで画面遷移の処理
+				this.execute(req, resp);
 
-				List<String> classList = classNumDao.filter(school);
-				List<ClassNum> classNumList = new ArrayList<>();
-
-				for (String classNumStrs : classList) {
-					ClassNum classNum = new ClassNum();
-					classNum.setClass_num(classNumStrs);
-					classNumList.add(classNum);
-				}
-
-				List<Subject> subjectList = subjectDao.filter(school);
-				List<Student> studentList = studentDao.filter(school, true);
-
-				req.setAttribute("classNumList", classNumList);
-				req.setAttribute("subjectList", subjectList);
-				req.setAttribute("studentList", studentList);
-
-				req.getRequestDispatcher("GRMU001.jsp").forward(req, resp);
 			}
 		}
 	}
@@ -275,7 +239,42 @@ public class TestRegistExecuteController extends CommonServlet {
 
 	@Override
 	protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+		// セッションからteacher情報を再取得するか、doPostから渡す必要がある
+		HttpSession session = req.getSession();
+		Teacher teacher = (Teacher) session.getAttribute("session_user");
+
+		if (teacher == null) {
+			resp.sendRedirect(req.getContextPath() + "/account/login");
+			return;
+		}
+
+		School school = teacher.getSchool();
+
+		// DAOの準備
+		ClassNumDao classNumDao = new ClassNumDao();
+		SubjectDao subjectDao = new SubjectDao();
+		StudentDao studentDao = new StudentDao();
+
+		// クラス一覧の準備
+		List<String> classList = classNumDao.filter(school);
+		List<ClassNum> classNumList = new ArrayList<>();
+		for (String classNumStr : classList) {
+			ClassNum classNum = new ClassNum();
+			classNum.setClass_num(classNumStr);
+			classNumList.add(classNum);
+		}
+
+		// 科目一覧と学生一覧の準備
+		List<Subject> subjectList = subjectDao.filter(school);
+		List<Student> studentList = studentDao.filter(school, true);
+
+		// リクエストスコープにセット
+		req.setAttribute("classNumList", classNumList);
+		req.setAttribute("subjectList", subjectList);
+		req.setAttribute("studentList", studentList);
+
+		// JSPへフォワード
+		req.getRequestDispatcher("GRMU001.jsp").forward(req, resp);
 
 	}
 
