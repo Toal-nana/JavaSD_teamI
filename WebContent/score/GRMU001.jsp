@@ -7,7 +7,7 @@
 	<c:param name="title">成績管理</c:param>
 	<c:param name="body">
 		<div class="container">
-			<h2 class="p-3 mb-4 bg-light rounded">成績管理</h2>
+			<h2 class="px-3 py-2 bg-light">成績管理</h2>
 
 			<%-- 検索フォーム --%>
 			<form method="get" action="test">
