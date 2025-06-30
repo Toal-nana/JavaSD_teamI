@@ -41,10 +41,10 @@ public class StudentCreateExecuteController extends CommonServlet {
         School school = teacher.getSchool();
 
         // フォームから送信されたパラメータを取得
-        String entYearStr = request.getParameter("year");   // 入学年度
+        String entYearStr = request.getParameter("year");  // 入学年度
         String num = request.getParameter("number");       // 学生番号
         String name = request.getParameter("name");        // 学生名
-        String classNum = request.getParameter("class");   // クラス番号
+        String classNum = request.getParameter("class");  // クラス番号
 
         StudentDao sDao = new StudentDao();
 
@@ -78,7 +78,7 @@ public class StudentCreateExecuteController extends CommonServlet {
             this.execute(request, response);
             request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
 
-        // バリデーション通過後の処理s
+        // バリデーション通過後の処理
         } else {
             // 共通属性を設定
             this.execute(request, response);
