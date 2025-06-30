@@ -7,7 +7,7 @@
 	<c:param name="body">
 
 		<%-- 画面タイトル --%>
-		<h2 class="p-3 mb-4 bg-light rounded">成績登録完了</h2>
+		<h2 class="px-3 py-2 mx-3 bg-light">成績登録完了</h2>
 
 		<%-- 登録完了メッセージ --%>
 		<p class="alert text-center alert-success shadow-sm  py-2"
