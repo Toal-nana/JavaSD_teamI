@@ -17,25 +17,45 @@ public class StudentDao extends Dao {
 	// idで指定した学生を学生インスタンスにして一件返す
 	// 指定した学生が存在しなかったらnullが返る
 	public Student get(String no, School school) throws Exception {
-		Student student = new Student();
+		Student student = null;
 		// DBに接続
 		Connection connection = getConnection();
 		// SQLの準備をする変数
 		PreparedStatement statement = null;
+		// ResultSetの準備
+	    ResultSet rSet = null;
 
 		try {
+
+			//学校コードと学生番号を繋げる
+			String schoolStudentNo = school.getCd().toLowerCase() + no;
 			// SQL文をセット
 			statement = connection.prepareStatement("select * from student where no=? and school_cd=?");
 			// SQL文に学生番号を入れる
-			statement.setString(1, no);
+			statement.setString(1, schoolStudentNo);
 			// SQL文に学校コードを入れる
 			statement.setString(2, school.getCd());
 			// SQL文を実行
-			ResultSet rSet = statement.executeQuery();
+			rSet = statement.executeQuery();
 
 			if (rSet.next()) {
+				//データが見つかったらインスタンス化
+				student = new Student();
+
 				// 学生インスタンスに検索結果をセット
-		        student.setNo(rSet.getString("no"));
+				//学生番号の加工
+				String dbNo = rSet.getString("no"); // DBからの一意な番号 (例: "oom1001")
+		        String schoolCd = school.getCd().toLowerCase(); // 学校コード (例: "oom")
+
+		        // 学生番号の先頭が学校コードで始まっているか確認
+	            if (dbNo != null && dbNo.startsWith(schoolCd)) {
+	                // 学校コード部分を削除して、数字だけの番号をセット
+	                student.setNo(dbNo.substring(schoolCd.length()));
+	            } else {
+	                // 予期せぬ形式の場合はそのままセット（念のため）
+	                student.setNo(dbNo);
+	            }
+
 		        student.setName(rSet.getString("name"));
 		        student.setEntYear(rSet.getInt("ent_year"));
 		        student.setClassNum(rSet.getString("class_num"));
@@ -50,6 +70,14 @@ public class StudentDao extends Dao {
 		} catch (Exception e) {
 			throw e;
 		} finally {
+			//rSetの終了
+			if (rSet != null) {
+	            try {
+	                rSet.close();
+	            } catch (SQLException sqle) {
+	                throw sqle;
+	            }
+	        }
 			// SQL文の入力を終了
 			if (statement != null) {
 				try{
@@ -257,7 +285,7 @@ public class StudentDao extends Dao {
 	// 学生インスタンスをDBに保存するメソッド
 	// 学生の変更と更新が出来る
 	// 変更件数が1件以上だとtrue、0件だとfalseを返す
-	public boolean save(Student student) throws Exception {
+	public boolean save(Student student, School school) throws Exception {
 		// DBに接続
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
@@ -267,12 +295,14 @@ public class StudentDao extends Dao {
 		try {
 			//DBから学生を取得
 			Student old = get(student.getNo(), student.getSchool());
+			//学校コードと学生番号を繋げる
+			String schoolStudentNo = school.getCd().toLowerCase() + student.getNo();
 			if (old == null) {
 				// 学生が存在しなかった場合
 				// SQL文にinsert文を加え、学生の新規登録を行う
 				statement = connection.prepareStatement("insert into student(no,name,ent_year,class_num,is_attend,school_cd) values(?,?,?,?,?,?)");
 				// PreparedStatementに値をバインド
-				statement.setString(1, student.getNo());
+				statement.setString(1, schoolStudentNo);
 				statement.setString(2, student.getName());
 				statement.setInt(3, student.getEntYear());
 				statement.setString(4, student.getClassNum());

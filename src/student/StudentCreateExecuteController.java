@@ -96,7 +96,7 @@ public class StudentCreateExecuteController extends CommonServlet {
             newStudent.setSchool(teacher.getSchool());  // 教師の所属校を設定
 
 
-            sDao.save(newStudent);
+            sDao.save(newStudent,school);
 
             // 完了画面にフォワード
             request.getRequestDispatcher("/student/STDM003.jsp").forward(request, response);

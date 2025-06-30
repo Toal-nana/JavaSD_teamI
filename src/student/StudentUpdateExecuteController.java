@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Student;
 import bean.Teacher;
 import dao.StudentDao;
@@ -28,6 +29,9 @@ public class StudentUpdateExecuteController extends CommonServlet {
             resp.sendRedirect(req.getContextPath() + "/login/LOGI001.jsp");
             return;
         }
+
+        //学校の取得
+        School school = teacher.getSchool();
 
         // フォームから送信されたデータを取得
         String no = req.getParameter("no"); // hiddenフィールドから学生番号を取得
@@ -53,7 +57,7 @@ public class StudentUpdateExecuteController extends CommonServlet {
 
         // StudentDaoを使ってDBを更新
         StudentDao sDao = new StudentDao();
-        sDao.save(student);
+        sDao.save(student,school);
 
         // 更新完了後、学生一覧画面にリダイレクト
         //resp.sendRedirect(req.getContextPath() + "/student/list");
