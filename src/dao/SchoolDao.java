@@ -9,8 +9,8 @@ import bean.School;
 
 public class SchoolDao extends Dao {
 
-	// idで指定された学校インスタンスを返す
-	// 存在しなかったらnullが返る
+	// noで指定された学校インスタンスを返す
+	// していした学校が存在しなかったらnullが返る
 	public School get(String no) throws Exception {
 		School school = new School();
 		// DBに接続

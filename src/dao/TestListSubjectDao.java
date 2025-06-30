@@ -62,6 +62,7 @@ public class TestListSubjectDao extends Dao {
 
 
 	// 入学年度、クラス番号、科目、学校で検索をかける
+	// 検索結果がリストで返る
 	public List<TestListSubject> filter(int entYear,String classNum,Subject subject,School school) throws Exception {
 		List<TestListSubject> list = new ArrayList<>();
 		// DBに接続
