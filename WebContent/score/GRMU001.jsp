@@ -78,8 +78,8 @@
 								</td>
 
 								<%-- 検索ボタン --%>
-								<td style="width: 80px; vertical-align: bottom;">
-									<button type="submit" class="btn btn-secondary w-100">検索</button>
+								<td style="width: 80px;">
+									<button type="submit" class="btn btn-secondary ms-4 mt-3">検索</button>
 								</td>
 
 							</tr>
