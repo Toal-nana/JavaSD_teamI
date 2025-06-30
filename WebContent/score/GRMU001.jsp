@@ -25,16 +25,12 @@
 										<option value="">--------</option>
 										<c:set var="displayedYears" value="" />
 										<%-- 入学年度を繰り返しで表示 --%>
-										<c:forEach var="student" items="${studentList}">
-											<%-- 入学年度が重複しないように判断し表示 --%>
-											<c:if test="${not fn:contains(displayedYears, student.entYear)}">
-												<option value="${student.entYear}"
-													    <c:if test="${student.entYear == f1_selected}">selected</c:if>>
-												${student.entYear}</option>
-												<c:set var="displayedYears"
-													   value="${displayedYears} ${student.entYear}" />
-											</c:if>
-										</c:forEach>
+										<c:forEach var="year" items="${entYearList}">
+								            <option value="${year}"
+								                    <c:if test="${year == f1_selected}">selected</c:if>>
+								                ${year}
+								            </option>
+								        </c:forEach>
 									</select>
 								</td>
 
@@ -45,7 +41,6 @@
 										<option value="">--------</option>
 										<%-- クラスを繰り返しで表示 --%>
 										<c:forEach var="course" items="${classNumList}">
-											<%-- クラスが重複しないように表示 --%>
 											<option value="${course.class_num}"
 												<c:if test="${course.class_num == f2_selected}">selected</c:if>>
 											${course.class_num}</option>
@@ -60,7 +55,6 @@
 										<option value="">--------</option>
 										<%-- 科目を繰り返しで表示 --%>
 										<c:forEach var="subject" items="${subjectList}">
-											<%-- 科目が重複しないように表示 --%>
 											<option value="${subject.cd}"
 												<c:if test="${subject.cd == f3_selected}">selected</c:if>>
 											${subject.name}</option>
@@ -84,8 +78,8 @@
 								</td>
 
 								<%-- 検索ボタン --%>
-								<td style="width: 80px; vertical-align: bottom;">
-									<button type="submit" class="btn btn-secondary w-100">検索</button>
+								<td style="width: 80px;">
+									<button type="submit" class="btn btn-secondary ms-4 mt-3">検索</button>
 								</td>
 
 							</tr>

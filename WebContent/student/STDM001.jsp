@@ -15,13 +15,22 @@
     	<div class="my-2 text-end px-4">
     	<a href="${pageContext.request.contextPath}/student/create">新規登録</a>
     		</div>
+
+    		<%-- 学生情報を絞り込むための検索フォーム。 --%>
+
     		<form method="get">
     			 <div class="row border mx-3 mb-3 py-2 align-items-center rounded "id="filter">
     			 <div class="col-4">
     			 <label class="form-label" for="student-f1-select">入学年度</label>
     			 <select class="form-select" id="student-f1-select" name="f1">
+
+    			 <%-- 未選択用の空の選択肢 --%>
     			 <option value="0"></option>
+
+    			 <%-- サーブレットから渡された入学年度のリスト(ent_year_set)をループして選択肢を生成します --%>
     			 <c:forEach var="year" items="${ent_year_set }">
+
+    			   <%-- もし以前の検索でこの年度が選択されていた場合(f1)、selected属性を付けて選択状態を維持します --%>
     			 <option value="${year}" <c:if test="${year==f1 }">selected</c:if>>${year }</option>
 
     			 </c:forEach>
@@ -30,6 +39,8 @@
     			</div>
 
 
+
+				<%-- クラスでの絞り込み --%>
     			 <div class="col-4">
     			 <label class="form-label" for="student-f2-select">クラス</label>
     			 <select class="form-select" id="student-f2-select" name="f2">
@@ -42,7 +53,7 @@
     			 	</select>
     			 </div>
 
-
+				 <%-- 在学状況での絞り込み --%>
     			 <div class="col-2 text-center">
     			<div class="form-check d-flex flex-column align-items-center">
        			 <label class="form-check-label" for="student-f3-check">在学中</label>
@@ -52,13 +63,13 @@
 
    			 </div>
 		</div>
-
+				<%-- フォーム送信ボタン --%>
     			 <div class="col-2 text-center">
     			 	<button class="btn btn-secondary" id="filter-button">絞り込み</button>
     			 		</div>
     			 		<div class="mt-2 text-warning">${errors.get("f1") }</div>
 
-
+					</div>
 
     				</form>
 
@@ -67,6 +78,10 @@
     			</c:if>
 
 				<c:choose>
+
+				<%-- 検索結果の表示 --%>
+				 <%-- 条件1: studentsリストに1件以上のデータが存在する場合の表示 --%>
+
 					<c:when test="${students.size()>0 }">
 						<div>検索結果：${students.size() }件</div>
 						<table class="table table-hover">
@@ -79,6 +94,8 @@
 							<th></th>
 							<th></th>
 						</tr>
+
+				<%-- studentsリストをループ処理し、各学生(student)の情報を1行ずつテーブルに表示します --%>
 						<c:forEach var="student" items="${students }">
 							<tr>
 								<td>${student.entYear }</td>
@@ -89,6 +106,7 @@
 
 								<c:choose>
 
+				 <%-- 在学状況(isAttend)がtrueかfalseかによって、表示を「○」か「×」に切り替える --%>
 									<c:when test="${student.isAttend() }">
 										○
 									</c:when>
