@@ -13,7 +13,7 @@ import bean.Subject;
 public class SubjectDao extends Dao {
 
 	// idで指定した科目を科目インスタンスにして一件返す
-	// 存在しなかったらnullが入る
+	// 指定した科目が存在しなかったらnullが入る
 	public Subject get(String cd, School school) throws Exception {
 		Subject subject = new Subject();
 		// DBに接続

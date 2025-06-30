@@ -15,7 +15,7 @@ public class StudentDao extends Dao {
 	private String baseSql = "select * from student where school_cd=? ";
 
 	// idで指定した学生を学生インスタンスにして一件返す
-	// 存在しなかったらnullが入る
+	// 指定した学生が存在しなかったらnullが返る
 	public Student get(String no, School school) throws Exception {
 		Student student = new Student();
 		// DBに接続
@@ -92,7 +92,8 @@ public class StudentDao extends Dao {
 		return list;
 	}
 
-	//学校、入学年度、クラス番号、在学フラグを指定して検索をかける
+	// 学校、入学年度、クラス番号、在学フラグを指定して検索をかける
+	// 検索結果をリストに入れて返す
 	public List<Student> filter(School school,int entYear,String classNum,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
 		// DBに接続
@@ -150,6 +151,7 @@ public class StudentDao extends Dao {
 
 
 	// 学校、入学年度、在学フラグを指定して検索をかける
+	// 検索結果をリストに入れて返す
 	public List<Student> filter(School school,int entYear,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
 		// DBに接続
