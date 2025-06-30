@@ -39,6 +39,7 @@ public class TestListStudentDao extends Dao {
 	}
 
 	// 受け取った学生インスタンスで検索をかける
+	// 検索結果がリストで返る
 	public List<TestListStudent> filter(Student student) throws Exception {
 		List<TestListStudent> list = new ArrayList<>();
 		// DBに接続

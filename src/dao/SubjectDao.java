@@ -12,7 +12,7 @@ import bean.Subject;
 
 public class SubjectDao extends Dao {
 
-	// idで指定した科目を科目インスタンスにして一件返す
+	//cdで指定した科目を科目インスタンスにして一件返す
 	// 指定した科目が存在しなかったらnullが入る
 	public Subject get(String cd, School school) throws Exception {
 		Subject subject = new Subject();
@@ -98,7 +98,7 @@ public class SubjectDao extends Dao {
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			// PrepareStatementを閉じる
+			// SQL文を終了
 			if (statement != null) {
 				try {
 					connection.close();
@@ -106,7 +106,7 @@ public class SubjectDao extends Dao {
 					throw sqle;
 				}
 			}
-			// connectionを閉じる
+			// DBを切断
 			if (connection != null) {
 				try {
 					connection.close();

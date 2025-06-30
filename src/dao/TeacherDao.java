@@ -10,7 +10,7 @@ import bean.Teacher;
 public class TeacherDao extends Dao {
 
 	// idで指定した先生インスタンスを返す
-	// idで指定した先生が存在しなかったらnullを返す
+	// 指定した先生が存在しなかったらnullを返す
 	public Teacher get(String id) throws Exception {
 		Teacher teacher = new Teacher();
 		// DBに接続
@@ -19,9 +19,9 @@ public class TeacherDao extends Dao {
 		PreparedStatement statement = null;
 
 		try {
-			// SQL文をセット 先生番号で絞り込み
+			// SQL文をセット 先生の番号で絞り込み
 			statement = connection.prepareStatement("select * from teacher where id=?");
-			// SQL文に先生番号を入れる
+			// SQL文に先生の番号を入れる
 			statement.setString(1, id);
 			// SQL文を実行
 			ResultSet rSet = statement.executeQuery();

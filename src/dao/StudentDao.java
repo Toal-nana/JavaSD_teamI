@@ -171,7 +171,7 @@ public class StudentDao extends Dao {
 			conditionIsAttend = "and is_attend=true";
 		}
 		try {
-			// SQL文をセット select * from student where school_cd=? and ent_year=? and is_attend=true order by no asc
+			// SQL文をセット
 			statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
 			// SQL文に学校コードを入れる
 			statement.setString(1, school.getCd());

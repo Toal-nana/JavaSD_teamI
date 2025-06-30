@@ -41,7 +41,6 @@ public class TestDao extends Dao {
 			if (rSet.next()) {
 				// 検索に引っかかった科目がある場合
 				// 学生インスタンスに検索結果をセット
-				// 学生インスタンスをセット
 				test.setStudent(student);
 				// クラス番号をセット
 				test.setClassNum(student.getClassNum());
@@ -89,15 +88,15 @@ public class TestDao extends Dao {
 				Test test = new Test();
 				// 学生インスタンスの要素はこの中に入れる
 				Student student = new Student();
-				// 入学年度
+				// 入学年度をセット
 				student.setEntYear(rSet.getInt("ent_year"));
-				// 学生番号
+				// 学生番号をセット
 				student.setNo(rSet.getString("student_no"));
-				// 氏名
+				// 氏名をセット
 				student.setName(rSet.getString("student_name"));
-				// クラス
+				// クラスをセット
 				test.setClassNum(rSet.getString("class_num"));
-				// 点数
+				// 点数をセット
 				 int point = rSet.getInt("point");
 		            if (rSet.wasNull()) {
 		            	//	未受験の場合の値
@@ -124,6 +123,7 @@ public class TestDao extends Dao {
 	}
 
 	// 入学年度、クラス番号、科目、回数、学校を指定して検索をかける
+	// 検索結果がリストで返る
 	public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) throws Exception {
 		List<Test> list = new ArrayList<>();
 		// DBに接続
