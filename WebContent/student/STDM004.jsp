@@ -5,7 +5,7 @@
   <c:param name="title">学生情報編集</c:param>
   <c:param name="body">
     <div class="container mt-2">
-      <h4 class="bg-light border shadow-sm p-3">学生情報変更</h4>
+      <h2 class="px-3 py-2 me-3 bg-light">学生情報変更</h2>
 
       <form action="${pageContext.request.contextPath}/student/update_execute" method="post">
 
@@ -13,16 +13,16 @@
         <input type="hidden" name="no" value="${student.no}">
 
 		<%-- 入学年度の表示 (変更不可) --%>
-        <div class="mb-3">
+        <div class="mb-3" >
           <label class="form-label">入学年度</label>
-          <input type="text" name="entYear" value="${student.entYear}" class="form-control-plaintext" readonly>
+          <input type="text" name="entYear" value="${student.entYear}" class=" ms-3  form-control-plaintext" readonly>
         </div>
 
 		<%-- 学生番号の表示 (変更不可) --%>
         <div class="mb-3">
           <label class="form-label">学生番号</label>
           <%-- 学生番号は主キーなので変更不可 (readonly) にする --%>
-          <input type="text" value="${student.no}" class="form-control-plaintext" readonly>
+          <input type="text" value="${student.no}" class="ms-3 form-control-plaintext" readonly>
         </div>
 
 		<%-- 氏名の入力フォーム --%>

@@ -9,7 +9,7 @@
   <%-- 本文（body）を base.jsp に渡す --%>
   <c:param name="body">
     <div class="container mt-2">
-      <h4 class="bg-light border shadow-sm p-3">学生情報登録</h4>
+      <h2 class="px-3 py-2 me-3 bg-light">学生情報登録</h2>
 
 	 <%-- 現在の年をJSPの変数としてセット --%>
       <c:set var="currentYear" value="<%= LocalDate.now().getYear() %>" />

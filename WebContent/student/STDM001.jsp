@@ -11,7 +11,7 @@
     <c:param name="body">
 
     	<section class="mp=4">
-    	<h1>学生管理</h1>
+       <h2 class="px-3 py-2 me-3 bg-light">学生管理</h2>
     	<div class="my-2 text-end px-4">
     	<a href="${pageContext.request.contextPath}/student/create">新規登録</a>
     		</div>
