@@ -11,9 +11,9 @@
   <c:param name="body">
 
     <%-- 画面見出し（登録完了ページとスタイルを統一） --%>
-    <div class="bg-body-secondary p-3 my-4">
-      <h2 class="mb-0">科目情報登録</h2>
-    </div>
+
+    <h2 class="px-3 py-2 me-3 mb-3 bg-light">科目情報登録</h2>
+
 
     <form action="createexecute" method="post">
 

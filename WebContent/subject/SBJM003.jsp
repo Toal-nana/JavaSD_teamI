@@ -11,9 +11,8 @@
   <c:param name="body">
   <div class="mb-5 pb-5">
     <%-- 画面見出し --%>
-    <div class="bg-body-secondary p-3 mb-4 mt-3">
-      <h2 class="mb-0">科目情報登録</h2>
-    </div>
+
+    <h2 class="px-3 py-2 me-3 mb-3 bg-light">科目情報登録</h2>
 
     <%-- 完了メッセージ（アラート） --%>
     <div class="alert alert-success py-2 text-center mb-5 rounded-0" role="alert" style="background-color: #8ab79a; border-color: #7fa98b;">

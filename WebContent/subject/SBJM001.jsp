@@ -9,9 +9,8 @@
   <%-- body に表示するコンテンツを渡す --%>
   <c:param name="body">
       <!-- ヘッダー部分（見出しと新規登録リンクをFlexboxで横並びにする） -->
-      <div class="bg-body-secondary p-3 my-4">
-        <h2 class="mb-0">科目管理</h2>
-      </div>
+
+      <h2 class="px-3 py-2 me-3 mb-3 bg-light">科目管理</h2>
 
       <!-- 新規登録リンクをdivで囲み、text-endで右揃えにする -->
       <div class="text-end mb-3">

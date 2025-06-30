@@ -11,9 +11,8 @@
   <c:param name="body">
 
     <%-- 画面見出し（他のページとスタイルを統一） --%>
-    <div class="bg-body-secondary p-3 my-4">
-      <h2 class="mb-0">科目情報削除</h2>
-    </div>
+
+    <h2 class="px-3 py-2 me-3 mb-3 bg-light">科目情報削除</h2>
 
     <%-- 削除確認メッセージ --%>
     <p class="my-4">

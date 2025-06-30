@@ -11,9 +11,9 @@
   <c:param name="body">
 
     <%-- 画面見出し（他のページとスタイルを統一） --%>
-    <div class="bg-body-secondary p-3 my-4">
-      <h2 class="mb-0">科目情報変更</h2>
-    </div>
+
+    <h2 class="px-3 py-2 me-3 mb-3 bg-light">科目情報変更</h2>
+
 
     <%-- 科目情報変更フォーム --%>
     <form action="updateexecute" method="post">
@@ -22,7 +22,7 @@
       <div class="mb-3">
         <label for="subjectId" class="form-label">科目コード</label>
         <%-- readonly 属性を追加して、ユーザーによる編集を防ぐ --%>
-        <input type="text" class="form-control" id="subjectId" name="cd" value="<c:out value='${subject.cd}'/>" readonly>
+        <input type="text" class="form-control-plaintext ms-3" id="subjectId" name="cd" value="<c:out value='${subject.cd}'/>" readonly>
       </div>
 
       <c:if test="${error != null}">
