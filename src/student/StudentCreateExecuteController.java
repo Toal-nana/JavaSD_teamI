@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -36,6 +37,9 @@ public class StudentCreateExecuteController extends CommonServlet {
             return;
         }
 
+        //学校を取得
+        School school = teacher.getSchool();
+
         // フォームから送信されたパラメータを取得
         String entYearStr = request.getParameter("year");   // 入学年度
         String num = request.getParameter("number");       // 学生番号
@@ -51,7 +55,7 @@ public class StudentCreateExecuteController extends CommonServlet {
         student.setClassNum(classNum);
 
         // バリデーション：入学年度未選択かつ学生番号重複
-        if (entYearStr.isEmpty() && sDao.get(num, null) != null) {
+        if (entYearStr.isEmpty() && sDao.get(num, school) != null) {
             request.setAttribute("error1", "入学年度を選択してください");
             request.setAttribute("error2", "学生番号が重複しています");
             request.setAttribute("student", student);
@@ -61,7 +65,7 @@ public class StudentCreateExecuteController extends CommonServlet {
             request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
 
         // バリデーション：学生番号重複のみ
-        } else if (sDao.get(num, null) != null) {
+        } else if (sDao.get(num, school) != null) {
             request.setAttribute("error2", "学生番号が重複しています");
             request.setAttribute("student", student);
             this.execute(request, response);
