@@ -2,6 +2,7 @@ package score;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -137,10 +138,17 @@ public class TestRegistController extends CommonServlet {
 		//true ＝ 在学中の学生
 		List<Student> studentList = studentDao.filter(school, true);
 
+		// 学生リストから入学年度を重複なく抽出しソートする
+		List<Integer> entYearList = studentList.stream()
+				.map(Student::getEntYear)   					// 各StudentオブジェクトからentYearを取得
+				.distinct()                 					// 重複を排除する
+				.sorted() 										// 昇順にソート
+				.collect(Collectors.toList()); 					// 結果を新しいListに集める
+
 		// JSPへ渡すデータをリクエストスコープにセット
 		req.setAttribute("classNumList", classNumList);
 		req.setAttribute("subjectList", subjectList);
-		req.setAttribute("studentList", studentList);
+		req.setAttribute("entYearList", entYearList);
 
 		req.setAttribute("searchResults", searchResults);
 
