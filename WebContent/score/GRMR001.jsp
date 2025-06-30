@@ -5,7 +5,7 @@
 	<c:param name="title">成績参照検索</c:param>
 	<c:param name="body">
 
-		<h2 class="h2 bg-body-tertiary mt-3 p-2 ps-4">成績参照</h2>
+		<h2 class="px-3 py-2 mx-3 bg-light">成績参照</h2>
 
 		<%-- 科目情報による検索フォーム --%>
 		<div class="border p-2 m-3 rounded">

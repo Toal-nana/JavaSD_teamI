@@ -10,6 +10,7 @@ import bean.Teacher;
 public class TeacherDao extends Dao {
 
 	// idで指定した先生インスタンスを返す
+	// idで指定した先生が存在しなかったらnullを返す
 	public Teacher get(String id) throws Exception {
 		Teacher teacher = new Teacher();
 		// DBに接続
