@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 			<c:if test="${not empty testListSubject}">
 				<div class="search-results">
 					<div class="mb-3">
@@ -29,7 +30,7 @@
 										<%-- 各セルの文字揃えと上下の余白(padding)を調整 --%>
 										<td class="text-center py-2">${tLS.entYear}</td>
 										<td class="text-center py-2">${tLS.classNum}</td>
-										<td class="text-center py-2">${tLS.studentNo}</td>
+										<td class="text-center py-2">${fn:substring(tLS.studentNo, 3,10)}</td>
 										<td class="text-center py-2">${tLS.studentName}</td>
 										<td class="text-center py-2">
 											<%-- デフォルト値をハイフンに設定 --%>

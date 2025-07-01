@@ -1,7 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- 入学年度の重複除去のためにJSTLのfunctionsライブラリを使う --%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="/base.jsp">
 	<c:param name="title">成績管理</c:param>
@@ -131,7 +130,7 @@
 										<%-- 各セルの文字揃えと上下の余白(padding)を調整 --%>
 										<td class="text-center py-2">${test.student.entYear}</td>
 										<td class="text-center py-2">${test.classNum}</td>
-										<td class="text-center py-2">${test.student.no}</td>
+										<td class="text-center py-2">${fn:substring(test.student.no, 3,10)}</td>
 										<td class="text-center py-2">${test.student.name}</td>
 										<td class="text-center py-2">
 										    <input type="text"
