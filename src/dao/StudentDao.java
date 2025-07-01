@@ -274,6 +274,7 @@ public class StudentDao extends Dao {
 	// 学生インスタンスをDBに保存するメソッド
 	// 学生の変更と更新が出来る
 	// 変更件数が1件以上だとtrue、0件だとfalseを返す
+	// ここで受け取る学生に入っている学生番号は学校コードを除いた７文字
 	public boolean save(Student student, School school) throws Exception {
 		// DBに接続
 		Connection connection = getConnection();
@@ -291,7 +292,7 @@ public class StudentDao extends Dao {
 				// SQL文にinsert文を加え、学生の新規登録を行う
 				statement = connection.prepareStatement("insert into student(no,name,ent_year,class_num,is_attend,school_cd) values(?,?,?,?,?,?)");
 				// PreparedStatementに値をバインド
-				statement.setString(1, schoolStudentNo);
+				statement.setString(1, schoolStudentNo); //学校コードがくっついた学生番号
 				statement.setString(2, student.getName());
 				statement.setInt(3, student.getEntYear());
 				statement.setString(4, student.getClassNum());
@@ -306,7 +307,7 @@ public class StudentDao extends Dao {
 				statement.setInt(2, student.getEntYear());
 				statement.setString(3, student.getClassNum());
 				statement.setBoolean(4, student.isAttend());
-				statement.setString(5, student.getNo());
+				statement.setString(5,schoolStudentNo); //学校コードがくっついた学生番号
 			}
 			// SQL文を実行
 			count = statement.executeUpdate();

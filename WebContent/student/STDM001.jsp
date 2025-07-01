@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 
@@ -31,7 +32,7 @@
     			 <c:forEach var="year" items="${ent_year_set }">
 
     			   <%-- もし以前の検索でこの年度が選択されていた場合(f1)、selected属性を付けて選択状態を維持します --%>
-    			 <option value="${year}" <c:if test="${year==f1 }">selected</c:if>>${year }</option>
+    			 <option value="${year}" <c:if test="${year==f1}">selected</c:if>>${year}</option>
 
     			 </c:forEach>
 
@@ -45,8 +46,8 @@
     			 <label class="form-label" for="student-f2-select">クラス</label>
     			 <select class="form-select" id="student-f2-select" name="f2">
     			 	<option value="0"></option>
-    			 	<c:forEach var="num" items="${class_num_set }">
-    			 	<option value="${num }" <c:if test="${num==f2 }">selected</c:if>>${num }</option>
+    			 	<c:forEach var="num" items="${class_num_set}">
+    			 	<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
 
     			 	 		</c:forEach>
 
@@ -96,12 +97,12 @@
 						</tr>
 
 				<%-- studentsリストをループ処理し、各学生(student)の情報を1行ずつテーブルに表示します --%>
-						<c:forEach var="student" items="${students }">
+						<c:forEach var="student" items="${students}">
 							<tr>
-								<td>${student.entYear }</td>
-								<td>${student.no }</td>
+								<td>${student.entYear}</td>
+								<td>${fn:substring(student.no, 3,10)}</td>
 								<td>${student.name }</td>
-								<td>${student.classNum }</td>
+								<td>${student.classNum}</td>
 								<td class="text-center">
 
 								<c:choose>
@@ -118,7 +119,7 @@
 								</td>
 
 								<td>
-  <a href="${pageContext.request.contextPath}/student/update?no=${student.no}">変更</a>
+  <a href="${pageContext.request.contextPath}/student/update?no=${fn:substring(student.no, 3,10)}">変更</a>
 </td>
 
 								</tr>
@@ -131,7 +132,7 @@
 					</c:when>
 					<c:otherwise>
 						<div>学生情報が存在しませんでした。</div>
-						</c:otherwise>
+					</c:otherwise>
 
 				</c:choose>
 
