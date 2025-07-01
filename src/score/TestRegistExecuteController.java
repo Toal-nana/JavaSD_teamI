@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -172,6 +173,8 @@ public class TestRegistExecuteController extends CommonServlet {
 			//executeで画面遷移の処理
 			this.execute(req, resp);
 
+			return;
+
 		} else {
 			//エラーがなかった場合
 			try {
@@ -268,10 +271,17 @@ public class TestRegistExecuteController extends CommonServlet {
 		List<Subject> subjectList = subjectDao.filter(school);
 		List<Student> studentList = studentDao.filter(school, true);
 
-		// リクエストスコープにセット
+		// 学生リストから入学年度を重複なく抽出しソートする
+		List<Integer> entYearList = studentList.stream()
+				.map(Student::getEntYear)
+				.distinct()
+				.sorted((y1, y2) -> y2.compareTo(y1)) // 降順ソート
+				.collect(Collectors.toList());
+
+		// JSPへ渡すデータをリクエストスコープにセット
 		req.setAttribute("classNumList", classNumList);
 		req.setAttribute("subjectList", subjectList);
-		req.setAttribute("studentList", studentList);
+		req.setAttribute("entYearList", entYearList);
 
 		// JSPへフォワード
 		req.getRequestDispatcher("GRMU001.jsp").forward(req, resp);
