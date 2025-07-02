@@ -1,73 +1,68 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="java.time.LocalDate" %>
 
 <c:import url="/base.jsp">
-  <%-- タイトルを base.jsp に渡す --%>
+
   <c:param name="title">学生情報登録</c:param>
 
-  <%-- 本文（body）を base.jsp に渡す --%>
   <c:param name="body">
     <div class="container mt-2">
       <h2 class="px-3 py-2 me-3 bg-light">学生情報登録</h2>
 
-	 <%-- 現在の年をJSPの変数としてセット --%>
-      <c:set var="currentYear" value="<%= LocalDate.now().getYear() %>" />
-
-
       <form action="${pageContext.request.contextPath}/student/create_execute" method="post">
-        <%--  <div class="mb-3">
-          <label class="form-label">入学年度</label>
-          <%-- value属性で入力値を再表示。0の場合は表示しない
-          <input type="text" name="year" class="form-control" value="<c:out value='${student.entYear > 0 ? student.entYear : ""}'/>" required>
-        </div>
-        --%>
 
-          <div class="mb-3">
+        <%-- 入学年度 --%>
+        <div class="mb-3">
           <label class="form-label">入学年度</label>
-          <select name="year" class="form-select" >
-              <%-- エラーで戻ってきたとき、または初期表示時 --%>
+          <select name="year" class="form-select">
               <option value="">-------</option>
               <c:forEach var="year" items="${entYearSet}">
-                  <option value="${year}" <c:if test="${selectEntYear == year}">selected</c:if>>
+                  <option value="${year}" <c:if test="${student.entYear == year}">selected</c:if>>
                     ${year}
                   </option>
               </c:forEach>
           </select>
-         </div>
+          <%-- 入学年度のサーバーサイドエラー表示 --%>
+          <c:if test="${not empty errors.year}">
+            <p class="text-warning d-block">${errors.year}</p>
+          </c:if>
+        </div>
 
-          <c:if test="${not empty entYearEmpty}">
-        	<p class="text-warning">${entYearEmpty}</p>
-      	</c:if>
-
-
-
+        <%-- 学生番号 --%>
         <div class="mb-3">
           <label class="form-label">学生番号</label>
-          <%-- value属性で入力値を再表示 --%>
-          <input type="text" name="number" class="form-control" value="<c:out value='${student.no}'/>" <c:if test="${StuNumEmpty}">required</c:if>>
-          <%-- 学生番号のエラーメッセージのみ表示 --%>
+          <%-- required属性で未入力をブラウザでチェック --%>
+          <input type="text" name="number" class="form-control" value="<c:out value='${student.no}'/>" required>
+          <%-- 学生番号のサーバーサイドエラー(桁数、重複)を表示 --%>
+          <c:if test="${not empty errors.number}">
+            <p class="text-warning d-block">${errors.number}</p>
+          </c:if>
         </div>
 
-        <c:if test="${not empty StuNumError}">
-        	<p class="text-warning">${StuNumError}</p>
-      	</c:if>
-
+        <%-- 氏名 --%>
         <div class="mb-3">
           <label class="form-label">氏名</label>
-          <%-- value属性で入力値を再表示 --%>
-          <input type="text" name="name" class="form-control" value="<c:out value='${student.name}'/>" <c:if test="${NameEmpty}">required</c:if>>
+          <%-- required属性で未入力をブラウザでチェック --%>
+          <input type="text" name="name" class="form-control" value="<c:out value='${student.name}'/>" required>
+          <%-- 氏名のサーバーサイドエラー（文字数オーバー）を表示する --%>
+		  <c:if test="${not empty errors.name}">
+		    <p class="text-warning d-block">${errors.name}</p>
+		  </c:if>
         </div>
 
+        <%-- クラス --%>
         <div class="mb-4">
           <label class="form-label">クラス</label>
-          <select name="class" class="form-select" <c:if test="${ClsNumEmpty}">required</c:if>>
+          <select name="class" class="form-select" required>
             <option value="">選択してください</option>
             <c:forEach var="cls" items="${classList}">
-              <%-- c:ifを使って選択された値を保持 (selected属性を付与) --%>
               <option value="${cls}" <c:if test="${student.classNum == cls}">selected</c:if>>${cls}</option>
             </c:forEach>
           </select>
+          <%-- クラスのサーバーサイドエラー表示 --%>
+          <c:if test="${not empty errors['class']}">
+            <p class="text-warning d-block">${errors['class']}</p>
+          </c:if>
         </div>
 
         <div class="mt-4">

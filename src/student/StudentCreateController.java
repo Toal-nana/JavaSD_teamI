@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Teacher;
-import dao.ClassNumDao; // ★ StudentDaoからClassNumDaoに変更
+import dao.ClassNumDao;
 import tool.CommonServlet;
 
 @WebServlet("/student/create")
