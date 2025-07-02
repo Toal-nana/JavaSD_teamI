@@ -46,6 +46,16 @@ public class StudentCreateExecuteController extends CommonServlet {
         String name = request.getParameter("name");        // 学生名
         String classNum = request.getParameter("class");  // クラス番号
 
+        // 未入力のチェック用
+        String entYearEmpty = "";
+        Boolean NameEmpty = false;
+        Boolean StuNumEmpty = false;
+        Boolean ClsNumEmpty = false;
+
+        // 学生番号が入力されていた時のチェック用
+        String StuNumError = "";
+
+
         StudentDao sDao = new StudentDao();
 
         // 入力値を仮保存するオブジェクト
@@ -54,53 +64,123 @@ public class StudentCreateExecuteController extends CommonServlet {
         student.setName(name);
         student.setClassNum(classNum);
 
-        // バリデーション：入学年度未選択かつ学生番号重複
-        if (entYearStr.isEmpty() && sDao.get(num, school) != null) {
-            request.setAttribute("error1", "入学年度を選択してください");
-            request.setAttribute("error2", "学生番号が重複しています");
-            request.setAttribute("student", student);
-            // クラスリストと年度リストを再設定
-            this.execute(request, response);
-            // 入力画面にフォワード
-            request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
 
-        // バリデーション：学生番号重複のみ
-        } else if (sDao.get(num, school) != null) {
-            request.setAttribute("error2", "学生番号が重複しています");
-            request.setAttribute("student", student);
-            this.execute(request, response);
-            request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
+        //未入力のチェック
+        if (entYearStr.isEmpty()) {
+            entYearEmpty = "入学年度を選択してください";
+        }
+        // 学生番号
+        if (num.isEmpty()) {
+            StuNumEmpty = true;
+        }else { // 入力されていた時 入力内容のチェック
+        	// 数値が入っているかどうかのチェック
+        	try{
+        		Integer.parseInt(num);
+        	}catch (NumberFormatException e) {// 数値が入っていなかったらエラーメッセージを入れる
+        		StuNumError = "7桁の数値で入力してください";
+            	request.setAttribute("entYearEmpty", entYearEmpty);
+            	request.setAttribute("StuNumEmpty", StuNumEmpty);
+            	request.setAttribute("StuNumError", StuNumError);
 
-        // バリデーション：入学年度未選択のみ
-        } else if (entYearStr.isEmpty()) {
-            request.setAttribute("error1", "入学年度を選択してください");
+            	// 入力、選択内容の保持
+            	request.setAttribute("selectEntYear",entYearStr);
+                request.setAttribute("student", student);
+            	// クラスリストと年度リストを再設定
+            	this.execute(request, response);
+            	// 入力画面へフォワード
+            	request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
+            	return;
+        	}
+
+        	// 数値が入っていた時
+        	// 入力された数値が7桁じゃなかったとき
+        	if (num.length() != 7) {
+        		StuNumError = "7桁の数値で入力してください";
+        	}else {
+        		// 重複チェック(数値エラーがなかったらここに進む)
+        		if (StuNumError.isEmpty() && sDao.get(num,school) != null) {
+        			StuNumError = "学生番号が重複しています";
+        		}
+        	}
+        }
+
+        // 学生氏名
+        if (name.isEmpty()) {
+        	NameEmpty = true;
+        }
+
+        // クラス番号
+        if (classNum.isEmpty()) {
+        	ClsNumEmpty = true;
+        }
+
+        // 入学年度がエラーもしくは学生番号がエラー
+        // warningでの表記をするためにrequiredの送信を停止
+        if (!entYearEmpty.isEmpty() || !StuNumError.isEmpty()) {
+        	// 詳細な場合分け
+        	if (!entYearEmpty.isEmpty()) { //入学年度がエラーの場合
+            	request.setAttribute("entYearEmpty", entYearEmpty);
+            	request.setAttribute("StuNumEmpty", StuNumEmpty);
+            	request.setAttribute("StuNumError", StuNumError);
+        	} else if(!StuNumError.isEmpty()) {// 学生番号がエラーの場合
+            	request.setAttribute("entYearEmpty", entYearEmpty);
+            	request.setAttribute("StuNumEmpty", StuNumEmpty);
+            	request.setAttribute("StuNumError", StuNumError);
+        	}
+        	// 入力、選択内容の保持
+        	request.setAttribute("selectEntYear",entYearStr);
             request.setAttribute("student", student);
-            this.execute(request, response);
-            request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
+        	// クラスリストと年度リストを再設定
+        	this.execute(request, response);
+        	// 入力画面へフォワード
+        	request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
+        	return;
+
+        }else if(NameEmpty || ClsNumEmpty){// warningエラーが起こらなかった時
+        	if (StuNumEmpty) {
+        		request.setAttribute("StuNumEmpty", StuNumEmpty);
+        	}else if (NameEmpty) {// 名前が未入力の時
+            	request.setAttribute("NameEmpty", NameEmpty); //requiredを追加
+        	}else if (ClsNumEmpty) {// クラスが未入力の時
+            	request.setAttribute("ClsNumEmpty", ClsNumEmpty);
+        	}
+        	// 入力、選択内容の保持
+        	request.setAttribute("selectEntYear",entYearStr);
+            request.setAttribute("student", student);
+        	// クラスリストと年度リストを再設定
+        	this.execute(request, response);
+        	// 入力画面へフォワード
+        	request.getRequestDispatcher("/student/STDM002.jsp").forward(request, response);
+        	return;
+        }
+
+
+
+
 
         // バリデーション通過後の処理
-        } else {
-            // 共通属性を設定
-            this.execute(request, response);
+        if(entYearEmpty.isEmpty() && !StuNumEmpty && StuNumError.isEmpty() && !NameEmpty && !ClsNumEmpty) {
+        	// 共通属性を設定
+        	this.execute(request, response);
 
-            // 入学年度文字列を整数に変換
-            int entYear = Integer.parseInt(entYearStr);
+        	// 入学年度文字列を整数に変換
+        	int entYear = Integer.parseInt(entYearStr);
 
-            // 新規学生オブジェクトを作成し、プロパティを設定
-            Student newStudent = new Student();
-            newStudent.setNo(num);
-            newStudent.setName(name);
-            newStudent.setEntYear(entYear);
-            newStudent.setClassNum(classNum);
-            newStudent.setAttend(true);                 // 出席ステータスはtrue
-            newStudent.setSchool(teacher.getSchool());  // 教師の所属校を設定
+        	// 新規学生オブジェクトを作成し、プロパティを設定
+        	Student newStudent = new Student();
+        	newStudent.setNo(num);
+        	newStudent.setName(name);
+        	newStudent.setEntYear(entYear);
+        	newStudent.setClassNum(classNum);
+        	newStudent.setAttend(true);                 // 出席ステータスはtrue
+        	newStudent.setSchool(teacher.getSchool());  // 教師の所属校を設定
 
 
-            sDao.save(newStudent,school);
-
-            // 完了画面にフォワード
-            request.getRequestDispatcher("/student/STDM003.jsp").forward(request, response);
+        	sDao.save(newStudent,school);
+        	// 完了画面にフォワード
+        	request.getRequestDispatcher("/student/STDM003.jsp").forward(request, response);
         }
+
     }
 
     /**

@@ -18,10 +18,7 @@ public class StudentCreateController extends CommonServlet {
 
     @Override
     public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-
-
-
+    	// セッションから先生の情報を取得
         HttpSession session = request.getSession();
      // 他のサーブレット（StudentCreateControllerなど）のコード
         Teacher teacher = (Teacher) session.getAttribute("session_user");

@@ -29,18 +29,15 @@
               <%-- エラーで戻ってきたとき、または初期表示時 --%>
               <option value="">-------</option>
               <c:forEach var="year" items="${entYearSet}">
-
-
-
-                  <option value="${year}">
+                  <option value="${year}" <c:if test="${selectEntYear == year}">selected</c:if>>
                     ${year}
                   </option>
               </c:forEach>
           </select>
          </div>
 
-          <c:if test="${error1 != null}">
-        	<p class="text-warning">${error1}</p>
+          <c:if test="${not empty entYearEmpty}">
+        	<p class="text-warning">${entYearEmpty}</p>
       	</c:if>
 
 
@@ -48,23 +45,23 @@
         <div class="mb-3">
           <label class="form-label">学生番号</label>
           <%-- value属性で入力値を再表示 --%>
-          <input type="text" name="number" class="form-control" value="<c:out value='${student.no}'/>" required>
+          <input type="text" name="number" class="form-control" value="<c:out value='${student.no}'/>" <c:if test="${StuNumEmpty}">required</c:if>>
           <%-- 学生番号のエラーメッセージのみ表示 --%>
         </div>
 
-        <c:if test="${error2 != null}">
-        	<p class="text-warning">${error2}</p>
+        <c:if test="${not empty StuNumError}">
+        	<p class="text-warning">${StuNumError}</p>
       	</c:if>
 
         <div class="mb-3">
           <label class="form-label">氏名</label>
           <%-- value属性で入力値を再表示 --%>
-          <input type="text" name="name" class="form-control" value="<c:out value='${student.name}'/>" required>
+          <input type="text" name="name" class="form-control" value="<c:out value='${student.name}'/>" <c:if test="${NameEmpty}">required</c:if>>
         </div>
 
         <div class="mb-4">
           <label class="form-label">クラス</label>
-          <select name="class" class="form-select" required>
+          <select name="class" class="form-select" <c:if test="${ClsNumEmpty}">required</c:if>>
             <option value="">選択してください</option>
             <c:forEach var="cls" items="${classList}">
               <%-- c:ifを使って選択された値を保持 (selected属性を付与) --%>
