@@ -28,10 +28,10 @@
     			 <%-- 未選択用の空の選択肢 --%>
     			 <option value="0"></option>
 
-    			 <%-- サーブレットから渡された入学年度のリスト(ent_year_set)をループして選択肢を生成します --%>
+    			 <%-- サーブレットから渡された入学年度のリスト(ent_year_set)をループして選択肢を生成 --%>
     			 <c:forEach var="year" items="${ent_year_set }">
 
-    			   <%-- もし以前の検索でこの年度が選択されていた場合(f1)、selected属性を付けて選択状態を維持します --%>
+    			   <%-- 以前の検索でこの年度が選択されていた場合(f1)、selected属性を付けて選択状態を維持 --%>
     			 <option value="${year}" <c:if test="${year==f1}">selected</c:if>>${year}</option>
 
     			 </c:forEach>
@@ -96,7 +96,7 @@
 							<th></th>
 						</tr>
 
-				<%-- studentsリストをループ処理し、各学生(student)の情報を1行ずつテーブルに表示します --%>
+				<%-- studentsリストをループ処理し、各学生(student)の情報を1行ずつテーブルに表示 --%>
 						<c:forEach var="student" items="${students}">
 							<tr>
 								<td>${student.entYear}</td>

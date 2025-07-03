@@ -10,10 +10,10 @@ public class Dao {
 
 	public Connection getConnection() throws Exception {
 		if (ds==null) {
-//			接続設定をcontext.xmlから取得する
+			// 接続設定をcontext.xmlから取得する
 			InitialContext ic = new InitialContext();
 
-//			繋ぐDBをきめる
+			// 繋ぐDBをきめる
 			ds = (DataSource)ic.lookup("java:/comp/env/jdbc/teami");
 		}
 		//DBへの接続

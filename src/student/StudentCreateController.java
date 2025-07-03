@@ -20,7 +20,7 @@ public class StudentCreateController extends CommonServlet {
     public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	// セッションから先生の情報を取得
         HttpSession session = request.getSession();
-     // 他のサーブレット（StudentCreateControllerなど）のコード
+        // 他のサーブレット（StudentCreateControllerなど）のコード
         Teacher teacher = (Teacher) session.getAttribute("session_user");
 
         // ログインチェック
@@ -29,7 +29,7 @@ public class StudentCreateController extends CommonServlet {
             return;
         }
 
-        // --- ClassNumDaoを使ってクラスのドロップダウンリストを作成 ---
+        // ClassNumDaoを使ってクラスのドロップダウンリストを作成
         ClassNumDao cNumDao = new ClassNumDao();
 
 
@@ -44,7 +44,7 @@ public class StudentCreateController extends CommonServlet {
         List<Integer> entYearSet = new ArrayList<>();
         // 現在の年を取得
         int currentYear = LocalDate.now().getYear();
-        // 10年前から1年後までをリストに追加
+        // 10年前から10年後までをリストに追加
         for (int i = currentYear + 10; i >= currentYear - 10; i--) {
             entYearSet.add(i);
         }

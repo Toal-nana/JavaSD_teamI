@@ -87,7 +87,7 @@ public class StudentCreateExecuteController extends CommonServlet {
             try {
                 student.setEntYear(Integer.parseInt(entYearStr));
             } catch (NumberFormatException e) {
-                // do nothing
+                // 何もしない
             }
         }
 
