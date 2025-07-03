@@ -77,7 +77,6 @@ public class TestRegistController extends CommonServlet {
 
 			// 全項目入力済みの場合
 			if (isAllFieldsFilled) {
-				System.out.println("検索処理を実行します。");
 
 				int entYear = Integer.parseInt(entYearStr);
 				int testNo = Integer.parseInt(testCountStr);
