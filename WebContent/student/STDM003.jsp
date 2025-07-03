@@ -6,7 +6,7 @@
 	<c:param name="body">
 		<div class="mx-auto">
 		<%-- ページの見出しを表示 --%>
-			<h2 class="px-3 py-2 me-3 bg-light">>学生情報登録</h2>
+			<h2 class="px-3 py-2 me-3 bg-light">学生情報登録</h2>
 
 
 			<div class="alert text-center alert-success shadow-sm  py-2"
