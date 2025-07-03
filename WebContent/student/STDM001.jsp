@@ -12,80 +12,74 @@
     <c:param name="body">
 
     	<section class="mp=4">
-       <h2 class="px-3 py-2 me-3 bg-light">学生管理</h2>
+        <h2 class="px-3 py-2 me-3 bg-light">学生管理</h2>
     	<div class="my-2 text-end px-4">
-    	<a href="${pageContext.request.contextPath}/student/create">新規登録</a>
-    		</div>
+    		<a href="${pageContext.request.contextPath}/student/create">新規登録</a>
+    	</div>
 
     		<%-- 学生情報を絞り込むための検索フォーム。 --%>
-
     		<form method="get">
     			 <div class="row border mx-3 mb-3 py-2 align-items-center rounded "id="filter">
-    			 <div class="col-4">
-    			 <label class="form-label" for="student-f1-select">入学年度</label>
-    			 <select class="form-select" id="student-f1-select" name="f1">
 
-    			 <%-- 未選択用の空の選択肢 --%>
-    			 <option value="0">--------</option>
+    			 	<%-- 入学年度の選択 --%>
+    			 	<div class="col-4">
+    			 		<label class="form-label" for="student-f1-select">入学年度</label>
+    			 		<select class="form-select" id="student-f1-select" name="f1">
+			    			 <%-- 未選択用の空の選択肢 --%>
+			    			 <option value="0">--------</option>
+			    			 <%-- サーブレットから渡された入学年度のリスト(ent_year_set)をループして選択肢を生成 --%>
+			    			 <c:forEach var="year" items="${ent_year_set }">
+				    			 <%-- 以前の検索でこの年度が選択されていた場合(f1)、selected属性を付けて選択状態を維持 --%>
+				    			 <option value="${year}" <c:if test="${year==f1}">selected</c:if>>${year}</option>
+	    			 		</c:forEach>
+    			  		</select>
+    				</div>
 
-    			 <%-- サーブレットから渡された入学年度のリスト(ent_year_set)をループして選択肢を生成 --%>
-    			 <c:forEach var="year" items="${ent_year_set }">
+					<%-- クラスでの絞り込み --%>
+	    			<div class="col-4">
+		    			<label class="form-label" for="student-f2-select">クラス</label>
+		    			<select class="form-select" id="student-f2-select" name="f2">
+			    			<option value="0">--------</option>
+			    			<c:forEach var="num" items="${class_num_set}">
+			    				<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
+			    			</c:forEach>
+		    			</select>
+	    			</div>
 
-    			   <%-- 以前の検索でこの年度が選択されていた場合(f1)、selected属性を付けて選択状態を維持 --%>
-    			 <option value="${year}" <c:if test="${year==f1}">selected</c:if>>${year}</option>
-
-    			 </c:forEach>
-
-    			  </select>
-    			</div>
-
-
-
-				<%-- クラスでの絞り込み --%>
-    			 <div class="col-4">
-    			 <label class="form-label" for="student-f2-select">クラス</label>
-    			 <select class="form-select" id="student-f2-select" name="f2">
-    			 	<option value="0">--------</option>
-    			 	<c:forEach var="num" items="${class_num_set}">
-    			 	<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
-
-    			 	 		</c:forEach>
-
-    			 	</select>
-    			 </div>
-
-				 <%-- 在学状況での絞り込み --%>
-    			 <div class="col-2 text-center">
-    			<div class="form-check d-flex flex-column align-items-center">
-       			 <label class="form-check-label" for="student-f3-check">在学中</label>
-       				 <input class="form-check-input mt-1" type="checkbox" id="student-f3-check" name="f3" value="t"
-             	  <c:if test="${!empty f3}">checked</c:if> />
-
-
-   			 </div>
-		</div>
-				<%-- フォーム送信ボタン --%>
-    			 <div class="col-2 text-center">
-    			 	<button class="btn btn-secondary" id="filter-button">絞り込み</button>
-    			 		</div>
-    			 		<div class="mt-2 text-warning">${errors.get("f1") }</div>
-
+					<%-- 在学状況での絞り込み --%>
+	    			<div class="col-2 text-center">
+		    			<div class="form-check d-flex flex-column align-items-center">
+			       			<label class="form-check-label" for="student-f3-check">在学中</label>
+			       			<input class="form-check-input mt-1"
+			       			       type="checkbox"
+			       			       id="student-f3-check"
+			       			       name="f3" value="t"
+			             		   <c:if test="${!empty f3}">checked</c:if> />
+		   			 	</div>
 					</div>
 
-    				</form>
+					<%-- フォーム送信ボタン --%>
+	    			<div class="col-2 text-center">
+	    				<button class="btn btn-secondary" id="filter-button">絞り込み</button>
+	    			</div>
 
-    			<c:if test="${error != null}">
-    				<div class="text-warning mb-1">${error}</div>
-    			</c:if>
+    			 	<div class="mt-2 text-warning">${errors.get("f1") }</div>
 
-				<c:choose>
+				</div>
+
+    		</form>
+
+    		<c:if test="${error != null}">
+    			<div class="text-warning mb-1">${error}</div>
+    		</c:if>
+
+			<c:choose>
 
 				<%-- 検索結果の表示 --%>
-				 <%-- 条件1: studentsリストに1件以上のデータが存在する場合の表示 --%>
-
-					<c:when test="${students.size()>0 }">
-						<div>検索結果：${students.size() }件</div>
-						<table class="table table-hover">
+				<%-- 条件1: studentsリストに1件以上のデータが存在する場合の表示 --%>
+				<c:when test="${students.size()>0 }">
+					<div>検索結果：${students.size() }件</div>
+					<table class="table table-hover">
 						<tr>
 							<th>入学年度</th>
 							<th>学生番号</th>
@@ -96,50 +90,41 @@
 							<th></th>
 						</tr>
 
-				<%-- studentsリストをループ処理し、各学生(student)の情報を1行ずつテーブルに表示 --%>
+						<%-- studentsリストをループ処理し、各学生(student)の情報を1行ずつテーブルに表示 --%>
 						<c:forEach var="student" items="${students}">
 							<tr>
 								<td>${student.entYear}</td>
 								<td>${fn:substring(student.no, 3,10)}</td>
 								<td>${student.name }</td>
 								<td>${student.classNum}</td>
+
+								<%-- 在学状況の表示 --%>
 								<td class="text-center">
-
-								<c:choose>
-
-				 <%-- 在学状況(isAttend)がtrueかfalseかによって、表示を「○」か「×」に切り替える --%>
-									<c:when test="${student.isAttend() }">
-										○
-									</c:when>
-									<c:otherwise>
-										×
-									</c:otherwise>
-								</c:choose>
-
+									<c:choose>
+										<c:when test="${student.isAttend() }">
+											○
+										</c:when>
+										<c:otherwise>
+											×
+										</c:otherwise>
+									</c:choose>
 								</td>
 
 								<td>
-  <a href="${pageContext.request.contextPath}/student/update?no=${fn:substring(student.no, 3,10)}">変更</a>
-</td>
+  									<a href="${pageContext.request.contextPath}/student/update?no=${fn:substring(student.no, 3,10)}">変更</a>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:when>
 
-								</tr>
+				<c:otherwise>
+					<div>学生情報が存在しませんでした。</div>
+				</c:otherwise>
 
+			</c:choose>
 
-							</c:forEach>
-							</table>
-
-
-					</c:when>
-					<c:otherwise>
-						<div>学生情報が存在しませんでした。</div>
-					</c:otherwise>
-
-				</c:choose>
-
-
-
-    		</section>
-
+    	</section>
 
     </c:param>
 </c:import>

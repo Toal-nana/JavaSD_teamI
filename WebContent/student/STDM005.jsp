@@ -6,8 +6,8 @@
 	<c:param name="title">学生管理一覧</c:param>
 	<c:param name="body">
 		<div class="mx-auto">
-		<%-- ページの見出しを表示 --%>
-			   <h2 class="px-3 py-2 me-3 bg-light">学生情報変更</h2>
+			<%-- ページの見出しを表示 --%>
+			<h2 class="px-3 py-2 me-3 bg-light">学生情報変更</h2>
 
 
 			<div class="alert text-center alert-success shadow-sm  py-2"
@@ -17,7 +17,7 @@
 			</div>
 		</div>
 
-		    <%-- 学生情報の一覧画面へ遷移するためのリンク  --%>
+		<%-- 学生情報の一覧画面へ遷移するためのリンク  --%>
 		<a href="${pageContext.request.contextPath}/student/list">学生一覧</a>
 	</c:param>
 </c:import>
