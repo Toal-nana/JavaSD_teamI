@@ -29,6 +29,10 @@
         <div class="mb-3">
           <label class="form-label">氏名</label>
           <input type="text" name="name" value="${student.name}" class="form-control" required>
+          <%-- 氏名のサーバーサイドエラーを表示 --%>
+          <c:if test="${not empty errors.name}">
+            <p class="text-warning d-block">${errors.name}</p>
+          </c:if>
         </div>
 
 		<%-- クラスの選択フォーム --%>
@@ -40,6 +44,10 @@
 
               <option value="${cls}" <c:if test="${cls == student.classNum}">selected</c:if>>${cls}</option>
             </c:forEach>
+            <%-- クラスのサーバーサイドエラー表示 --%>
+	         <c:if test="${not empty errors.classNum}">
+	           <p class="text-danger d-block mt-1">${errors.classNum}</p>
+	         </c:if>
           </select>
         </div>
 
