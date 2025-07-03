@@ -48,13 +48,13 @@
 
 					<%-- 在学状況での絞り込み --%>
 	    			<div class="col-2 text-center">
-		    			<div class="form-check d-flex flex-column align-items-center">
-			       			<label class="form-check-label" for="student-f3-check">在学中</label>
-			       			<input class="form-check-input mt-1"
+		    			<div class="form-check d-inline-block">
+			       			<input class="form-check-input"
 			       			       type="checkbox"
 			       			       id="student-f3-check"
 			       			       name="f3" value="t"
 			             		   <c:if test="${!empty f3}">checked</c:if> />
+			             	<label class="form-check-label" for="student-f3-check">在学中</label>
 		   			 	</div>
 					</div>
 
