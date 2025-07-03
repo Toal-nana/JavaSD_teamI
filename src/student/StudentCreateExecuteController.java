@@ -27,7 +27,7 @@ public class StudentCreateExecuteController extends CommonServlet {
         Teacher teacher = (Teacher) session.getAttribute("session_user");
 
         if (teacher == null) {
-            response.sendRedirect(request.getContextPath() + "/account/LOGI001");
+            response.sendRedirect(request.getContextPath() + "/account/login");
             return;
         }
 

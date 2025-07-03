@@ -25,7 +25,7 @@ public class StudentCreateController extends CommonServlet {
 
         // ログインチェック
         if (teacher == null) {
-            response.sendRedirect(request.getContextPath() + "/account/LOGI001");
+            response.sendRedirect(request.getContextPath() + "/account/login");
             return;
         }
 

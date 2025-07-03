@@ -16,7 +16,7 @@ public class SubjectCreateController extends CommonServlet {
 
         // ログインチェック
         if (session.getAttribute("session_user") == null) {
-            resp.sendRedirect(req.getContextPath() + "/LOGI001.jsp");
+            resp.sendRedirect(req.getContextPath() + "/account/login");
             return;
         }
 

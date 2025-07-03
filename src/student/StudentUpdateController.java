@@ -24,7 +24,7 @@ public class StudentUpdateController extends CommonServlet {
 
         Teacher teacher = (Teacher) session.getAttribute("session_user");
         if (teacher == null) {
-            resp.sendRedirect(req.getContextPath() + "/login/LOGI001.jsp");
+            resp.sendRedirect(req.getContextPath() + "/account/login");
             return;
         }
 

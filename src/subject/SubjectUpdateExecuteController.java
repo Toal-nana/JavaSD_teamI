@@ -29,7 +29,7 @@ public class SubjectUpdateExecuteController extends CommonServlet {
 
         // ログインチェック
         if (teacher == null) {
-            resp.sendRedirect(req.getContextPath() + "/LOGI001.jsp");
+            resp.sendRedirect(req.getContextPath() + "/account/login");
             return;
         }
 
