@@ -26,7 +26,7 @@
     			 <select class="form-select" id="student-f1-select" name="f1">
 
     			 <%-- 未選択用の空の選択肢 --%>
-    			 <option value="0"></option>
+    			 <option value="0">--------</option>
 
     			 <%-- サーブレットから渡された入学年度のリスト(ent_year_set)をループして選択肢を生成 --%>
     			 <c:forEach var="year" items="${ent_year_set }">
@@ -45,7 +45,7 @@
     			 <div class="col-4">
     			 <label class="form-label" for="student-f2-select">クラス</label>
     			 <select class="form-select" id="student-f2-select" name="f2">
-    			 	<option value="0"></option>
+    			 	<option value="0">--------</option>
     			 	<c:forEach var="num" items="${class_num_set}">
     			 	<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
 

@@ -63,7 +63,7 @@ public class TestListStudentExecuteController extends CommonServlet {
 		//学生情報がない場合はエラーメッセージを表示
 		if (student == null) {
             // 学生が見つからなかった場合の処理
-            req.setAttribute("error_student", "指定された学生番号の学生は存在しません。");
+            req.setAttribute("error_student", "指定された学生番号の学生は存在しません");
             // JSP側で ${testListStudent} がエラーにならないよう、空のリストをセットしておく
             req.setAttribute("testListStudent", new ArrayList<TestListStudent>());
 

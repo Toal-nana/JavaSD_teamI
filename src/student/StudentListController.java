@@ -34,7 +34,7 @@ public class StudentListController extends CommonServlet {
     	        // ログインチェック
     	        if (teacher == null) {
 
-    	            response.sendRedirect(request.getContextPath() + "/account/LOGI001.jsp");
+    	            response.sendRedirect(request.getContextPath() + "/account/login");
     	            return;
     	        }
 
@@ -63,8 +63,7 @@ public class StudentListController extends CommonServlet {
     	            .collect(Collectors.toList());     // リストに変換する
 
 
-    	        // --- ここから絞り込み処理 ---
-
+    	        // 絞り込み処理
     	        // フォームから送信された絞り込み条件を取得
     	        String entYearStr = request.getParameter("f1");
     	        String classNum = request.getParameter("f2");
@@ -94,8 +93,7 @@ public class StudentListController extends CommonServlet {
     	            students = sDao.filter(school, isAttend);
     	        }
 
-    	        // --- JSPにデータを渡す ---
-
+    	        // JSPにデータを渡す
     	        // 絞り込み用の選択肢リスト
     	        request.setAttribute("ent_year_set", entYearSet);
     	        request.setAttribute("class_num_set", classNumSet);
