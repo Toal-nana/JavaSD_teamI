@@ -31,7 +31,7 @@
       <%-- 科目名 --%>
       <div class="mb-3">
         <label for="subjectName" class="form-label">科目名</label>
-        <input type="text" class="form-control" id="subjectName" name="name" value="<c:out value='${subject.name}'/>" placeholder="科目名を入力してください" required>
+        <input type="text" maxlength="20" class="form-control" id="subjectName" name="name" value="<c:out value='${subject.name}'/>" placeholder="科目名を入力してください" required>
       </div>
 
       <%-- 変更ボタン --%>
