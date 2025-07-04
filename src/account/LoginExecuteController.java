@@ -39,7 +39,14 @@ public class LoginExecuteController extends CommonServlet {
 
         // DAO を利用して認証処理を実行
         TeacherDao dao = new TeacherDao();
-        Teacher teacher = dao.login(id, password);
+        Teacher teacher = null;
+
+        // DBに接続できていない場合、エラーページへ遷移
+        try {
+        	teacher = dao.login(id, password);
+		} catch (Exception e) {
+			req.getRequestDispatcher("/ERRO001.jsp").forward(req, resp);
+		}
 
         if (teacher != null) {
             // 認証成功時：
