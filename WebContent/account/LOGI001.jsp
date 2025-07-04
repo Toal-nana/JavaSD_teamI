@@ -21,7 +21,7 @@
 
         <%-- カードボディ: フォーム本体を配置 --%>
         <div class="card-body p-4">
-          <form action="loginexecute" method="post">
+          <form action="${pageContext.request.contextPath}/account/loginexecute" method="post">
 
             <%-- 認証失敗時に表示するエラーメッセージ --%>
             <c:if test="${not empty error}">
