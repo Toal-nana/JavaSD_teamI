@@ -36,6 +36,10 @@ public class SubjectDeleteController extends CommonServlet {
             // 削除対象の科目情報を取得
             Subject subjectToDelete = subjectDao.get(cd, school);
 
+            if (subjectToDelete == null) {
+            	req.getRequestDispatcher("/subject/list").forward(req, resp);
+            }
+
             // JSPに渡すためにリクエストスコープにセット
             req.setAttribute("subject", subjectToDelete);
 
