@@ -15,63 +15,100 @@ import tool.CommonServlet;
 @WebServlet("/subject/createexecute")
 public class SubjectCreateExecuteController extends CommonServlet {
 
-	@Override
-	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    @Override
+    protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        // GETリクエストの場合は登録画面にリダイレクトするなど、適切な処理を記述
+        resp.sendRedirect(req.getContextPath() + "/subject/create");
+    }
 
-	}
+    @Override
+    protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        HttpSession session = req.getSession();
+        Teacher teacher = (Teacher) session.getAttribute("session_user");
 
-	@Override
-	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		 HttpSession session = req.getSession();
-	        Teacher teacher = (Teacher) session.getAttribute("session_user");
+        // ログインチェック
+        if (teacher == null) {
+            resp.sendRedirect(req.getContextPath() + "/account/login");
+            return;
+        }
 
-	        // ログインチェック
-	        if (teacher == null) {
-	            resp.sendRedirect(req.getContextPath() + "/account/login");
-	            return;
-	        }
+        req.setCharacterEncoding("UTF-8");
 
-	        try {
-	            SubjectDao subjectDao = new SubjectDao();
+        String cd = req.getParameter("cd");
+        String name = req.getParameter("name");
+        School school = teacher.getSchool();
 
-	            String cd = req.getParameter("cd");
-	            String name = req.getParameter("name");
-	            School school = teacher.getSchool();
+        // フォームの入力値を保持するインスタンスを作成
+        Subject subject = new Subject();
+        subject.setCd(cd);
+        subject.setName(name);
+        subject.setSchool(school);
 
-	            // フォームから送信された値でSubjectインスタンスを作成
-	            Subject subject = new Subject();
-	            subject.setCd(cd);
-	            subject.setName(name);
-	            subject.setSchool(school);
+        // エラーチェック用のフラグ
+        boolean hasError = false;
 
-	            Subject subject2 = subjectDao.get(cd, school);
+        // --- バリデーション（入力チェック） ---
 
-	            if (subject2 == null && cd.length() == 3) {
-	            	 // DAOのsaveメソッドでDBに保存
-		            subjectDao.save(subject);
+        // 1. 科目コードの文字数チェック (3文字以外はエラー)
+        if (cd == null || cd.length() != 3) {
+            req.setAttribute("cd_error", "科目コードは3文字で入力してください");
+            hasError = true;
+        }
 
-		            // 完了画面にフォワード
-		            req.getRequestDispatcher("/subject/SBJM003.jsp").forward(req, resp);
-				} else {
-					req.setAttribute("subject", subject);
+        // 2. 科目名の文字数チェック (20文字より多い場合はエラー)
+        if (name != null && name.length() > 20) {
+            req.setAttribute("name_error", "20文字以内で入力してください");
+            hasError = true;
+        }
 
-					if (subject2 != null) {
-						req.setAttribute("error", "科目コードが重複しています");
-					} else {
-						req.setAttribute("error", "科目コードは3文字で入力してください");
-					}
-					req.getRequestDispatcher("SBJM002.jsp").forward(req, resp);
-				}
+        // 3. (任意) 科目名が空の場合のエラー
+        if (name == null || name.trim().isEmpty()) {
+            req.setAttribute("name_error", "科目名を入力してください");
+            hasError = true;
+        }
 
-	        } catch (Exception e) {
-	            throw new ServletException(e);
-	        }
-	}
 
-	@Override
-	protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+        // 4. 科目コードの重複チェック（文字数エラーがない場合のみ実行）
+        if (!hasError) {
+            try {
+                SubjectDao subjectDao = new SubjectDao();
+                Subject existingSubject = subjectDao.get(cd, school);
+                if (existingSubject != null) {
+                    req.setAttribute("cd_error", "科目コードが重複しています");
+                    hasError = true;
+                }
+            } catch (Exception e) {
+                // DB関連のエラーは別途処理
+                throw new ServletException(e);
+            }
+        }
 
-	}
 
+        // --- 処理の分岐 ---
+
+        // エラーが一つでもあった場合
+        if (hasError) {
+            // 入力値をリクエストスコープにセットして、登録画面に戻す
+            req.setAttribute("subject", subject);
+            req.getRequestDispatcher("SBJM002.jsp").forward(req, resp);
+            return;
+        }
+
+
+        // エラーがなかった場合、登録処理を実行
+        try {
+            SubjectDao subjectDao = new SubjectDao();
+            subjectDao.save(subject);
+
+            // 完了画面にフォワード
+            req.getRequestDispatcher("/subject/SBJM003.jsp").forward(req, resp);
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
+    }
+
+    @Override
+    protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        // TODO 自動生成されたメソッド・スタブ
+    }
 }

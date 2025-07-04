@@ -49,6 +49,14 @@ public class SubjectUpdateExecuteController extends CommonServlet {
 			subjectFromForm.setName(name);
 			subjectFromForm.setSchool(school);
 
+			if (name != null && name.length() > 20) {
+				// 20文字を超えている場合
+				req.setAttribute("subject", subjectFromForm); // 入力値を画面に戻すためにセット
+				req.setAttribute("name_error", "20文字以内で入力してください");
+				req.getRequestDispatcher("SBJM004.jsp").forward(req, resp);
+				return; // 処理を終了
+			}
+
 			// 存在チェックの結果で処理を分岐
 			if (existingSubject == null) {
 				// 存在しなかった場合（DBから削除された場合など）

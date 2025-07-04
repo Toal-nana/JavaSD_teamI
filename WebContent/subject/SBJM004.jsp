@@ -31,7 +31,12 @@
       <%-- 科目名 --%>
       <div class="mb-3">
         <label for="subjectName" class="form-label">科目名</label>
-        <input type="text" maxlength="20" class="form-control" id="subjectName" name="name" value="<c:out value='${subject.name}'/>" placeholder="科目名を入力してください" required>
+        <input type="text" class="form-control" id="subjectName" name="name" value="<c:out value='${subject.name}'/>" placeholder="科目名を入力してください" required>
+
+      <c:if test="${name_error != null}">
+          <div class="form-text text-warning">${name_error}</div>
+      </c:if>
+
       </div>
 
       <%-- 変更ボタン --%>
