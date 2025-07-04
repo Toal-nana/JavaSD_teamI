@@ -52,6 +52,9 @@ public class TestListStudentDao extends Dao {
 		// SQL文のソート
 		String order = "order by t.subject_cd asc";
 
+		// 学校コードと学生番号を連結
+        String fullStudentNo = student.getSchool().getCd() + student.getNo();
+
 		try {
 			// SQL文をセット 学校と学生番号による絞り込み
 			statement = connection.prepareStatement(
@@ -59,7 +62,7 @@ public class TestListStudentDao extends Dao {
 			// SQL文に学校番号を入れる
 			statement.setString(1,student.getSchool().getCd());
 			// SQL文に学生番号を入れる
-			statement.setString(2, student.getNo());
+			statement.setString(2, fullStudentNo);
 			rSet = statement.executeQuery();
 			// リストへの格納処理を実行
 			list = postFilter(rSet);
