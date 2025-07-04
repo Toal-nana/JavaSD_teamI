@@ -1,6 +1,5 @@
 package subject;
 
-// Listのimportは不要
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;

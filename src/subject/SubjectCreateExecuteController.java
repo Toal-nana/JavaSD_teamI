@@ -17,7 +17,6 @@ public class SubjectCreateExecuteController extends CommonServlet {
 
     @Override
     protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        // GETリクエストの場合は登録画面にリダイレクトするなど、適切な処理を記述
         resp.sendRedirect(req.getContextPath() + "/subject/create");
     }
 
@@ -47,28 +46,19 @@ public class SubjectCreateExecuteController extends CommonServlet {
         // エラーチェック用のフラグ
         boolean hasError = false;
 
-        // --- バリデーション（入力チェック） ---
-
-        // 1. 科目コードの文字数チェック (3文字以外はエラー)
+        // 科目コードの文字数チェック (3文字以外はエラー)
         if (cd == null || cd.length() != 3) {
             req.setAttribute("cd_error", "科目コードは3文字で入力してください");
             hasError = true;
         }
 
-        // 2. 科目名の文字数チェック (20文字より多い場合はエラー)
+        // 科目名の文字数チェック (20文字より多い場合はエラー)
         if (name != null && name.length() > 20) {
             req.setAttribute("name_error", "20文字以内で入力してください");
             hasError = true;
         }
 
-        // 3. (任意) 科目名が空の場合のエラー
-        if (name == null || name.trim().isEmpty()) {
-            req.setAttribute("name_error", "科目名を入力してください");
-            hasError = true;
-        }
-
-
-        // 4. 科目コードの重複チェック（文字数エラーがない場合のみ実行）
+        // 科目コードの重複チェック（文字数エラーがない場合のみ実行）
         if (!hasError) {
             try {
                 SubjectDao subjectDao = new SubjectDao();
@@ -82,9 +72,6 @@ public class SubjectCreateExecuteController extends CommonServlet {
                 throw new ServletException(e);
             }
         }
-
-
-        // --- 処理の分岐 ---
 
         // エラーが一つでもあった場合
         if (hasError) {

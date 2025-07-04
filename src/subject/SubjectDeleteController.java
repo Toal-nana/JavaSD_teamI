@@ -8,19 +8,21 @@ import javax.servlet.http.HttpSession;
 
 import bean.School;
 import bean.Subject;
-import dao.SchoolDao;
+import bean.Teacher;
 import dao.SubjectDao;
 import tool.CommonServlet;
 
 @WebServlet("/subject/delete")
 public class SubjectDeleteController extends CommonServlet {
 
-	@Override
-	protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		HttpSession session = req.getSession();
+    @Override
+    protected void get(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        HttpSession session = req.getSession();
+        // Teacherオブジェクトとしてユーザー情報を取得
+        Teacher teacher = (Teacher) session.getAttribute("session_user");
 
         // ログインチェック
-        if (session.getAttribute("session_user") == null) {
+        if (teacher == null) {
             resp.sendRedirect(req.getContextPath() + "/account/login");
             return;
         }
@@ -28,33 +30,29 @@ public class SubjectDeleteController extends CommonServlet {
         try {
             SubjectDao subjectDao = new SubjectDao();
             String cd = req.getParameter("cd");
-            String scd = req.getParameter("scd");
+            // ログインユーザー情報からSchoolを取得
+            School school = teacher.getSchool();
 
-            SchoolDao schoolDao = new SchoolDao();
-            School school = schoolDao.get(scd);
             // 削除対象の科目情報を取得
-            Subject subjectToDelete = subjectDao.get(cd,school);
+            Subject subjectToDelete = subjectDao.get(cd, school);
 
             // JSPに渡すためにリクエストスコープにセット
             req.setAttribute("subject", subjectToDelete);
 
             req.getRequestDispatcher("/subject/SBJM006.jsp").forward(req, resp);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ServletException(e);
         }
+    }
 
-	}
+    @Override
+    protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-	@Override
-	protected void post(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+    }
 
-	}
+    @Override
+    protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-	@Override
-	protected void execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
+    }
 }
