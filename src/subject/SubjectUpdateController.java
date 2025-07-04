@@ -35,6 +35,10 @@ public class SubjectUpdateController extends CommonServlet {
 	            // 変更対象の科目情報を取得
 	            Subject subjectToUpdate = subjectDao.get(cd,school);
 
+	            // DBの検索結果(subjectToUpdate)とは別に、
+	            // URLパラメータで受け取った科目コード(cd)もJSPに渡す
+	            req.setAttribute("subject_cd", cd);
+
 	            // JSPに渡すためにリクエストスコープにセット
 	            req.setAttribute("subject", subjectToUpdate);
 

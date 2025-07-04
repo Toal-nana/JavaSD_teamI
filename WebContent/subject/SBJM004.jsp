@@ -21,7 +21,7 @@
       <div class="mb-3">
         <label for="subjectId" class="form-label">科目コード</label>
         <%-- readonly 属性を追加して、ユーザーによる編集を防ぐ --%>
-        <input type="text" class="form-control-plaintext ms-3" id="subjectId" name="cd" value="<c:out value='${subject.cd}'/>" readonly>
+        <input type="text" class="form-control-plaintext ms-3" id="subjectId" name="cd" value="<c:out value='${subject.cd != null ? subject.cd : subject_cd}'/>" readonly>
       </div>
 
       <c:if test="${error != null}">
