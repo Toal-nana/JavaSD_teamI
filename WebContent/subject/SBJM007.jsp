@@ -1,20 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%-- base.jsp を共通レイアウトとして読み込む --%>
 <c:import url="/base.jsp">
 
-  <%-- ページタイトルを「削除完了」に変更 --%>
+  <%-- ページタイトル --%>
   <c:param name="title" value="削除完了" />
 
   <%-- 表示する本文の内容 --%>
   <c:param name="body">
   <div class="mb-5 pb-5">
-    <%-- 画面見出しを「科目情報削除」に変更 --%>
+    <%-- 画面見出し --%>
 
     <h2 class="px-3 py-2 me-3 mb-3 bg-light">科目情報削除</h2>
 
-    <%-- 完了メッセージを「削除が完了しました」に変更 --%>
+    <%-- 完了メッセージ --%>
     <div class="alert alert-success py-2 text-center mb-5 rounded-0" role="alert" style="background-color: #8ab79a; border-color: #7fa98b;">
       削除が完了しました
     </div>

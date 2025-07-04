@@ -1,29 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%-- base.jsp を読み込み、タイトルと本文をパラメータとして渡す --%>
 <c:import url="/base.jsp">
-  <%-- ページタイトルを指定 --%>
-  <c:param name="title">科目管理</c:param> <%-- ページ内容に合わせて変更 --%>
 
-  <%-- body に表示するコンテンツを渡す --%>
+  <%-- ページタイトルを指定 --%>
+  <c:param name="title">科目管理</c:param>
+
   <c:param name="body">
-      <!-- ヘッダー部分（見出しと新規登録リンクをFlexboxで横並びにする） -->
+      <%-- ヘッダー部分 --%>
 
       <h2 class="px-3 py-2 me-3 mb-3 bg-light">科目管理</h2>
 
-      <!-- 新規登録リンクをdivで囲み、text-endで右揃えにする -->
+      <%-- 新規登録 --%>
       <div class="text-end mb-3">
         <a href="${pageContext.request.contextPath}/subject/create">新規登録</a>
       </div>
 
-      <!-- 科目一覧テーブル（table-bordered を table-hover に変更し、シンプルな見た目にする） -->
+      <%-- 科目一覧テーブル --%>
       <table class="table table-hover">
         <thead>
           <tr>
             <th>科目コード</th>
             <th>科目名</th>
-            <!-- 変更・削除リンク用の見出し。text-endで右揃えに -->
+            <%-- 変更・削除リンク用の見出し --%>
             <th class="text-end" style="width: 200px;"></th>
           </tr>
         </thead>
@@ -32,11 +30,9 @@
             <tr>
               <td><c:out value="${subject.cd}" /></td>
               <td><c:out value="${subject.name}" /></td>
-              <!-- 変更・削除リンクのセル。text-endで右揃えにする -->
+              <%-- 変更・削除リンクのセル --%>
               <td >
-                <!-- リンクを横並びに配置 -->
                 <a href="${pageContext.request.contextPath}/subject/update?cd=${subject.cd}&scd=${subject.school.cd}">変更</a>
-                <!-- ms-3で左側に余白を設ける -->
                 <a href="${pageContext.request.contextPath}/subject/delete?cd=${subject.cd}&scd=${subject.school.cd}" class="mx-5 ps-3">削除</a>
               </td>
             </tr>

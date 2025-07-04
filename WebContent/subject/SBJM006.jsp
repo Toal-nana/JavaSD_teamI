@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%-- base.jspを使用して共通レイアウトを適用 --%>
 <c:import url="/base.jsp">
 
@@ -10,7 +9,7 @@
   <%-- ページ本文の内容 --%>
   <c:param name="body">
 
-    <%-- 画面見出し（他のページとスタイルを統一） --%>
+    <%-- 画面見出し --%>
 
     <h2 class="px-3 py-2 me-3 mb-3 bg-light">科目情報削除</h2>
 
